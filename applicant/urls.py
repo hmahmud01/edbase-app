@@ -8,9 +8,13 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('login/', views.login, name='login'),
-    path('studentdetail/', views.studentDetail, name='studentDetail'),
-    path('studentform/', views.studentForm, name='studentForm'),
-    path('studentpanel/', views.studentPanel, name='studentPanel'),
+    path('verifylogin/', views.verifyLogin, name='verifylogin'),
+    path('logout/', views.userLogout, name='logout'),
+    path('studentdetail/<int:sid>/', views.studentDetail, name='studentdetail'),
+    path('studentform/', views.studentForm, name='studentform'),
+    path('success/', views.success, name='success'),
+    path('savestudent/', views.saveStudent, name='savestudent'),
+    path('studentpanel/', views.studentPanel, name='studentpanel'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

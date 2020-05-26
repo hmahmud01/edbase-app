@@ -13,24 +13,25 @@
                                 <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin-bottom">                                        
                                     <img width="325" class="uk-margin-bottom" src="/static/img/edbase.png" alt="" uk-img>
                                     <p class="uk-flex uk-flex-center uk-margin-small-bottom">Login With your Credentials</p>
-                                    <form class="uk-form-stacked">
+                                    <form method="POST" action="{% url 'verifylogin' %}" class="uk-form-stacked">{% csrf_token %}
                                         <div class="uk-margin">
-                                            <label class="uk-form-label" for="form-stacked-text">Email Address</label>
+                                            <label class="uk-form-label" for="form-stacked-text">Mobile Number</label>
                                             <div class="uk-form-controls">
-                                                <input class="uk-input" id="form-stacked-text" type="email" placeholder="Email">
+                                                <input class="uk-input" id="form-stacked-text" type="text" name="user" placeholder="Mobile Number">
                                             </div>
                                         </div>
 
                                         <div class="uk-margin">
                                             <label class="uk-form-label" for="form-stacked-text">Password</label>
                                             <div class="uk-form-controls">
-                                                <input class="uk-input" id="form-stacked-text" type="password" placeholder="Password">
+                                                <input class="uk-input" id="form-stacked-text" type="password" name="pass" placeholder="Password">
                                             </div>
                                         </div>                              
-                                        <a type="button" class="uk-button uk-button-danger uk-width-1-1" href="dashboard.html">Login</a>
+                                        <input type="submit" class="uk-button uk-button-danger uk-width-1-1" value="Login" />
+                                        <!-- <a type="button" class="uk-button uk-button-danger uk-width-1-1" href="{% url 'dashboard' %}">Login</a> -->
                                     </form>
                                 </div>
-                                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="#">[i]RONMAMA</a>@2020</p>
+                                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="#">edbase.com</a>@2020</p>
                             </div> 
                         </div>
                     </div>

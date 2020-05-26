@@ -6,9 +6,9 @@
     <section class="main-section">
         <div class="main-section-content">
             <div>
-                <div class="uk-background-cover uk-dark uk-panel" style="background-image: url('/static/img/home1.jpg');">
+                <div class="uk-background-cover uk-dark uk-panel" style="background-image: url('/static/img/background_1800.jpg');">
                     <div class="uk-overlay-primary uk-position-cover"></div>                     
-                    <div class="h-100 uk-flex uk-flex-center uk-flex-bottom uk-text-center">                           
+                    <div class="h-100 uk-flex uk-flex-center uk-flex-middle uk-text-center">                           
                         <div class="uk-flex-column">                            
                             <div class="uk-padding uk-flex uk-flex-column uk-animation-slide-top-small">
                                 <img class="uk-padding-small" src="/static/img/edbase.png" width="685" alt="logo" uk-img>                                                                  
@@ -78,8 +78,8 @@
     <section id="zeros">        
         <div>
             <div class="uk-grid-collapse" uk-grid>
-                <div class="uk-width-1-1@m">
-                    <div class="uk-height-responsive uk-background-muted">
+                <div class="uk-width-3-4@m">
+                    <div class="uk-height-responsive">
                         <div class="uk-height-large uk-height-responsive uk-padding uk-dark content-anim">
                             <div class="uk-section">
                                 <div class="uk-container">                    
@@ -105,6 +105,9 @@
                         </div>
                     </div>
                 </div>  
+                <div class="uk-width-expand@m">
+                    <img src="/static/img/back_800.jpg" alt="logo" uk-img> 
+                </div>
             </div>
         </div>
 
@@ -115,8 +118,8 @@
                 <div class="uk-background-cover uk-dark uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle" uk-parallax="bgy: -400" style="background-image: url('/static/img/home.jpg');">                                        
                     <div class="uk-overlay-primary uk-position-cover"></div>   
                     <div class="uk-flex uk-flex-column uk-animation-slide-top-small uk-padding">
-                        <p class="uk-margin-small-bottom edbase-sub-head">Sign up Here For the Web Access</p>
-                        <a href="studentForm.html" class="uk-button uk-button-danger">Sign Up</a>
+                        <p class="uk-margin-small-bottom edbase-sub-head">Sign up Here For Online Admission</p>
+                        <a href="{% url 'studentform' %}" class="uk-button uk-button-danger">Sign Up</a>
                         <!-- <button class="uk-button uk-button-danger">Sign Up</button> -->
                     </div>                    
                 </div>
@@ -146,7 +149,7 @@
                     
                 </div>
                 <div class="uk-divider-icon"></div>
-                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="#">[i]RONMAMA</a>@2020</p>
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbase.com</a>@2020</p>
             </div>
         </div>
     </section>

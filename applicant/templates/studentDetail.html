@@ -10,19 +10,18 @@
                     <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-dark; top: 200">
                         <nav class="uk-navbar-container" uk-navbar="mode: click;">
                             <div class="uk-navbar-left">
-                                <a class="uk-navbar-item uk-logo logo-size" href="index.html"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
+                                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
                             </div>
                             <div class="uk-navbar-right uk-dark">
                                 <ul class="uk-navbar-nav uk-iconnav">
                                     <li>
-                                        <a href="login.html" uk-toggle><span uk-icon="heart"></span> Login </a>
+                                        <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
                                     </li>                                 
                                 </ul>
                             </div>
                         </nav>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -44,7 +43,7 @@
                                 <div class="">Name</div>
                             </div>
                             <div class="uk-width-3-4">
-                                <div class="uk-text-large">User Name</div>
+                                <div class="uk-text-large">{{ data.name }}</div>
                             </div>
                         </div>
     
@@ -53,7 +52,7 @@
                                 <div class="">Mobile Number</div>
                             </div>
                             <div class="uk-width-3-4">
-                                <div class="uk-text-large">User Name</div>
+                                <div class="uk-text-large">{{ data.mobile }}</div>
                             </div>
                         </div>
     
@@ -62,7 +61,7 @@
                                 <div class="">Guardian's Mobile Number</div>
                             </div>
                             <div class="uk-width-3-4">
-                                <div class="uk-text-large">User Name</div>
+                                <div class="uk-text-large">{{ data.guardian_mobile }}</div>
                             </div>
                         </div>
 
@@ -71,7 +70,7 @@
                                 <div class="">Email Address</div>
                             </div>
                             <div class="uk-width-3-4">
-                                <div class="uk-text-large">User Name</div>
+                                <div class="uk-text-large">{{ data.email }}</div>
                             </div>
                         </div>
 
@@ -80,7 +79,7 @@
                                 <div class="">Current School</div>
                             </div>
                             <div class="uk-width-3-4">
-                                <div class="uk-text-large">User Name</div>
+                                <div class="uk-text-large">{{ data.school }}</div>
                             </div>
                         </div>
 
@@ -89,7 +88,11 @@
                                 <div class="">Qualifications</div>
                             </div>
                             <div class="uk-width-3-4">
-                                <div class="uk-text-large">User Name</div>
+                                {% if data.status == False %}
+                                <div class="uk-text-large">Inactive</div>
+                                {% else %}
+                                <div class="uk-text-large">Active</div>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -99,9 +102,22 @@
                             </div>
                             <div class="uk-width-3-4">
                                 <ul class="uk-list uk-list-bullet">
-                                    <li>List item 1</li>
-                                    <li>List item 2</li>
-                                    <li>List item 3</li>
+                                    <table class="uk-table uk-table-hover uk-table-divider">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject Title</th>
+                                                <th>Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for subject in subjects %}
+                                            <tr>
+                                                <td>{{ subject.title }}</td>
+                                                <td>{{ subject.level }}</td>                                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </ul>
                             </div>
                         </div>
@@ -116,8 +132,8 @@
     <section id="footer">
         <div class="uk-padding">                            
             <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle">
-                <a class="uk-navbar-item uk-logo logo-size" href="index.html"><img src="/static/img/edbase.png" alt="zeros"></a>   
-                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="#">[i]RONMAMA</a>@2020</p>
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbase.com</a>@2020</p>
             </div>                
         </div>
     </section>
