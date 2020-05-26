@@ -1,0 +1,139 @@
+p{
+    margin: 0;
+}
+
+.main-section{
+    position: relative;
+}
+
+.main-section-content{
+    /* position: absolute; */
+    height: 100vh;
+    /* width: 100vw; */
+}
+
+/* heights clasess */
+.h-100{
+    height: 100vh;
+}
+
+.h-70{
+    height: 70vh;
+}
+
+.h-80{
+    height: 80vh;
+}
+
+.grow { 
+    transition: all .2s ease-in-out; 
+    padding: 40px;
+    margin: 40px;
+    border: 1px solid;
+    border-radius: 50%;    
+}
+
+.shadow-dark{
+    -webkit-box-shadow: 5px 5px 30px -20px rgba(0,0,0,0.62);
+    -moz-box-shadow: 5px 5px 30px -20px rgba(0,0,0,0.62);
+    box-shadow: 5px 5px 30px -20px rgba(0,0,0,0.62);
+}
+
+.shadow-light{
+    -webkit-box-shadow: 5px 5px 30px -20px rgba(230,230,230,1);
+    -moz-box-shadow: 5px 5px 30px -20px rgba(230,230,230,1);
+    box-shadow: 5px 5px 30px -20px rgba(230,230,230,1);
+}
+
+.grow:hover { 
+    transform: scale(1.1); 
+}
+
+/* Background color */
+.uk-background-danger {
+    background: #EE395B;
+}
+
+.uk-background-warning {
+    background: #f1d24a;
+}
+
+.uk-background-dark-blue {
+    background: #202f46;
+}
+
+.uk-button-warning:hover, .uk-button-warning:focus {
+    background-color: rgb(238, 211, 57);
+    color:#000;
+}
+
+.uk-button-warning {
+    background-color: #f1d24a;
+    color: #000;
+    border: 1px solid transparent;
+}
+
+.zeros-head{
+    font-family: 'Pacifico', cursive;
+    margin-bottom: 5px;
+    font-size: 2.7rem;
+    color:#cc569e !important;
+}
+
+.zeros-sub-head{
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.3rem;
+    color:#5a3a68;
+}
+
+.edbase-sub-head{
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.3rem;
+    color:#fff;
+}
+
+.logo-size{
+    width: 128px;
+}
+
+.copy {
+    font-size: 1rem;
+    color: #e8a37a;
+}
+
+
+/* height response fore device */
+@media (max-width: 420px) {
+    .uk-height-responsive {
+        height: 800px;
+    }
+}
+
+
+
+/* Overriding uikit css */
+.uk-navbar-container:not(.uk-navbar-transparent) {
+    background: #120529;
+  }
+
+
+  /* map size */
+#map {
+    height: 100%;
+}
+
+.h-1-1{
+    height: 100%;
+}
+
+
+/* ADMIN SECTION CSS */
+
+.admin-section-top {
+    height: 10vh;
+}
+
+.head{
+    display: flex;
+    flex-direction: column-reverse;
+}

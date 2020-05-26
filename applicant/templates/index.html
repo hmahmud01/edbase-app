@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        <div class="main-section-content">
+            <div>
+                <div class="uk-background-cover uk-dark uk-panel" style="background-image: url('/static/img/home1.jpg');">
+                    <div class="uk-overlay-primary uk-position-cover"></div>                     
+                    <div class="h-100 uk-flex uk-flex-center uk-flex-bottom uk-text-center">                           
+                        <div class="uk-flex-column">                            
+                            <div class="uk-padding uk-flex uk-flex-column uk-animation-slide-top-small">
+                                <img class="uk-padding-small" src="/static/img/edbase.png" width="685" alt="logo" uk-img>                                                                  
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                                        <p class="zeros-sub-head">Online Coaching Platform</p>                                        
+                                    </div>
+                                </div>                            
+                            </div>                                                          
+                        </div>                                                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Food Order On the go -->
+    <div id="food-order" uk-offcanvas="mode: push; overlay: true">
+        <div class="uk-offcanvas-bar">                        
+            <button class="uk-offcanvas-close" type="button" uk-close></button>                                                
+            <h3 class="uk-h4 zeros-head">Order <span class="zeros-sub-head">On the go</span></h3>      
+                            
+            <form class="uk-form-stacked">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Name</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Full Name">
+                    </div>
+                </div>
+            
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-select">Select City</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="form-stacked-select">
+                            <option>Dhaka</option>
+                            <option>Khulna</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-select">Select Area</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="form-stacked-select">
+                                <option>Dhanmondi</option>
+                                <option>Kolabagan</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                <div class="uk-margin">
+                    <div class="uk-form-label">Preference</div>
+                    <div class="uk-form-controls">
+                        <label><input class="uk-radio" type="radio" name="radio1"> Lunch</label><br>
+                        <label><input class="uk-radio" type="radio" name="radio2"> Dinner</label>
+                    </div>
+                </div>        
+                <div class="uk-margin">
+                    <button class="uk-button uk-button-danger">Search</button>
+                </div>    
+            </form>
+        </div>
+    </div>
+
+    <!-- Page Content Section -->
+    <section id="zeros">        
+        <div>
+            <div class="uk-grid-collapse" uk-grid>
+                <div class="uk-width-1-1@m">
+                    <div class="uk-height-responsive uk-background-muted">
+                        <div class="uk-height-large uk-height-responsive uk-padding uk-dark content-anim">
+                            <div class="uk-section">
+                                <div class="uk-container">                    
+                                    <h3>About Edbase</h3>                    
+                                    <div class="uk-grid-match" uk-grid>
+                                        <div>
+                                            <p>
+                                                Edbase was established a decade ago with one sole purpose to be the premiere academic institution provider for Edexcel IGCSE at IAL specifications.  To that end, edbase, from the get go, has tried to set itself apart from the rest.
+                                            </p>                                           
+                                            <p>
+                                                From providing exceptional teachers with extensive industry experience to cultivating a positive learning environment, learners are challenged to meet and exceed their expectations from the very beginning.  Every classroom is equipped with multimedia projectors to provide engaging interactive content and is air conditioned for comfort.  Our diverse offerings of core academic curricula meet the most stringent standards of excellence.  Our students regularly achieve country highest and world highest marks every session, with several students scoring highest in multiple subjects.
+                                            </p>
+                                            <p>
+                                                Keeping the health and safety of our students in mind during these unprecedented times, edbase is making the best out of the current situation by delivering rich, interactive online classes for its students using a variety of platforms. 
+                                            </p>
+                                            <p>
+                                                We see this as an opportunity to engage young learners and connect them with the very best tutors available and give them a head start on their May 2021 exam preparations.  
+                                            </p>
+                                        </div>
+                                    </div>                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <!-- APP INCOMING SECTION -->
+
+        <div class="uk-grid-collapse" uk-grid>
+            <div class="uk-width-1-1">
+                <div class="uk-background-cover uk-dark uk-height-medium uk-panel uk-flex uk-flex-center uk-flex-middle" uk-parallax="bgy: -400" style="background-image: url('/static/img/home.jpg');">                                        
+                    <div class="uk-overlay-primary uk-position-cover"></div>   
+                    <div class="uk-flex uk-flex-column uk-animation-slide-top-small uk-padding">
+                        <p class="uk-margin-small-bottom edbase-sub-head">Sign up Here For the Web Access</p>
+                        <a href="studentForm.html" class="uk-button uk-button-danger">Sign Up</a>
+                        <!-- <button class="uk-button uk-button-danger">Sign Up</button> -->
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <!-- 4th section: Footer Section -->
+        <div class="uk-section uk-section-secondary">
+            <div class="uk-container">
+                <div class="uk-flex uk-flex-center" uk-grid>
+                    <div class="uk-flex uk-flex-center uk-text-center">
+                        <div class="uk-width-1-1">
+                            <img src="/static/img/edbase_footer.png" width="150" alt="logo" uk-img>
+                            <hr class="uk-divider-small">
+                            <div class="icon-section">                            
+                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                                <i class="fa fa-youtube-square" aria-hidden="true"></i>
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="addr">
+                                <p>Address: 44/kualalampur, Barisal, America</p>
+                                <p>Contact: +88##121321#</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="uk-divider-icon"></div>
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="#">[i]RONMAMA</a>@2020</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

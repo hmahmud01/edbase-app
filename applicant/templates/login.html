@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section id="login">
+    <div>
+        <div class="uk-grid-collapse" uk-grid>
+            <div class="uk-width-1-1@m h-100">
+                <div class="h-1-1">
+                    <div class="uk-background-cover h-1-1 uk-dark uk-panel uk-flex uk-flex-center uk-flex-middle">
+                        <div class="uk-flex uk-flex-column uk-animation-slide-top-small">
+                            <div>
+                                <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin-bottom">                                        
+                                    <img width="325" class="uk-margin-bottom" src="/static/img/edbase.png" alt="" uk-img>
+                                    <p class="uk-flex uk-flex-center uk-margin-small-bottom">Login With your Credentials</p>
+                                    <form class="uk-form-stacked">
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="form-stacked-text">Email Address</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" id="form-stacked-text" type="email" placeholder="Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="form-stacked-text">Password</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" id="form-stacked-text" type="password" placeholder="Password">
+                                            </div>
+                                        </div>                              
+                                        <a type="button" class="uk-button uk-button-danger uk-width-1-1" href="dashboard.html">Login</a>
+                                    </form>
+                                </div>
+                                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="#">[i]RONMAMA</a>@2020</p>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</section> 
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>EdBase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Pacifico&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="{% static 'css/uikit.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">  
+    
+</head>
+<body>    
+    {% block content %}
+    {% endblock %}
+    
+    <script src="{% static 'js/uikit-icons.min.js' %}"></script>
+    <script src="{% static 'js/uikit.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    {% block script %}
+    {% endblock %}
+</body>
+</html>
