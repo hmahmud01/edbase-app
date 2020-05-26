@@ -56,7 +56,11 @@
                                 <td>{{ student.mobile }}</td>
                                 <td>{{ student.status }}</td>
                                 <td>{{ student.qualification }} Level</td>
-                                <td><a href="{% url 'studentdetail' student.id %}" class="uk-button uk-button-secondary">Detail</a></td>
+                                <td class="uk-flex">
+                                    <a href="{% url 'studentdetail' student.id %}" class="uk-button uk-button-secondary">Detail</a> 
+                                    <a href="{% url 'deletestudent' student.id %}" class="uk-button uk-button-danger">Delete</a>
+                                </td>
+                                
                             </tr>
                             {% endfor %}
                         </tbody>

@@ -76,6 +76,12 @@ def saveStudent(request):
     return redirect('success')
 
 
+def deleteStudent(request, sid):
+    instance = Student.objects.get(id=sid)
+    instance.delete()
+    return redirect('dashboard')
+
+
 def login(request):
     data = ""
     return render(request, 'login.html', {'data': data})

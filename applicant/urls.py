@@ -15,6 +15,7 @@ urlpatterns = [
     path('success/', views.success, name='success'),
     path('savestudent/', views.saveStudent, name='savestudent'),
     path('studentpanel/', views.studentPanel, name='studentpanel'),
+    path('deletestudent/<int:sid>/', views.deleteStudent, name='deletestudent'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
