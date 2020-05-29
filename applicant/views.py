@@ -13,6 +13,11 @@ def home(request):
     return render(request, 'index.html', {'data': data})
 
 
+def signUp(request):
+    data = ""
+    return render(request, 'signup.html', {'data': data})
+
+
 def studentForm(request):
     data = ""
     return render(request, 'studentForm.html', {'data': data})

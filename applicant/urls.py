@@ -7,6 +7,7 @@ from applicant import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('signup/', views.signUp, name='signup'),
     path('login/', views.login, name='login'),
     path('verifylogin/', views.verifyLogin, name='verifylogin'),
     path('logout/', views.userLogout, name='logout'),
