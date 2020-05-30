@@ -15,9 +15,9 @@
                                     <p class="uk-flex uk-flex-center uk-margin-small-bottom">Login With your Credentials</p>
                                     <form method="POST" action="{% url 'verifylogin' %}" class="uk-form-stacked">{% csrf_token %}
                                         <div class="uk-margin">
-                                            <label class="uk-form-label" for="form-stacked-text">Mobile Number</label>
+                                            <label class="uk-form-label" for="form-stacked-text">Username</label>
                                             <div class="uk-form-controls">
-                                                <input class="uk-input" id="form-stacked-text" type="text" name="user" placeholder="Mobile Number">
+                                                <input class="uk-input" id="form-stacked-text" type="text" name="user" placeholder="Username">
                                             </div>
                                         </div>
 
@@ -29,7 +29,7 @@
                                         </div>                              
                                         <input type="submit" class="uk-button uk-button-danger uk-width-1-1" value="Login" />
                                         <div class="uk-flex uk-flex-center uk-flex-middle">
-                                            <p>Didn't Register? <a class="uk-button uk-button-text" href="{% url 'login' %}">Register</a> Here</p>
+                                            <p>Didn't Register? <a class="uk-button uk-button-text" href="{% url 'signup' %}">Register</a> Here</p>
                                         </div>
                                     </form>
                                 </div>
