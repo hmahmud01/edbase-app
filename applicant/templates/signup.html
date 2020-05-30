@@ -13,7 +13,7 @@
                                 <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin-bottom">                                        
                                     <img width="325" class="uk-margin-bottom" src="/static/img/edbase.png" alt="" uk-img>
                                     <p class="uk-flex uk-flex-center uk-margin-small-bottom">Registration with your Credentials</p>
-                                    <form method="POST" action="" class="uk-form-stacked"> {% csrf_token %}
+                                    <form method="POST" action="{% url 'createaccount' %}" class="uk-form-stacked"> {% csrf_token %}
                                         <div class="uk-margin">
                                             <label class="uk-form-label" for="form-stacked-text">Email Address</label>
                                             <div class="uk-form-controls">
@@ -46,8 +46,8 @@
                                             <div class="uk-form-controls">
                                                 <input class="uk-input" name="conf_pass" id="form-stacked-text" type="password" placeholder="Confirm Password">
                                             </div>
-                                        </div>                            
-                                        <a type="button" class="uk-button uk-button-danger uk-width-1-1" href="/">Register</a>
+                                        </div>                   
+                                        <button type="submit" class="uk-button uk-button-danger uk-width-1-1">Register</button>
                                         <div class="uk-flex uk-flex-center uk-flex-middle">
                                             <p>Already Have An Account? <a class="uk-button uk-button-text" href="{% url 'login' %}">Login</a></p>
                                         </div>

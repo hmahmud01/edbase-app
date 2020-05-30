@@ -85,7 +85,16 @@
 
                         <div class="uk-text-left" uk-grid>
                             <div class="uk-width-1-4">
-                                <div class="">Qualifications</div>
+                                <div class="">Qalification</div>
+                            </div>
+                            <div class="uk-width-3-4">
+                                <div class="uk-text-large">{{ data.qualification }}</div>
+                            </div>
+                        </div>
+
+                        <div class="uk-text-left" uk-grid>
+                            <div class="uk-width-1-4">
+                                <div class="">Status</div>
                             </div>
                             <div class="uk-width-3-4">
                                 {% if data.status == False %}
@@ -95,7 +104,7 @@
                                 {% endif %}
                             </div>
                         </div>
-
+                        {% if subjects %}
                         <div class="uk-text-left" uk-grid>
                             <div class="uk-width-1-4">
                                 <div class="">Subjects</div>
@@ -121,7 +130,8 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                        {% endif %}
+                    </div> 
                     
                 </div>
                 

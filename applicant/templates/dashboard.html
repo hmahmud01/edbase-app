@@ -58,6 +58,11 @@
                                 <td>{{ student.qualification }} Level</td>
                                 <td class="uk-flex">
                                     <a href="{% url 'studentdetail' student.id %}" class="uk-button uk-button-secondary">Detail</a> 
+                                    {% if student.status is False %}
+                                    <a href="{% url 'activate' student.id %}" class="uk-button uk-button-primary">Activate</a>
+                                    {% else %}
+                                    <a href="{% url 'deactivate' student.id %}" class="uk-button uk-button-primary">De-Activate</a>
+                                    {% endif %}
                                     <a href="{% url 'deletestudent' student.id %}" class="uk-button uk-button-danger">Delete</a>
                                 </td>
                                 

@@ -5,7 +5,7 @@
 <section id="login">
     <div>
         <div class="uk-grid-collapse" uk-grid>
-            <div class="uk-width-1-1@m h-100">
+            <div class="uk-width-1-2@m h-100">
                 <div class="h-1-1">
                     <div class="uk-background-cover h-1-1 uk-dark uk-panel uk-flex uk-flex-center uk-flex-middle">
                         <div class="uk-flex uk-flex-column uk-animation-slide-top-small">
@@ -28,11 +28,28 @@
                                             </div>
                                         </div>                              
                                         <input type="submit" class="uk-button uk-button-danger uk-width-1-1" value="Login" />
-                                        <!-- <a type="button" class="uk-button uk-button-danger uk-width-1-1" href="{% url 'dashboard' %}">Login</a> -->
+                                        <div class="uk-flex uk-flex-center uk-flex-middle">
+                                            <p>Didn't Register? <a class="uk-button uk-button-text" href="{% url 'login' %}">Register</a> Here</p>
+                                        </div>
                                     </form>
                                 </div>
                                 <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbase.com</a>@2020</p>
                             </div> 
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="uk-width-expand@m">
+                <div class="h-100">
+                    <div class="uk-background-cover uk-dark uk-panel" uk-parallax="bgy: -200" style="background-image: url(/static/img/login.jpg);">
+                        <div class="h-100 uk-flex uk-flex-right uk-flex-bottom">
+                            <div class="uk-flex-column">
+                                <div class="uk-flex uk-flex-column uk-animation-slide-top-small uk-margin-bottom">
+                                    <div>
+                                        <img src="/static/img/edbase.png" width="385" alt="logo" uk-img>
+                                    </div>                            
+                                </div>  
+                            </div>                                                  
                         </div>
                     </div>
                 </div>

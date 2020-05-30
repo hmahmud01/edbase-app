@@ -43,72 +43,49 @@
                 </ul>
             </div>
             <div class="uk-child-width-1@m" uk-grid>
-                <form action="{% url 'savestudentdata' %}" method="post" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
-                    <input id="id" type="text" name="id" value="{{ data.id }}" hidden>
+                <form action="{% url 'savestudent' %}" method="post" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
                     <div class="uk-margin">
                         <label class="uk-form-label" for="name">Full Name</label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" id="name" type="text" name="name" placeholder="Full Name" value="{{ data.name }}" disabled>
+                            <input class="uk-input" id="name" type="text" name="name" placeholder="Full Name" required>
                         </div>
                     </div>
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="mobile">Mobile Number</label>
                         <div class="uk-form-controls">
-                            {% if data.mobile %}
-                            <input class="uk-input" id="mobile" type="text" name="mobile" placeholder="Mobile Number" value="{{ data.mobile }}" disabled>
-                            {% else %}
                             <input class="uk-input" id="mobile" type="text" name="mobile" placeholder="Mobile Number" required>
-                            {% endif %}                            
                         </div>
                     </div>
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="guardian_mobile">Guardian's Mobile Number</label>
                         <div class="uk-form-controls">
-                            {% if data.guardian_mobile %}
-                            <input class="uk-input" id="guardian_mobile" type="text" name="guardian_mobile" placeholder="Guardian's Mobile Number" value="{{ data.guardian_mobile }}" disabled>
-                            {% else %}
                             <input class="uk-input" id="guardian_mobile" type="text" name="guardian_mobile" placeholder="Guardian's Mobile Number" required>
-                            {% endif %}                            
                         </div>
                     </div>
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="email">Email Address</label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" id="email" type="email" name="email" placeholder="Email Address" value="{{ data.email }}" disabled>
+                            <input class="uk-input" id="email" type="email" name="email" placeholder="Email Address" required>
                         </div>
                     </div>
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="school">Current School</label>
                         <div class="uk-form-controls">
-                            {% if data.school %}
-                            <input class="uk-input" id="school" type="text" name="school" placeholder="Current School" value="{{ data.school }}" disabled>
-                            {% else %}
                             <input class="uk-input" id="school" type="text" name="school" placeholder="Current School" required>
-                            {% endif %}   
-                            
                         </div>
                     </div>
-
-                    
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="qualification">Qualification</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
-                                {% if data.qualification %}
-                                <option value="none" disabled>Select</option>
-                                <option value="O" disabled>O Level</option>
-                                <option value="A" disabled>A Level</option>
-                                {% else %}
                                 <option value="none">Select</option>
                                 <option value="O">O Level</option>
                                 <option value="A">A Level</option>
-                                {% endif %}
-                                
                             </select>
                         </div>
                     </div> 
@@ -183,13 +160,9 @@
                     </div> 
                     
                     <div class="uk-margin uk-flex uk-flex-right">
-                        {% if data.mobile %}
-                        <input type="submit" class="uk-button uk-button-primary" value="Submit" disabled>
-                        {% else %}
-                        <input type="submit" class="uk-button uk-button-primary" value="Submit">
-                        {% endif %}
+                        <input type="submit" class="uk-button uk-button-primary" value="Submit" />
                         <!-- <input type="cancel" class="uk-button uk-button-danger" value="Cancel" /> -->
-                        <a href="{% url 'studentpanel' %}" class="uk-button uk-button-danger">Back</a>
+                        <a href="/" class="uk-button uk-button-danger">Cancel</a>
                     </div>   
                 </form>
             </div>

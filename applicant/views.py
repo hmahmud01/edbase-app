@@ -18,6 +18,99 @@ def signUp(request):
     return render(request, 'signup.html', {'data': data})
 
 
+def createStudentAccount(request):
+    data = "failed"
+    post_data = request.POST
+    if post_data['pass'] == post_data['conf_pass']:
+        user = User.objects.create_user(post_data['username'], post_data['email'], post_data['pass'])
+        student = Student(
+            user = user,
+            name = post_data['name'],
+            email = post_data['email'],
+            user_type = "Student",
+        )
+        student.save()
+        return redirect('accountcreatesuccess')
+    else:
+        return render(request, 'signup.html', {'data': data})  
+
+
+def activateStudent(request, sid):
+    student = Student.objects.get(id=sid)
+    student.status = True
+    student.save()
+
+    subject = 'Account Create success in Edbase'
+    message = 'Congrats! Your Account Has been Activated. You can now admit yourself for online system. Thanks for staying with us.'
+
+    send_mail(subject, message, EMAIL_HOST_USER, [student.email], fail_silently=False)
+
+    return redirect('dashboard')
+
+
+def deactivateStudent(request, sid):
+    student = Student.objects.get(id=sid)
+    student.status = False
+    student.save()
+
+    subject = 'Account De-activation in Edbase'
+    message = 'Your Account has been de activated in the system. Please contact office for further information. Thanks for staying with us.'
+
+    send_mail(subject, message, EMAIL_HOST_USER, [student.email], fail_silently=False)
+
+    return redirect('dashboard')
+
+
+def studentAdmissionForm(request, sid):
+    print(sid)
+    student = Student.objects.get(id=sid)        
+    return render(request, 'studentForm.html', {'data': student})
+
+
+def saveStudentData(request):
+    print(request.POST)
+    post_data = request.POST
+    sid = post_data['id']
+    student = Student.objects.get(id=sid)
+    student.mobile = post_data['mobile']
+    student.guardian_mobile = post_data['guardian_mobile']
+    student.school = post_data['school']
+    student.qualification = post_data['qualification']
+    student.save()
+    
+    qual_value = post_data['qualification']
+
+    if 'O' in qual_value:
+        subjects = post_data.getlist('oLevel')
+        for sub in subjects:
+            qualfication = Qualification(
+                student = student,
+                title = sub,
+                level = "O level"
+            )
+            qualfication.save()
+    elif 'A' in qual_value:
+        a2 = post_data.getlist('a2Level')
+        aS = post_data.getlist('aSLevel')
+
+        for sub in a2:
+            qualification = Qualification(
+                student = student,
+                title = sub,
+                level = "A2"
+            )
+            qualification.save()
+
+        for sub in aS:
+            qualification = Qualification(
+                student = student,
+                title = sub,
+                level = "AS"
+            )
+            qualification.save()
+
+    return redirect('success')
+
 def studentForm(request):
     data = ""
     return render(request, 'studentForm.html', {'data': data})
@@ -78,12 +171,14 @@ def saveStudent(request):
 
     send_mail(subject, message, EMAIL_HOST_USER, [post_data['email']], fail_silently=False)
     
-    return redirect('success')
+    return redirect('studentPanel')
 
 
 def deleteStudent(request, sid):
-    instance = Student.objects.get(id=sid)
-    instance.delete()
+    student = Student.objects.get(id=sid)
+    user = User.objects.get(id=student.user_id)
+    student.delete()
+    user.delete()
     return redirect('dashboard')
 
 
@@ -112,9 +207,23 @@ def verifyLogin(request):
             return redirect('dashboard')
         else:
             auth_login(request, user)
-            request.session['user'] = post_data['user']
-            request.session['type'] = "Student"
-            return redirect('studentpanel')
+            print(user.id)
+            user_id = user.id
+            student = Student.objects.get(user_id=user_id)
+            print(student)
+            status = student.status
+            if student.status is True :
+                request.session['user'] = post_data['user']
+                request.session['type'] = "Student"
+                request.session['id'] = user_id
+                request.session['student'] = student.id
+                return redirect('studentpanel')
+            else :
+                request.session['user'] = post_data['user']
+                request.session['type'] = "Student"
+                request.session['id'] = user_id
+                request.session['student'] = student.id
+                return redirect('studentpanelunverified')            
     else:
         return redirect('login')
 
@@ -142,11 +251,25 @@ def studentDetail(request, sid):
     return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects})
 
 
-def studentPanel(request):
+@login_required(login_url='/login/')
+def studentPanel(request):    
+    sid = request.session['student']
+    student = Student.objects.get(id=sid)
+    subjects = Qualification.objects.filter(student__id__contains=sid)
+
+    return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects})
+
+
+def studentPanelUnverified(request):
     data = ""
-    return render(request, 'studentPanel.html', {'data': data})
+    return render(request, 'studentPanelUnverified.html', {'data': data})
 
 
 def success(request):
     data = ""
     return render(request, 'success.html', {'data': data})
+
+
+def successCreateAcccount(request):
+    data = ""
+    return render(request, 'successAccountCreate.html', {'data': data})
