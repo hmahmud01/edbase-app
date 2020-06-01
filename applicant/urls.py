@@ -24,6 +24,10 @@ urlpatterns = [
     path('studentpanel/', views.studentPanel, name='studentpanel'),
     path('studentpanelunverified/', views.studentPanelUnverified, name='studentpanelunverified'),
     path('deletestudent/<int:sid>/', views.deleteStudent, name='deletestudent'),
+    path('upload/', views.uploadSpreadSheet, name='upload'),
+    path('savexl/', views.saveSpreadSheet, name='savexl'),
+    path('encapsulate/<int:fid>', views.encapsulate, name='encapsulate'),
+    path('deletefile/<int:fid>', views.deleteFile, name='deletefile'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
