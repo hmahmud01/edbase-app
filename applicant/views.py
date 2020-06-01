@@ -310,23 +310,27 @@ def dashboard(request):
 @login_required(login_url='/login/')
 def studentDetail(request, sid):
     student = Student.objects.get(id=sid)
-    personal_info = PersonalInfo.objects.get(student_id=sid)
-    payment_info = PaymentInfo.objects.get(student_id=sid)
-    subjects = Qualification.objects.filter(student__id__contains=sid)
-
-    # return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects})
-    return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
-
+    if PersonalInfo.objects.get(student_id=sid).exists and PaymentInfo.objects.get(student_id=sid).exists():
+        personal_info = PersonalInfo.objects.get(student_id=sid)
+        payment_info = PaymentInfo.objects.get(student_id=sid)
+        subjects = Qualification.objects.filter(student__id__contains=sid)
+        return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
+    else:
+        subjects = Qualification.objects.filter(student__id__contains=sid)
+        return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects})
 
 @login_required(login_url='/login/')
 def studentPanel(request):    
     sid = request.session['student']
     student = Student.objects.get(id=sid)
-    personal_info = PersonalInfo.objects.get(student_id=sid)
-    payment_info = PaymentInfo.objects.get(student_id=sid)
-    subjects = Qualification.objects.filter(student__id__contains=sid)
-
-    return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
+    if PersonalInfo.objects.get(student_id=sid).exists and PaymentInfo.objects.get(student_id=sid).exists():
+        personal_info = PersonalInfo.objects.get(student_id=sid)
+        payment_info = PaymentInfo.objects.get(student_id=sid)
+        subjects = Qualification.objects.filter(student__id__contains=sid)
+        return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
+    else:
+        subjects = Qualification.objects.filter(student__id__contains=sid)
+        return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects})
 
 
 @login_required(login_url='/login/')
