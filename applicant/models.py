@@ -23,3 +23,10 @@ class Qualification(models.Model):
 
     def __str__(self):
         return self.student
+
+
+class StudentFile(models.Model):
+    file = models.FileField('app_files', upload_to='files', blank=True, null=True)
+
+    def __str__(self):
+        return self.file

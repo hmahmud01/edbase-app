@@ -6,7 +6,13 @@ from django.contrib.auth.decorators import login_required
 from edbase.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 
-from applicant.models import Student, Qualification
+from xlrd import open_workbook
+import os
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
+
+from applicant.models import Student, Qualification, StudentFile
 
 def home(request):
     data = ""
@@ -273,3 +279,66 @@ def success(request):
 def successCreateAcccount(request):
     data = ""
     return render(request, 'successAccountCreate.html', {'data': data})
+
+
+def uploadSpreadSheet(request):    
+    files = StudentFile.objects.all()
+    return render(request, 'uploadSpreadSheet.html', {'data': files})
+
+
+def saveSpreadSheet(request):
+    file = request.FILES['file']
+
+    workBook = open_workbook(file_contents=file.read())
+
+    workSheet = workBook.sheet_by_index(0)
+
+    print("processing xl file")
+    for row_id in range(1, workSheet.nrows):
+        print(workSheet.cell_value(row_id, 1))
+        user = User.objects.create_user(workSheet.cell_value(row_id, 1), workSheet.cell_value(row_id, 3), workSheet.cell_value(row_id, 2))
+        student = Student(
+            user = user,
+            name = workSheet.cell_value(row_id,0),
+            email = workSheet.cell_value(row_id,3),
+            status= False,
+            user_type = "Student",
+        )
+        student.save()
+
+    print("process done")
+
+    # print(sheet.cell(1, 3))
+    # print(book)
+
+    fileObj = StudentFile(file=file)
+    fileObj.save()
+
+
+
+    
+    # path = default_storage.save('tmp/{}'.format(file), ContentFile(file.read()))
+    # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+
+    # print(path)
+    # print(tmp_file)
+
+    # xlfile = default_storage.open(path)
+    # file_url = default_storage.url(tmp_file)
+    # default_storage.delete(path)
+    # book = open_workbook(file_url)
+    # sheet = book.sheet_by_index(1)
+
+    # print(sheet.cell(1, 0))
+    return redirect('upload')
+
+
+def encapsulate(request, fid):
+    print(fid)
+    return redirect('upload')
+
+
+def deleteFile(request, fid):
+    file = StudentFile.objects.get(id=fid)
+    file.delete()
+    return redirect('upload')
