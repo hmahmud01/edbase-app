@@ -31,156 +31,332 @@
     <section id="student-application">
         <div class="uk-container">
             <div class="head">
-                <h1 class="uk-heading-bullet">Edbase - Student Enrollment Form</h1>
+                <h1 class="uk-heading-bullet">Edbase - O/A Level Admission Form</h1>
                 <p class="uk-heading-line"><span>Application form to get enroll</span></p>
             </div>
-            <div class="uk-margin">
-                <p>Please read the instruction below for help</p>
-                <ul class="uk-list uk-list-bullet">
-                    <li>Please read this form carefully, fill out below and submit.</li>
-                    <li>If you face any difficulties in filling up this form, send us a message in our Facebook page describing the issue and a screenshot of the problem(if you can) or please call us: 01892570038 or 01643031714.</li>
-                    <li>Don't provide E-mail address of your parent in the E-mail field. E-mail MUST be a valid one that you're currently using.</li>
-                </ul>
-            </div>
             <div class="uk-child-width-1@m" uk-grid>
-                <form action="{% url 'savestudentdata' %}" method="post" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
+                <form action="{% url 'savestudentdata' %}" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
                     <input id="id" type="text" name="id" value="{{ data.id }}" hidden>
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="name">Full Name</label>
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="name" type="text" name="name" placeholder="Full Name" value="{{ data.name }}" disabled>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <h3 class="uk-card-title">Personal Information</h3>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="name">Full Name</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="name" type="text" name="name" placeholder="Full Name" value="{{ data.name }}" disabled>
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="mobile">Mobile Number</label>
+                            <div class="uk-form-controls">
+                                {% if data.mobile %}
+                                <input class="uk-input" id="mobile" type="text" name="mobile" placeholder="Mobile Number" value="{{ data.mobile }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="mobile" type="text" name="mobile" placeholder="Mobile Number" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="father">Fathers's Name</label>
+                            <div class="uk-form-controls">
+                                {% if data.father %}
+                                <input class="uk-input" id="father" type="text" name="father" placeholder="Fathers's Name" value="{{ data.father }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="father" type="text" name="father" placeholder="Fathers's Name" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="father_mobile">Fathers's Mobile Number</label>
+                            <div class="uk-form-controls">
+                                {% if data.father_mobile %}
+                                <input class="uk-input" id="father_mobile" type="text" name="father_mobile" placeholder="Fathers's Mobile Number" value="{{ data.father_mobile }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="father_mobile" type="text" name="father_mobile" placeholder="Fathers's Mobile Number" required>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="mother">Mother's Name</label>
+                            <div class="uk-form-controls">
+                                {% if data.mother %}
+                                <input class="uk-input" id="mother" type="text" name="mother" placeholder="Mother's Name" value="{{ data.mother }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="mother" type="text" name="mother" placeholder="Mother's Name" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="mother_mobile">Mother's Mobile Number</label>
+                            <div class="uk-form-controls">
+                                {% if data.mother_mobile %}
+                                <input class="uk-input" id="mother_mobile" type="text" name="mother_mobile" placeholder="Mother's Mobile Number" value="{{ data.mother_mobile }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="mother_mobile" type="text" name="mother_mobile" placeholder="Mother's Mobile Number" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="address">Address</label>
+                            <div class="uk-form-controls" id="address">
+                                <input class="uk-input mb-5" id="street_1" type="text" name="street_1" placeholder="Street Address" required>
+                                <input class="uk-input mb-5" id="street_2" type="text" name="street_2" placeholder="Street Address 2" required>                                
+                                <div uk-grid>
+                                    <div class="uk-width-1-3">
+                                        <input class="uk-input mb-5" id="city" type="text" name="city" placeholder="City" required>
+                                    </div>
+                                    <div class="uk-width-1-3">
+                                        <input class="uk-input mb-5" id="zip_code" type="text" name="zip_code" placeholder="Zip Code" required>
+                                    </div>
+                                    <div class="uk-width-1-3">
+                                        <input class="uk-input mb-5" id="country" type="text" name="country" placeholder="Country" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="email">Email Address</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="email" type="email" name="email" placeholder="Email Address" value="{{ data.email }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="dob">Date Of Birth</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="dob" type="date" name="dob" placeholder="Date of Birth" required>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="school">School Name</label>
+                            <div class="uk-form-controls">
+                                {% if data.school %}
+                                <input class="uk-input" id="school" type="text" name="school" placeholder="School Name" value="{{ data.school }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="school" type="text" name="school" placeholder="School Name" required>
+                                {% endif %}                                   
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="blood_group">Blood Group</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="blood_group" name="blood_group">                                    
+                                    <option value="select" >Select One</option>
+                                    <option value="A+" >A Positive (A+)</option>
+                                    <option value="A-" >A Negative (A-)</option>
+                                    <option value="B+" >B Positive (B+)</option>
+                                    <option value="B-" >B Negative (B-)</option>
+                                    <option value="O+" >O Positive (O+)</option>
+                                    <option value="O-" >A Negative (O-)</option>
+                                    <option value="AB+" >AB Positive (AB+)</option>
+                                    <option value="AB-" >AB Negative (AB-)</option>
+                                </select>
+                            </div>
+                        </div>     
+                        
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="experience">Share Your Online Experience</label>
+                            <div class="uk-form-controls">
+                                <textarea class="uk-textarea" name="experience" rows="5" placeholder="Your Thoughts ...."></textarea>
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="email">Upload Your Passport Size Photo</label>
+                            <div class="uk-form-controls">
+                                <div uk-form-custom="target: true">
+                                    <input type="file" name="photo">
+                                    <input class="uk-input uk-form-width-medium" type="text" placeholder="Upload Photo" disabled>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="mobile">Mobile Number</label>
-                        <div class="uk-form-controls">
-                            {% if data.mobile %}
-                            <input class="uk-input" id="mobile" type="text" name="mobile" placeholder="Mobile Number" value="{{ data.mobile }}" disabled>
-                            {% else %}
-                            <input class="uk-input" id="mobile" type="text" name="mobile" placeholder="Mobile Number" required>
-                            {% endif %}                            
+                    <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
+                        <div class="uk-card-header uk-card-primary">
+                            <h3 class="uk-card-title">Terms and Conditions for Admission </h3>
+                            <p>Read carefully before you submit </p>
+                        </div>
+                        <div class="uk-card-body">
+                            <ol>
+                                <li>A student is considered fully registered upon subject enrolment and payment of fees due. </li>
+                                <li>Fees due must be paid in advance by the 5th of the month. Failure to pay fees on time may result in the student being barred from classes, examinations and access to other facilities. </li>
+                                <li>In the event that a student is expelled/suspended or discontinued due to misconduct, all fees paid are not refundable. </li>
+                                <li>Edbase reserves the right to review and amend the rules and regulations (including policies) at anytime. </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
+                        <div class="uk-card-header uk-card-primary">
+                            <h3 class="uk-card-title">General Rules for Students </h3>
+                            <p>Read carefully before you submit </p>
+                        </div>
+                        <div class="uk-card-body">
+                            <h4>Classes on Campus:</h4>
+                            <ol>
+                                <li>You must have at least 90% attendance to register for Edexcel IGCSE/IAL/GCE - A' level or CIE GCE/IGCSE/A' level exams. Edbase will not be liable for poor results of any student if this criteria is not met. </li>
+                                <li>You must not hang around/socialize along edbase premises. If found, Edbase reserves the right to rusticate you immediately. Loitering, socializing and/or congregating in the lobby area of the ground floor or in the stair case is strictly prohibited. </li>
+                                <li>Greetings among your fellow students must be from afar as long as the pandemic situation prevails. After that, greetings should be limited to handshakes only. </li>
+                                <li>The clothing you wear for attending classes at edbase must be modest. Your attire should not cross socially acceptable norms. </li>
+                                <li>If you fail to attend any class due to illness or any other unavoidable circumstance, you must notify edbase immediately.</li>
+                            </ol>
+
+                            <h4>Online Classes:</h4>
+                            <ol>
+                                <li>Individual teachers have their own platform of choice when taking classes. Webcams may be a requirement for some teachers. Students must ensure they have webcams that are in working condition. </li>
+                                <li>Teachers may require webcams to be turned on during their lectures. Failure to do so may be grounds for removal from the lecture. </li>
+                                <li>When logging in to classes, students MUST use their full name. No aliases or shortened forms will be allowed. Doing so is grounds for removal from the lecture. </li>
+                                <li>Parents must not come into view of the webcam or interrupt an ongoing lecture while class is in progress. </li>
+                                <li>Students should sit through an entire class without any breaks and away from distractions. </li>
+                                <li>Students should have a stable internet connection and a backup power source for the device being used to attend the lectures. </li>
+                                <li>90% attendance is a MUST for all the courses registered for. </li>
+                                <li>Cyber bullying will not be tolerated AT ALL. Any student found guilty will face immediate suspension or expulsion from ALL courses registered at edbase. </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
+                        <div class="uk-card-header uk-card-primary">
+                            <h3 class="uk-card-title">Declaration </h3>
+                            <p>Read carefully before you submit </p>
+                        </div>
+                        <div class="uk-card-body">
+                            <ol>
+                                <li>I hereby declare that all information provided by me in this form, including the information given in all other documents submitted with this form, is complete and accurate. I also accept that edbase reserves the right to vary or reverse any decision regarding admission and enrolment made on the basis of incomplete or inaccurate information. </li>
+                                <li>I accept that edbase reserves the right to modify or change the current fee structure.</li>
+                                <li>I hereby agree to pay all fees due on the dates stipulated by edbase. </li>
+                                <li>I have read and fully understood all the terms and conditions governing this application for admission. </li>
+                                <li>I accept that edbase has the right to terminate a student for violating the any of the 'General Rule for Students'. </li>
+                            </ol>
+                            <label><input name="acceptance" class="uk-checkbox" type="checkbox" value="accepted" required> I agree to the terms & conditions. </label>
                         </div>
                     </div>
 
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="guardian_mobile">Guardian's Mobile Number</label>
-                        <div class="uk-form-controls">
-                            {% if data.guardian_mobile %}
-                            <input class="uk-input" id="guardian_mobile" type="text" name="guardian_mobile" placeholder="Guardian's Mobile Number" value="{{ data.guardian_mobile }}" disabled>
-                            {% else %}
-                            <input class="uk-input" id="guardian_mobile" type="text" name="guardian_mobile" placeholder="Guardian's Mobile Number" required>
-                            {% endif %}                            
+                    <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
+                        <div class="uk-card-header uk-card-primary">
+                            <h3 class="uk-card-title">Subject Selection </h3>
+                            <p>Select a subject / subjects  </p>
+                        </div>
+                        <div class="uk-card-body">
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="qualification">Qualification</label>
+                                <div class="uk-form-controls">
+                                    <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
+                                        {% if data.qualification %}
+                                        <option value="none" disabled>Select</option>
+                                        <option value="O" disabled>O Level</option>
+                                        <option value="A" disabled>A Level</option>
+                                        {% else %}
+                                        <option value="none">Select</option>
+                                        <option value="O">O Level</option>
+                                        <option value="A">A Level</option>
+                                        {% endif %}
+                                        
+                                    </select>
+                                </div>
+                            </div> 
+        
+                            <div class="uk-margin" id="o_level">
+                                <label class="uk-form-label" for="qualification">Select Subjects for O-level</label>
+                                <div class="uk-form-controls">
+                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label> <br />
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label> <br />
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Bangla ( Arup Henry Halder )"> Bangla ( Arup Henry Halder )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Ryad Ahmed )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Human Biology ( Dr. Riyad Ahmed )"> Human Biology ( Dr. Riyad Ahmed )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Business ( Qazi Asghar Kamal )"> Business ( Qazi Asghar Kamal )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Chemistry ( Qudrat Elahi )"> Chemistry ( Qudrat Elahi )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Commerce ( N. Newaz Karim )"> Commerce ( N. Newaz Karim )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Computer Science ( Nazir Hossain )"> Computer Science ( Nazir Hossain )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Economics ( Fahim Muhammad Nael )"> Economics ( Fahim Muhammad Nael )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Economics ( Qazi Asghar Kamal )"> Economics ( Qazi Asghar Kamal )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="English Language B ( Muhammad Abdullah Al Mamun )"> English Language B ( Muhammad Abdullah Al Mamun )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Further Pure Mathematics ( Fahim Uddin Chowdhury )"> Further Pure Mathematics ( Fahim Uddin Chowdhury )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="ICT ( Nazir Hossain )"> ICT ( Nazir Hossain )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Mathematics A ( Fahim Uddin Chowdhury )"> Mathematics A ( Fahim Uddin Chowdhury )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Mathematics B ( Fahim Uddin Chowdhury )"> Mathematics B ( Fahim Uddin Chowdhury )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>  
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label> 
+                                    </div>
+                                </div>
+                            </div> 
+        
+                            <div class="uk-margin" id="a_level">
+                                <label class="uk-form-label" for="qualification">A Level : AS Subjects</label>
+                                <div class="uk-form-controls">
+                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Riyad Ahmed )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Business ( Qazi Asghar Kamal )"> Business ( Qazi Asghar Kamal )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Chemistry ( Qudrat Elahi )"> Chemistry ( Qudrat Elahi )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Economics ( Fahim Muhammad Nael )"> Economics ( Fahim Muhammad Nael )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Economics ( Qazi Asghar Kamal )"> Economics ( Qazi Asghar Kamal )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="ICT ( Nazir Hossain )"> ICT ( Nazir Hossain )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Law ( N. Newaz Karim)"> Law ( N. Newaz Karim)</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Mathematics ( Fahim Uddin Chowdhury )"> Mathematics ( Fahim Uddin Chowdhury )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>
+                                    </div>
+                                </div>
+        
+                                <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
+                                <div class="uk-form-controls">
+                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Riyad Ahmed )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Business ( Qazi Asghar Kamal )"> Business ( Qazi Asghar Kamal )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Chemistry ( Qudrat Elahi )"> Chemistry ( Qudrat Elahi )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Economics ( Fahim Muhammad Nael )"> Economics ( Fahim Muhammad Nael )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Economics ( Qazi Asghar Kamal )"> Economics ( Qazi Asghar Kamal )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="ICT ( Nazir Hossain )"> ICT ( Nazir Hossain )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Law ( N. Newaz Karim)"> Law ( N. Newaz Karim)</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Mathematics ( Fahim Uddin Chowdhury )"> Mathematics ( Fahim Uddin Chowdhury )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>
+                                    </div>
+                                </div>        
+                                
+                            </div> 
                         </div>
                     </div>
-
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="email">Email Address</label>
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="email" type="email" name="email" placeholder="Email Address" value="{{ data.email }}" disabled>
+                    <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
+                        <div class="uk-card-header uk-card-primary">
+                            <h3 class="uk-card-title">Payment Details </h3>
                         </div>
-                    </div>
+                        <div class="uk-card-body">
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="payment_option">Paid Through</label>
+                                <div class="uk-form-controls">
+                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                        <label class="w-100"><input class="uk-radio" type="radio" name="payment_option" value="Cash"> Cash</label>
+                                        <label class="w-100"><input class="uk-radio" type="radio" name="payment_option" value="bKash"> bKash</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="school">Current School</label>
-                        <div class="uk-form-controls">
-                            {% if data.school %}
-                            <input class="uk-input" id="school" type="text" name="school" placeholder="Current School" value="{{ data.school }}" disabled>
-                            {% else %}
-                            <input class="uk-input" id="school" type="text" name="school" placeholder="Current School" required>
-                            {% endif %}   
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="trx_id">Type in the TrxId or TransID of bKash</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="trx_id" type="text" name="trx_id" placeholder="From sms or from the app's statement option">
+                                </div>
+                            </div>
                             
                         </div>
                     </div>
-
-                    
-
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="qualification">Qualification</label>
-                        <div class="uk-form-controls">
-                            <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
-                                {% if data.qualification %}
-                                <option value="none" disabled>Select</option>
-                                <option value="O" disabled>O Level</option>
-                                <option value="A" disabled>A Level</option>
-                                {% else %}
-                                <option value="none">Select</option>
-                                <option value="O">O Level</option>
-                                <option value="A">A Level</option>
-                                {% endif %}
-                                
-                            </select>
-                        </div>
-                    </div> 
-
-                    <div class="uk-margin" id="o_level">
-                        <label class="uk-form-label" for="qualification">Select Subjects for O-level</label>
-                        <div class="uk-form-controls">
-                            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label> <br />
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label> <br />
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Bangla ( Arup Henry Halder )"> Bangla ( Arup Henry Halder )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Ryad Ahmed )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Human Biology ( Dr. Riyad Ahmed )"> Human Biology ( Dr. Riyad Ahmed )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Business ( Qazi Asghar Kamal )"> Business ( Qazi Asghar Kamal )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Chemistry ( Qudrat Elahi )"> Chemistry ( Qudrat Elahi )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Commerce ( N. Newaz Karim )"> Commerce ( N. Newaz Karim )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Computer Science ( Nazir Hossain )"> Computer Science ( Nazir Hossain )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Economics ( Fahim Muhammad Nael )"> Economics ( Fahim Muhammad Nael )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Economics ( Qazi Asghar Kamal )"> Economics ( Qazi Asghar Kamal )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="English Language B ( Muhammad Abdullah Al Mamun )"> English Language B ( Muhammad Abdullah Al Mamun )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Further Pure Mathematics ( Fahim Uddin Chowdhury )"> Further Pure Mathematics ( Fahim Uddin Chowdhury )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="ICT ( Nazir Hossain )"> ICT ( Nazir Hossain )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Mathematics A ( Fahim Uddin Chowdhury )"> Mathematics A ( Fahim Uddin Chowdhury )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Mathematics B ( Fahim Uddin Chowdhury )"> Mathematics B ( Fahim Uddin Chowdhury )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>  
-                                <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label> 
-                            </div>
-                        </div>
-                    </div> 
-
-                    <div class="uk-margin" id="a_level">
-                        <label class="uk-form-label" for="qualification">A Level : AS Subjects</label>
-                        <div class="uk-form-controls">
-                            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Riyad Ahmed )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Business ( Qazi Asghar Kamal )"> Business ( Qazi Asghar Kamal )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Chemistry ( Qudrat Elahi )"> Chemistry ( Qudrat Elahi )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Economics ( Fahim Muhammad Nael )"> Economics ( Fahim Muhammad Nael )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Economics ( Qazi Asghar Kamal )"> Economics ( Qazi Asghar Kamal )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="ICT ( Nazir Hossain )"> ICT ( Nazir Hossain )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Law ( N. Newaz Karim)"> Law ( N. Newaz Karim)</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Mathematics ( Fahim Uddin Chowdhury )"> Mathematics ( Fahim Uddin Chowdhury )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>
-                                <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>
-                            </div>
-                        </div>
-
-                        <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
-                        <div class="uk-form-controls">
-                            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Riyad Ahmed )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Business ( Qazi Asghar Kamal )"> Business ( Qazi Asghar Kamal )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Chemistry ( Qudrat Elahi )"> Chemistry ( Qudrat Elahi )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Economics ( Fahim Muhammad Nael )"> Economics ( Fahim Muhammad Nael )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Economics ( Qazi Asghar Kamal )"> Economics ( Qazi Asghar Kamal )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="ICT ( Nazir Hossain )"> ICT ( Nazir Hossain )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Law ( N. Newaz Karim)"> Law ( N. Newaz Karim)</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Mathematics ( Fahim Uddin Chowdhury )"> Mathematics ( Fahim Uddin Chowdhury )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>
-                                <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>
-                            </div>
-                        </div>
-
-                        
-                    </div> 
                     
                     <div class="uk-margin uk-flex uk-flex-right">
                         {% if data.mobile %}
