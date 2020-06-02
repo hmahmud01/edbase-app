@@ -309,13 +309,13 @@ def dashboard(request):
 
 @login_required(login_url='/login/')
 def studentDetail(request, sid):
-    student = Student.objects.get(id=sid)
-    if PersonalInfo.objects.get(student_id=sid).exists and PaymentInfo.objects.get(student_id=sid).exists():
+    student = Student.objects.get(id=sid)    
+    try:
         personal_info = PersonalInfo.objects.get(student_id=sid)
         payment_info = PaymentInfo.objects.get(student_id=sid)
         subjects = Qualification.objects.filter(student__id__contains=sid)
         return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
-    else:
+    except :
         subjects = Qualification.objects.filter(student__id__contains=sid)
         return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects})
 
@@ -323,12 +323,12 @@ def studentDetail(request, sid):
 def studentPanel(request):    
     sid = request.session['student']
     student = Student.objects.get(id=sid)
-    if PersonalInfo.objects.get(student_id=sid).exists and PaymentInfo.objects.get(student_id=sid).exists():
+    try:
         personal_info = PersonalInfo.objects.get(student_id=sid)
         payment_info = PaymentInfo.objects.get(student_id=sid)
         subjects = Qualification.objects.filter(student__id__contains=sid)
         return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
-    else:
+    except :
         subjects = Qualification.objects.filter(student__id__contains=sid)
         return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects})
 
