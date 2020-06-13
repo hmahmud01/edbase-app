@@ -39,6 +39,7 @@ class PersonalInfo(models.Model):
     mother = models.CharField(max_length=128, null=True, blank=True)
     father_mobile = models.CharField(max_length=128, null=True, blank=True)
     mother_mobile = models.CharField(max_length=128, null=True, blank=True)
+    parent_email = models.EmailField(max_length=128, null=True, blank=True)
     street_1 = models.CharField(max_length=128, null=True, blank=True)
     street_2 = models.CharField(max_length=128, null=True, blank=True)
     city = models.CharField(max_length=128, null=True, blank=True)

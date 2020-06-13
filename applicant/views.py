@@ -93,6 +93,7 @@ def saveStudentData(request):
         mother = post_data['mother'],
         father_mobile = post_data['father_mobile'],
         mother_mobile = post_data['mother_mobile'],
+        parent_email = post_data['parent_email'],
         street_1 = post_data['street_1'],
         street_2 = post_data['street_2'],
         city = post_data['city'],
