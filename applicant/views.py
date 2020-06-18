@@ -12,7 +12,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial
+from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent
 
 def home(request):
     data = ""
@@ -490,20 +490,63 @@ def uploadMaterial(request):
     print(request.session['user'])
     uploader_id = request.session['id']
     user = User.objects.get(id=uploader_id)
-    files = SubjectMaterial.objects.all()
+    files = MaterialContent.objects.all()
     subjects = Subject.objects.all()
     return render(request, 'materials.html', {'data': files, 'subjects': subjects, 'user': user})
 
 
 def saveMaterial(request):
-    file = request.FILES['file']
-    print(request.POST)
-    print(file)
-    print(request.session['id'])
+    post_data = request.POST
+    files = request.FILES
+    print(post_data)
+    print(files)    
+    print('done')
+    subject_id = post_data['subject']
+    subject = Subject.objects.get(id=subject_id)
+    uploader_id = post_data['uploader']
+    uploader = User.objects.get(id=uploader_id)
+    material = SubjectMaterial(
+        subject = subject,
+        name = post_data['name'],
+        level = post_data['qualification'],
+        uploaded_by = uploader,
+    )
+    material.save()
+
+    if 'file' in files:
+        for f in files.getlist('file'):
+            content = MaterialContent(
+                material = material,
+                file = f,
+            )
+            content.save()
+
     return redirect('uploadmaterial')
 
 
 def deleteMaterial(request, fid):
-    file = SubjectMaterial.objects.get(id=fid)
+    file = MaterialContent.objects.get(id=fid)
     file.delete()
     return redirect('uploadmaterial')
+
+
+def contentDeashboard(request):    
+    subjects = Subject.objects.all()
+    return render(request, 'contentDashboard.html', {'data': subjects})
+
+
+def contentList(request, cid):
+    data = ""
+    print(cid)
+    contents = MaterialContent.objects.filter(material__subject__id__contains=cid)    
+    return render(request, 'contentList.html', {'data': contents})
+
+
+def contentDetail(request, fid):
+    data = MaterialContent.objects.get(id=fid)
+    return render(request, 'contentDetail.html', {'data': data})
+
+
+def help(request):
+    data = ""
+    return render(request, 'help.html', {'data': data})

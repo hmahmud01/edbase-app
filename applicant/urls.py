@@ -40,7 +40,11 @@ urlpatterns = [
     path('deletesubject/<int:sid>', views.deletesubject, name='deletesubject'),
     path('uploadmaterial/', views.uploadMaterial, name='uploadmaterial'),
     path('savematerial/', views.saveMaterial, name='savematerial'),
-    path('deletematerial/', views.deleteMaterial, name='deletematerial'),
+    path('deletematerial/<int:fid>', views.deleteMaterial, name='deletematerial'),
+    path('contentdashboard/', views.contentDeashboard, name='contentdashboard'),
+    path('contentlist/<int:cid>/', views.contentList, name='contentlist'),
+    path('contentdetail/<int:fid>/', views.contentDetail, name='contentdetail'),
+    path('help/', views.help, name='help')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

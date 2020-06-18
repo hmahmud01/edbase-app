@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        {% include 'admin_nav.html' %}
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-application">
+        <div class="uk-container">
+            <div class="head">
+                <h1 class="uk-heading-bullet">Edbase - Help Menu</h1>
+                <p class="uk-heading-line"><span>Some Helping Guideline</span></p>
+            </div>
+            <div class="uk-child-width-1-1@s uk-grid-match uk-margin-large" uk-grid>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <h3 class="uk-card-title">Guidline to upload A file</h3>
+                        <ul class="uk-list">
+                            <li>First Create A Teacher from  <a class="uk-button uk-button-text" href="{% url 'teachers' %}">Teachers Link</a></li>
+                            <li>First Create A Subject from  <a class="uk-button uk-button-text" href="{% url 'subjects' %}">Subjects Link</a></li>
+                            <li>Assign that teacher to that subject</li>
+                            <li>Now redirect to <a class="uk-button uk-button-text" href="{% url 'uploadmaterial' %}">Upload Content Page Link</a></li>
+                            <li>Now Upload the files correnponding the subject from the list of subjects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </section>
+
+    <section id="footer">
+        <div class="uk-padding">                            
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle uk-position-bottom">
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+            </div>                
+        </div>
+    </section>
+{% endblock %}
