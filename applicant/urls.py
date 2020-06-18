@@ -30,6 +30,14 @@ urlpatterns = [
     path('deletefile/<int:fid>', views.deleteFile, name='deletefile'),
     path('changepassword/<int:uid>/', views.changePasswordPage, name='changePasswordPage'),
     path('passwordchange/', views.changePassword, name='changePassword'),
+    path('teachers/', views.teachers, name='teachers'),
+    path('subjects/', views.subjects, name='subjects'),
+    path('addteacher/', views.addTeacher, name='addteacher'),
+    path('saveteacher/', views.saveteacher, name='saveteacher'),
+    path('deleteteacher/<int:tid>', views.deleteteacher, name='deleteteacher'),
+    path('addsubject/', views.addSubject, name='addsubject'),
+    path('savesubject/', views.savesubject, name='savesubject'),
+    path('deletesubject/<int:sid>', views.deletesubject, name='deletesubject'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

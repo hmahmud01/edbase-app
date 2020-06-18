@@ -53,8 +53,34 @@ class PersonalInfo(models.Model):
     def __str__(self):
         return self.student
 
+class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class Subject(models.Model):
+    title = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    assigned = models.BooleanField(default=False, null=True, blank=True)
+    assigned_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
 class StudentFile(models.Model):
+    subject = models.ForeignKey(Subject, related_name='subject_files', on_delete=models.CASCADE)
     file = models.FileField('app_files', upload_to='files', blank=True, null=True)
+    subject = models.CharField(max_length=128, null=True, blank=True)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.file

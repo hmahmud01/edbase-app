@@ -12,7 +12,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo
+from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Subject, Teacher
 
 def home(request):
     data = ""
@@ -411,3 +411,74 @@ def deleteFile(request, fid):
     file = StudentFile.objects.get(id=fid)
     file.delete()
     return redirect('upload')
+
+
+def teachers(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'teachers.html', {'data': teachers})
+
+
+def addTeacher(request):
+    data = ""
+    return render(request, 'addTeacher.html', {'data': data})
+
+
+def saveteacher(request):
+    post_data = request.POST
+    print(post_data)
+    password = "edbaseteacher"
+    user = User.objects.create_user(post_data['username'], post_data['email'], password)
+    teacher = Teacher(
+        user = user,
+        name = post_data['name'],
+        status = True,
+        level = post_data['qualification'],
+    )
+    teacher.save()
+    return redirect('teachers')
+
+
+def deleteteacher(request, tid):
+    teacher = Teacher.objects.get(id=tid)
+    user = User.objects.get(id=teacher.user_id)
+    teacher.delete()
+    user.delete()
+    return redirect('teachers')
+
+
+def subjects(request):
+    subjects = Subject.objects.all()
+    return render(request, 'subjects.html', {'data': subjects})
+
+
+def addSubject(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'addSubject.html', {'data': teachers})
+
+
+def savesubject(request):
+    post_data = request.POST
+    if post_data['teacher']:
+        teacher = Teacher.objects.get(id=post_data['teacher'])
+        subject = Subject(
+            title = post_data['name'],
+            status = True,
+            assigned = True,
+            assigned_teacher = teacher,
+            level = post_data['qualification'],
+        )
+        subject.save()
+    else:
+        subject = Subject(
+            title = post_data['name'],
+            status = True,
+            assigned = False,
+            level = post_data['qualification'],
+        )
+    return redirect('subjects')
+
+
+def deletesubject(request, sid):
+    student = Subject.objects.get(id=sid)    
+    student.delete()
+    return redirect('teachers')
