@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        {% include 'admin_nav.html' %}
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-application">
+        <div class="uk-container">
+            <div class="head">
+                <h1 class="uk-heading-bullet">Edbase - Upload Subject Contents</h1>
+                <p class="uk-heading-line"><span>Application form to get enroll</span></p>
+            </div>
+            <div class="uk-margin">
+                <p>Upload Panel</p>
+            </div>
+            <div class="uk-grid-collapse" uk-grid>
+                <div class="uk-width-1-3@m">
+                    <form action="{% url 'savematerial' %}" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                        
+                        <div class="uk-margin">
+                            <input class="uk-input" name="uploader" id="form-stacked-text" type="text" value="{{ user.id }}" hidden>
+                            <label class="uk-form-label" for="name">Name</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="name" type="text" name="name" placeholder="File Name" required>
+                            </div>
+                        </div>    
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="qualification">Qualification level</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="qualification" name="qualification">
+                                    <option value="none">Select</option>
+                                    <option value="O">O Level</option>
+                                    <option value="A">A Level</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="subject">For Which Subject</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="qualification" name="subject">
+                                    {% for subject in subjects %}
+                                    <option value="{{subject.id}}">{{ subject.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div> 
+
+                        <div class="uk-margin" uk-margin>
+                            <div uk-form-custom="target: true">
+                                <input type="file" name="file" multiple>
+                                <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+                            </div>
+                            <input type="submit" class="uk-button uk-button-primary" value="Submit">
+                        </div>
+                    </form>    
+                </div>
+                {% if data %}
+                <div class="uk-width-expand@m">
+                    <div>
+                        <div class="uk-margin-large uk-padding uk-padding-remove-top">
+                            <table class="uk-table uk-table-hover uk-table-divider">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Name</th>                                        
+                                        <th>Subject</th>
+                                        <th>Uploader</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for file in data %}
+                                    <tr>
+                                        <td>{{ file.id }}</td>
+                                        <td>{{ file.file }}</td>
+                                        <td>{{ file.material.subject.title }}</td>
+                                        <td>{{ file.material.uploaded_by.username }}</td>                                                                      
+                                        <td class="uk-flex">
+                                            <a href="/media/{{ file.file }}" class="uk-button uk-button-secondary">Download</a>                                        
+                                            <a href="{% url 'deletematerial' file.id %}" class="uk-button uk-button-danger">Delete</a>                                        
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>  
+                {% endif %} 
+            </div>    
+        </div>
+    </section>
+    <section id="footer">
+        <div class="uk-padding">                            
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle">
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+            </div>                
+        </div>
+    </section>
+{% endblock %}
