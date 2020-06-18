@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        <div class="admin-section-top">
+            <div>
+                <div class="uk-section-secondary uk-preserve-color">
+                    <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-dark; top: 200">
+                        <nav class="uk-navbar-container" uk-navbar="mode: click;">
+                            <div class="uk-navbar-left">
+                                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
+                            </div>
+                            <div class="uk-navbar-right uk-dark">
+                                <ul class="uk-navbar-nav uk-iconnav">
+                                    <li>
+                                        <!-- <a href="{% url 'login' %}" uk-toggle><span uk-icon="heart"></span> Login </a> -->
+                                    </li>                                 
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-application">
+        <div class="uk-container">
+            <div class="head">
+                <h1 class="uk-heading-bullet">Edbase - Upload Subject Contents</h1>
+                <p class="uk-heading-line"><span>Application form to get enroll</span></p>
+            </div>
+            <div class="uk-margin">
+                <p>Upload Panel</p>
+            </div>
+            <div class="uk-grid-collapse" uk-grid>
+                <div class="uk-width-1-3@m" uk-grid>
+                    <form action="{% url 'savexl' %}" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="name">Name</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="name" type="text" name="name" placeholder="File Name" required>
+                            </div>
+                        </div>    
+    
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="qualification">Qualification level</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="qualification" name="qualification">
+                                    <option value="none">Select</option>
+                                    <option value="O">O Level</option>
+                                    <option value="A">A Level</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="qualification">For Which Subject</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="qualification" name="teacher">
+                                    {% for subject in subjects %}
+                                    <option value="{{subject.id}}">{{ subject.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div> 
+
+                        <div class="uk-margin" uk-margin>
+                            <div uk-form-custom="target: true">
+                                <input type="file" name="file">
+                                <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+                            </div>
+                            <input type="submit" class="uk-button uk-button-primary" value="Submit">
+                        </div>
+                    </form>    
+                </div>
+                {% if data %}
+                <div class="uk-width-expand@m">
+                    <div>
+                        <div class="uk-margin-large">
+                            <table class="uk-table uk-table-hover uk-table-divider">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Name</th>
+                                        <th>Modification</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for file in data %}
+                                    <tr>
+                                        <td>{{ file.id }}</td>
+                                        <td>{{ file.file }}</td>                                    
+                                        <td class="uk-flex">
+                                            <a href="{% url 'encapsulate' file.id %}" class="uk-button uk-button-secondary">Encapsulate</a>                                        
+                                            <a href="{% url 'deletefile' file.id %}" class="uk-button uk-button-danger">Delete</a>                                        
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>  
+                {% endif %} 
+            </div>    
+        </div>
+    </section>
+{% endblock %}

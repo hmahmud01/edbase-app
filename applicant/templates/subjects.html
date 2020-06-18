@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        <div class="admin-section-top">
+            <div>
+                <div class="uk-section-secondary uk-preserve-color">
+                    <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-dark; top: 200">
+                        <nav class="uk-navbar-container" uk-navbar="mode: click;">
+                            <div class="uk-navbar-left">
+                                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
+                            </div>
+                            <div class="uk-navbar-right uk-dark">
+                                <ul class="uk-navbar-nav uk-iconnav">
+                                    <li>
+                                        <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
+                                    </li>                                 
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-list">
+        <div class="uk-container">
+            
+
+            <div uk-grid>
+                <div class="uk-width-2-3@m">
+                    <div class="head">
+                        <h1 class="uk-heading-bullet">Current Log of Subjects</h1>
+                        <p class="uk-heading-line"><span>Edbase Subject Log</span></p>
+                    </div>
+                </div>                    
+                <div class="uk-width-expand@m">
+                    <a href="{% url 'addsubject' %}" class="uk-button uk-button-secondary">Add Subject</a>
+                </div>
+            </div>
+
+            <div class="uk-child-width-1@m" uk-grid>
+                <div class="uk-margin-large">
+                    <table class="uk-table uk-table-hover uk-table-divider">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Title</th>
+                                <th>Assigned Teacher</th>
+                                <th>Status</th>                                
+                                <th>Level</th>
+                                <th>Modification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subject in data %}
+                            <tr>
+                                <td>{{ subject.id }}</td>
+                                <td>{{ subject.title }}</td>
+                                <td>{{ subject.assigned_teacher.name }}</td>
+                                <td>{{ subject.status }}</td>
+                                <td>{{ subject.level }}</td>
+                                <td class="uk-flex">
+                                    <a href="#" class="uk-button uk-button-secondary">Detail</a> 
+                                    <!-- {% if student.status is False %} -->
+                                    <a href="#" class="uk-button uk-button-primary">Activate</a>
+                                    <!-- {% else %} -->
+                                    <a href="#" class="uk-button uk-button-primary">De-Activate</a>
+                                    <!-- {% endif %} -->
+                                    <a href="{% url 'deletesubject' subject.id %}" class="uk-button uk-button-danger">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="footer">
+        <div class="uk-padding">                            
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle uk-position-bottom">
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+            </div>                
+        </div>
+    </section>
+{% endblock %}
