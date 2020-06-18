@@ -488,17 +488,22 @@ def deletesubject(request, sid):
 def uploadMaterial(request):    
     print(request.session['id'])
     print(request.session['user'])
+    uploader_id = request.session['id']
+    user = User.objects.get(id=uploader_id)
     files = SubjectMaterial.objects.all()
     subjects = Subject.objects.all()
-    return render(request, 'materials.html', {'data': files, 'subjects': subjects})
+    return render(request, 'materials.html', {'data': files, 'subjects': subjects, 'user': user})
 
 
 def saveMaterial(request):
     file = request.FILES['file']
-    return redirect('upload')
+    print(request.POST)
+    print(file)
+    print(request.session['id'])
+    return redirect('uploadmaterial')
 
 
 def deleteMaterial(request, fid):
     file = SubjectMaterial.objects.get(id=fid)
     file.delete()
-    return redirect('upload')
+    return redirect('uploadmaterial')
