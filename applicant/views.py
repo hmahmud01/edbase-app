@@ -12,7 +12,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo
+from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent
 
 def home(request):
     data = ""
@@ -269,6 +269,7 @@ def verifyLogin(request):
             auth_login(request, user)
             request.session['user'] = post_data['user']
             request.session['type'] = "Admin"
+            request.session['id'] = user.id
             return redirect('dashboard')
         else:
             auth_login(request, user)
@@ -411,3 +412,141 @@ def deleteFile(request, fid):
     file = StudentFile.objects.get(id=fid)
     file.delete()
     return redirect('upload')
+
+
+def teachers(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'teachers.html', {'data': teachers})
+
+
+def addTeacher(request):
+    data = ""
+    return render(request, 'addTeacher.html', {'data': data})
+
+
+def saveteacher(request):
+    post_data = request.POST
+    print(post_data)
+    password = "edbaseteacher"
+    user = User.objects.create_user(post_data['username'], post_data['email'], password)
+    teacher = Teacher(
+        user = user,
+        name = post_data['name'],
+        status = True,
+        level = post_data['qualification'],
+    )
+    teacher.save()
+    return redirect('teachers')
+
+
+def deleteteacher(request, tid):
+    teacher = Teacher.objects.get(id=tid)
+    user = User.objects.get(id=teacher.user_id)
+    teacher.delete()
+    user.delete()
+    return redirect('teachers')
+
+
+def subjects(request):
+    subjects = Subject.objects.all()
+    return render(request, 'subjects.html', {'data': subjects})
+
+
+def addSubject(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'addSubject.html', {'data': teachers})
+
+
+def savesubject(request):
+    post_data = request.POST
+    if post_data['teacher']:
+        teacher = Teacher.objects.get(id=post_data['teacher'])
+        subject = Subject(
+            title = post_data['name'],
+            status = True,
+            assigned = True,
+            assigned_teacher = teacher,
+            level = post_data['qualification'],
+        )
+        subject.save()
+    else:
+        subject = Subject(
+            title = post_data['name'],
+            status = True,
+            assigned = False,
+            level = post_data['qualification'],
+        )
+    return redirect('subjects')
+
+
+def deletesubject(request, sid):
+    student = Subject.objects.get(id=sid)    
+    student.delete()
+    return redirect('teachers')
+
+
+def uploadMaterial(request):    
+    print(request.session['id'])
+    print(request.session['user'])
+    uploader_id = request.session['id']
+    user = User.objects.get(id=uploader_id)
+    files = MaterialContent.objects.all()
+    subjects = Subject.objects.all()
+    return render(request, 'materials.html', {'data': files, 'subjects': subjects, 'user': user})
+
+
+def saveMaterial(request):
+    post_data = request.POST
+    files = request.FILES
+    print(post_data)
+    print(files)    
+    print('done')
+    subject_id = post_data['subject']
+    subject = Subject.objects.get(id=subject_id)
+    uploader_id = post_data['uploader']
+    uploader = User.objects.get(id=uploader_id)
+    material = SubjectMaterial(
+        subject = subject,
+        name = post_data['name'],
+        level = post_data['qualification'],
+        uploaded_by = uploader,
+    )
+    material.save()
+
+    if 'file' in files:
+        for f in files.getlist('file'):
+            content = MaterialContent(
+                material = material,
+                file = f,
+            )
+            content.save()
+
+    return redirect('uploadmaterial')
+
+
+def deleteMaterial(request, fid):
+    file = MaterialContent.objects.get(id=fid)
+    file.delete()
+    return redirect('uploadmaterial')
+
+
+def contentDeashboard(request):    
+    subjects = Subject.objects.all()
+    return render(request, 'contentDashboard.html', {'data': subjects})
+
+
+def contentList(request, cid):
+    data = ""
+    print(cid)
+    contents = MaterialContent.objects.filter(material__subject__id__contains=cid)    
+    return render(request, 'contentList.html', {'data': contents})
+
+
+def contentDetail(request, fid):
+    data = MaterialContent.objects.get(id=fid)
+    return render(request, 'contentDetail.html', {'data': data})
+
+
+def help(request):
+    data = ""
+    return render(request, 'help.html', {'data': data})

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        {% include 'admin_nav.html' %}
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-application">
+        <div class="uk-container">
+            <div class="head">
+                <h1 class="uk-heading-bullet">Edbase - Subject Enrollment Form</h1>
+                <p class="uk-heading-line"><span>Application form to register Subject for Edbase System</span></p>
+            </div>
+            <div class="uk-margin">
+                <p>Please read the instruction below for help</p>
+            </div>
+            <div class="uk-child-width-1@m" uk-grid>
+                <form action="{% url 'savesubject' %}" method="post" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="name">Title</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="name" type="text" name="name" placeholder="Subject Title" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="qualification">Assign A Teacher</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="qualification" name="teacher">
+                                {% for teacher in data %}
+                                <option value="{{teacher.id}}">{{ teacher.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div> 
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="qualification">Qualification</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="qualification" name="qualification">
+                                <option value="none">Select</option>
+                                <option value="O">O Level</option>
+                                <option value="A">A Level</option>
+                            </select>
+                        </div>
+                    </div> 
+                    
+                    <div class="uk-margin uk-flex uk-flex-right">
+                        <input type="submit" class="uk-button uk-button-primary" value="Submit" />
+                        <!-- <input type="cancel" class="uk-button uk-button-danger" value="Cancel" /> -->
+                        <a href="/" class="uk-button uk-button-danger">Cancel</a>
+                    </div>   
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- class="uk-position-center" -->
+    <section id="footer" >
+        <div class="uk-padding">                            
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle uk-position-bottom">
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+            </div>                
+        </div>
+    </section>
+{% endblock %}

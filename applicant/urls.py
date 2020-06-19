@@ -30,6 +30,21 @@ urlpatterns = [
     path('deletefile/<int:fid>', views.deleteFile, name='deletefile'),
     path('changepassword/<int:uid>/', views.changePasswordPage, name='changePasswordPage'),
     path('passwordchange/', views.changePassword, name='changePassword'),
+    path('teachers/', views.teachers, name='teachers'),
+    path('subjects/', views.subjects, name='subjects'),
+    path('addteacher/', views.addTeacher, name='addteacher'),
+    path('saveteacher/', views.saveteacher, name='saveteacher'),
+    path('deleteteacher/<int:tid>', views.deleteteacher, name='deleteteacher'),
+    path('addsubject/', views.addSubject, name='addsubject'),
+    path('savesubject/', views.savesubject, name='savesubject'),
+    path('deletesubject/<int:sid>', views.deletesubject, name='deletesubject'),
+    path('uploadmaterial/', views.uploadMaterial, name='uploadmaterial'),
+    path('savematerial/', views.saveMaterial, name='savematerial'),
+    path('deletematerial/<int:fid>', views.deleteMaterial, name='deletematerial'),
+    path('contentdashboard/', views.contentDeashboard, name='contentdashboard'),
+    path('contentlist/<int:cid>/', views.contentList, name='contentlist'),
+    path('contentdetail/<int:fid>/', views.contentDetail, name='contentdetail'),
+    path('help/', views.help, name='help')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
