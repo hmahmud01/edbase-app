@@ -15,9 +15,17 @@
                 <h1 class="uk-heading-bullet">Edbase - Subject contents</h1>
                 <p class="uk-heading-line"><span>List of Subjects</span></p>
             </div>
-            <div class="uk-child-width-1-4@s uk-grid-match uk-margin-large" uk-grid>
+
+            <p class="uk-margin-large">
+                <button class="uk-button uk-button-default"  data-filter="all">ALL </button>
+                <button class="uk-button uk-button-default"  data-filter=".O">O Level </button>
+                <button class="uk-button uk-button-primary" data-filter=".AS">AS Level</button>
+                <button class="uk-button uk-button-secondary" data-filter=".A2">A2 Level</button>
+            </p>
+
+            <div class="uk-child-width-1-4@s uk-grid-match uk-margin-large mix-content" uk-grid>
                 {% for subject in data %}
-                <a href="{% url 'contentlist' subject.id %}">
+                <a href="{% url 'contentlist' subject.id %}" class="mix {{ subject.level }}">
                     <div>
                         <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">                        
                             <h3 class="uk-card-title">{{ subject.title }}</h3>     
@@ -38,4 +46,12 @@
             </div>                
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/mixitup.min.js' %}"></script>
+<script>
+    var containerEl = document.querySelector('.mix-content');
+    var mixer = mixitup(containerEl);
+</script>
 {% endblock %}
