@@ -20,7 +20,9 @@
                 <a href="{% url 'contentlist' subject.id %}">
                     <div>
                         <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">                        
-                            <h3 class="uk-card-title">{{ subject.title }}</h3>                        
+                            <h3 class="uk-card-title">{{ subject.title }}</h3>     
+                            <p>{{ subject.level }} Level</p>                   
+                            <p>{{ subject.assigned_teacher }}</p>                   
                         </div>
                     </div>
                 </a>
