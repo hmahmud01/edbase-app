@@ -47,7 +47,7 @@
                             <div class="uk-form-controls">
                                 <select class="uk-select" id="qualification" name="subject">
                                     {% for subject in subjects %}
-                                    <option value="{{subject.id}}">{{ subject.title }} - {{ subject.level }} Level </option>
+                                    <option value="{{subject.id}}">{{ subject.title }} - {{ subject.level }} Level - {{ subject.assigned_teacher }} </option>
                                     {% endfor %}
                                 </select>
                             </div>
