@@ -258,7 +258,7 @@
                                 <label class="uk-form-label" for="qualification">Qualification</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
-                                        {% if data.qualification %}
+                                        <!-- {% if data.qualification %}
                                         <option value="none" disabled>Select</option>
                                         <option value="O" disabled>O Level</option>
                                         <option value="A" disabled>A Level</option>
@@ -266,7 +266,10 @@
                                         <option value="none">Select</option>
                                         <option value="O">O Level</option>
                                         <option value="A">A Level</option>
-                                        {% endif %}
+                                        {% endif %} -->
+                                        <option value="none">Select</option>
+                                        <option value="O">O Level</option>
+                                        <option value="A">A Level</option>
                                         
                                     </select>
                                 </div>
@@ -276,7 +279,7 @@
                                 <label class="uk-form-label" for="qualification">Select Subjects for O-level</label>
                                 <div class="uk-form-controls">
                                     <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label> <br />
+                                        <!-- <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label> <br />
                                         <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label> <br />
                                         <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Bangla ( Arup Henry Halder )"> Bangla ( Arup Henry Halder )</label>  
                                         <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Ryad Ahmed )</label>  
@@ -294,7 +297,10 @@
                                         <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Mathematics A ( Fahim Uddin Chowdhury )"> Mathematics A ( Fahim Uddin Chowdhury )</label>  
                                         <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Mathematics B ( Fahim Uddin Chowdhury )"> Mathematics B ( Fahim Uddin Chowdhury )</label>  
                                         <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>  
-                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label> 
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>  -->
+                                        {% for subject in olevel %}
+                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div> 
@@ -303,7 +309,7 @@
                                 <label class="uk-form-label" for="qualification">A Level : AS Subjects</label>
                                 <div class="uk-form-controls">
                                     <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
+                                        <!-- <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
                                         <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label>
                                         <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Riyad Ahmed )</label>
                                         <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>
@@ -315,14 +321,17 @@
                                         <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Law ( N. Newaz Karim)"> Law ( N. Newaz Karim)</label>
                                         <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Mathematics ( Fahim Uddin Chowdhury )"> Mathematics ( Fahim Uddin Chowdhury )</label>
                                         <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>
-                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label> -->
+                                        {% for subject in aslevel %}
+                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+                                        {% endfor %}
                                     </div>
                                 </div>
         
                                 <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
                                 <div class="uk-form-controls">
                                     <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
+                                        <!-- <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Accounting ( Faisal Bin Maleque )"> Accounting ( Faisal Bin Maleque )</label>
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Art and Design ( Ripon Kumar Das )"> Art and Design ( Ripon Kumar Das )</label>
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Biology ( Dr. Riyad Ahmed )"> Biology ( Dr. Riyad Ahmed )</label>
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Business ( Mohammad Yousuf Akter )"> Business ( Mohammad Yousuf Akter )</label>
@@ -334,7 +343,10 @@
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Law ( N. Newaz Karim)"> Law ( N. Newaz Karim)</label>
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Mathematics ( Fahim Uddin Chowdhury )"> Mathematics ( Fahim Uddin Chowdhury )</label>
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Shabbir Hasan Khan )"> Physics ( Shabbir Hasan Khan )</label>
-                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label>
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="Physics ( Gazi Moinuddin )"> Physics ( Gazi Moinuddin )</label> -->
+                                        {% for subject in a2level %}
+                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+                                        {% endfor %}
                                     </div>
                                 </div>        
                                 

@@ -197,7 +197,7 @@
                                 </div>                         
                             </div>
 
-                            {% if "bKash" in payment_info.payment_option %}
+                            {% if payment_info.payment_option %}
                             <div class="uk-width-3-4@m">
                                 <div class="uk-text-left" uk-grid>
                                     <div class="uk-width-1-4">
@@ -226,13 +226,15 @@
                                                 <tr>
                                                     <th>Subject Title</th>
                                                     <th>Category</th>
+                                                    <th>Assigned Teacher</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for subject in subjects %}
                                                 <tr>
-                                                    <td>{{ subject.title }}</td>
-                                                    <td>{{ subject.level }}</td>                                                
+                                                    <td>{{ subject.subjects.title }}</td>
+                                                    <td>{{ subject.subjects.level }} Level</td>   
+                                                    <td>{{ subject.subjects.assigned_teacher }}</td>                                
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>

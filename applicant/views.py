@@ -12,7 +12,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent
+from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject
 
 def home(request):
     data = ""
@@ -70,7 +70,10 @@ def deactivateStudent(request, sid):
 def studentAdmissionForm(request, sid):
     print(sid)
     student = Student.objects.get(id=sid)        
-    return render(request, 'studentForm.html', {'data': student})
+    aslevel = Subject.objects.filter(level__contains="AS")
+    a2level = Subject.objects.filter(level__contains="A2")
+    olevel = Subject.objects.filter(level__contains="O")
+    return render(request, 'studentForm.html', {'data': student, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel})
 
 
 def saveStudentData(request):
@@ -128,10 +131,10 @@ def saveStudentData(request):
     if 'O' in qual_value:
         subjects = post_data.getlist('oLevel')
         for sub in subjects:
-            qualfication = Qualification(
+            subject = Subject.objects.get(id=sub)
+            qualfication = QualificationSubject(
                 student = student,
-                title = sub,
-                level = "O level"
+                subjects = subject,
             )
             qualfication.save()
     elif 'A' in qual_value:
@@ -139,20 +142,21 @@ def saveStudentData(request):
         aS = post_data.getlist('aSLevel')
 
         for sub in a2:
-            qualification = Qualification(
+            subject = Subject.objects.get(id=sub)
+            qualfication = QualificationSubject(
                 student = student,
-                title = sub,
-                level = "A2"
+                subjects = subject,
             )
-            qualification.save()
+            qualfication.save()
 
         for sub in aS:
-            qualification = Qualification(
+            subject = Subject.objects.get(id=sub)
+            qualfication = QualificationSubject(
                 student = student,
-                title = sub,
-                level = "AS"
+                subjects = subject,
+                
             )
-            qualification.save()
+            qualfication.save()
 
     return redirect('success')
 
@@ -315,10 +319,10 @@ def studentDetail(request, sid):
     try:
         personal_info = PersonalInfo.objects.get(student_id=sid)
         payment_info = PaymentInfo.objects.get(student_id=sid)
-        subjects = Qualification.objects.filter(student__id__contains=sid)
+        subjects = QualificationSubject.objects.filter(student__id__contains=sid)
         return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
     except :
-        subjects = Qualification.objects.filter(student__id__contains=sid)
+        subjects = QualificationSubject.objects.filter(student__id__contains=sid)
         return render(request, 'studentDetail.html', {'data': student, 'subjects': subjects})
 
 @login_required(login_url='/login/')
@@ -328,10 +332,10 @@ def studentPanel(request):
     try:
         personal_info = PersonalInfo.objects.get(student_id=sid)
         payment_info = PaymentInfo.objects.get(student_id=sid)
-        subjects = Qualification.objects.filter(student__id__contains=sid)
+        subjects = QualificationSubject.objects.filter(student__id__contains=sid)
         return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects, 'payment': payment_info, 'personal': personal_info, 'media_url':settings.MEDIA_URL})
     except :
-        subjects = Qualification.objects.filter(student__id__contains=sid)
+        subjects = QualificationSubject.objects.filter(student__id__contains=sid)
         return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects})
 
 
@@ -482,7 +486,7 @@ def savesubject(request):
 def deletesubject(request, sid):
     student = Subject.objects.get(id=sid)    
     student.delete()
-    return redirect('teachers')
+    return redirect('subjects')
 
 
 def uploadMaterial(request):    

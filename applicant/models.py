@@ -17,6 +17,37 @@ class Student(models.Model):
         return self.name
 
 
+class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Subject(models.Model):
+    title = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    assigned = models.BooleanField(default=False, null=True, blank=True)
+    assigned_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class QualificationSubject(models.Model):
+    student = models.ForeignKey(Student, related_name='student_subjects_qualified', on_delete=models.CASCADE)
+    subjects = models.ForeignKey(Subject, related_name='subjects', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.student
+
+
 class Qualification(models.Model):
     student = models.ForeignKey(Student, related_name='student_qualification', on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
@@ -62,29 +93,6 @@ class StudentFile(models.Model):
 
     def __str__(self):
         return self.file
-
-
-class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=128, null=True, blank=True)
-    status = models.BooleanField(default=True, null=True, blank=True)
-    level = models.CharField(max_length=128, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Subject(models.Model):
-    title = models.CharField(max_length=128, null=True, blank=True)
-    status = models.BooleanField(default=True, null=True, blank=True)
-    assigned = models.BooleanField(default=False, null=True, blank=True)
-    assigned_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    level = models.CharField(max_length=128, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.title
 
 
 class SubjectMaterial(models.Model):
