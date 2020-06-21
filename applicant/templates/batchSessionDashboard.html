@@ -19,20 +19,9 @@
             <div class="uk-child-width-1-1@s uk-grid-match uk-margin-large mix-content" uk-grid>
                 <div>
                     <ul uk-tab>
-                        
-                        {% if 'session' in request.session.tab %}
-                        <li><a href="#list">List</a></li>
-                        <li class="uk-active"><a href="#session">Session</a></li>
-                        <li><a href="#batch">Batch</a></li>
-                        {% elif 'batch' in request.session.tab %}
-                        <li><a href="#list">List</a></li>
-                        <li><a href="#session">Session</a></li>
-                        <li class="uk-active"><a href="#batch">Batch</a></li>
-                        {% elif 'all' in request.session.tab %}
                         <li class="uk-active"><a href="#list">List</a></li>
                         <li><a href="#session">Session</a></li>
                         <li><a href="#batch">Batch</a></li>
-                        {% endif %}
                     </ul>
 
                     <ul class="uk-switcher uk-margin">
