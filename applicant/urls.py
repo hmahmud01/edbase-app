@@ -44,7 +44,13 @@ urlpatterns = [
     path('contentdashboard/', views.contentDeashboard, name='contentdashboard'),
     path('contentlist/<int:cid>/', views.contentList, name='contentlist'),
     path('contentdetail/<int:fid>/', views.contentDetail, name='contentdetail'),
-    path('help/', views.help, name='help')
+    path('help/', views.help, name='help'),
+    path('batchsession/', views.batchSession, name='batchsession'),
+    path('savebatch/', views.saveBatch, name='savebatch'),
+    path('savesession/', views.saveSession, name='savesession'),
+    path('deletebatch/<int:bid>', views.deleteBatch, name='deletebatch'),
+    path('deletesession/<int:sid>', views.deleteSession, name='deletesession'),
+    path('generatesessionlist/', views.generateStudentSessionBatchList, name='generatesessionlist')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
