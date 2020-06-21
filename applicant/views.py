@@ -12,7 +12,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject
+from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject, Batch, Session, StudentSessionBatchTracker
 
 def home(request):
     data = ""
@@ -108,6 +108,16 @@ def saveStudentData(request):
         photo = photo
     )
     personal_info.save()
+
+    session = Session.objects.get(id=1)
+    batch = Batch.objects.get(id=1)
+
+    tracker = StudentSessionBatchTracker(
+        students = student,
+        session = session,
+        batch = batch
+    )
+    tracker.save()
 
     payment_option = post_data['payment_option']
 
@@ -554,3 +564,79 @@ def contentDetail(request, fid):
 def help(request):
     data = ""
     return render(request, 'help.html', {'data': data})
+
+
+def batchSession(request):
+    students = StudentSessionBatchTracker.objects.all()
+    session = Session.objects.all()
+    batch = Batch.objects.all()
+
+    return render(request, 'batchSessionDashboard.html', {'students': students, 'sessions': session, 'batchs': batch})
+
+
+def saveBatch(request):
+    post_data = request.POST
+    batch = Batch(
+        batch = post_data['batch']
+    )
+    batch.save()
+
+    return redirect('batchsession')
+
+
+def deleteBatch(request, bid):
+    batch = Batch.objects.get(id=bid)
+    batch.delete()
+
+    return redirect('batchsession')
+
+
+def saveSession(request):
+    post_data = request.POST
+    session = Session(
+        session = post_data['session']
+    )
+    session.save()
+
+    return redirect('batchsession')
+
+
+def deleteSession(request, sid):
+    session = Session.objects.get(id=sid)
+    session.delete()
+
+    return redirect('batchsession')
+
+
+def generateStudentSessionBatchList(request):
+    students = Student.objects.all()
+    session = Session.objects.get(id=1)
+    batch = Batch.objects.get(id=1)
+    for student in students:
+        tracker = StudentSessionBatchTracker(
+            students = student,
+            session=session,
+            batch=batch,
+        )
+        tracker.save()
+
+    return redirect('batchsession')
+
+def deleteStudentSessionBatchList(request):
+    tracker = StudentSessionBatchTracker.objects.all().delete()
+    return redirect('batchsession')
+
+def assignStudentSessionBatch(request):
+    print(request.POST)
+    post_data = request.POST
+    student_id = post_data['student_id']
+    batch_id = post_data['student_batch']
+    session_id = post_data['student_session']
+    tracker = StudentSessionBatchTracker.objects.get(students__id=student_id)
+    batch = Batch.objects.get(id=batch_id)
+    session = Session.objects.get(id=session_id)
+    tracker.batch = batch
+    tracker.session = session
+    tracker.save()    
+
+    return redirect('batchsession')

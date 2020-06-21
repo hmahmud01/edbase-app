@@ -112,3 +112,28 @@ class MaterialContent(models.Model):
 
     def __str__(self):
         return self.file
+
+
+class Session(models.Model):
+    session = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.session
+
+
+class Batch(models.Model):
+    batch = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.batch
+
+
+class StudentSessionBatchTracker(models.Model):
+    students = models.ForeignKey(Student, related_name='students', on_delete=models.CASCADE)    
+    session = models.ForeignKey(Session, related_name='sessions', on_delete=models.CASCADE)
+    batch = models.ForeignKey(Batch, related_name='batchs', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.student
