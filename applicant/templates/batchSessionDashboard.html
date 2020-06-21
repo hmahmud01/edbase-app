@@ -60,57 +60,57 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
 
-                        <div id="assignStudent" uk-modal>
-                            <div class="uk-modal-dialog uk-margin-auto-vertical">
-                                <button class="uk-modal-close-default" type="button" uk-close></button>
-                                <div class="uk-modal-header">
-                                    <h2 class="uk-modal-title">Assing Session & Batch</h2>
-                                </div>
-                                <form action="{% url 'assignstudentbatchsession' %}" method="post" class="uk-form-horizontal" enctype="multipart/form-data">{% csrf_token %}
-                                    <div class="uk-modal-body">
-                                        <p>Assign The Student with the batch and session from the List.</p>
-                                        <div class="uk-margin">
-                                            <input class="uk-input" name="student_id" id="student_id" type="text" hidden>
-                                            <label class="uk-form-label" for="student_name">Name</label>
-                                            <div class="uk-form-controls">
-                                                <input class="uk-input" id="student_name" type="text" name="student_name" disabled>
+                            <div id="assignStudent" uk-modal>
+                                <div class="uk-modal-dialog uk-margin-auto-vertical">
+                                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                                    <div class="uk-modal-header">
+                                        <h2 class="uk-modal-title">Assing Session & Batch</h2>
+                                    </div>
+                                    <form action="{% url 'assignstudentbatchsession' %}" method="post" class="uk-form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="uk-modal-body">
+                                            <p>Assign The Student with the batch and session from the List.</p>
+                                            <div class="uk-margin">
+                                                <input class="uk-input" name="student_id" id="student_id" type="text" hidden>
+                                                <label class="uk-form-label" for="student_name">Name</label>
+                                                <div class="uk-form-controls">
+                                                    <input class="uk-input" id="student_name" type="text" name="student_name" disabled>
+                                                </div>
                                             </div>
+                                            
+                                            <div class="uk-margin">
+                                                <label class="uk-form-label" for="student_batch">Select Batch</label>
+                                                <div class="uk-form-controls">
+                                                    <select class="uk-select" id="student_batch" name="student_batch">
+                                                        {% for batch in batchs %}  
+                                                        <option value="{{batch.id}}">{{ batch.batch }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> 
+    
+                                            <div class="uk-margin">
+                                                <label class="uk-form-label" for="student_session">Select Session</label>
+                                                <div class="uk-form-controls">
+                                                    <select class="uk-select" id="student_session" name="student_session">
+                                                        {% for session in sessions %}  
+                                                        <option value="{{session.id}}">{{ session.session }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> 
                                         </div>
-                                        
-                                        <div class="uk-margin">
-                                            <label class="uk-form-label" for="student_batch">Select Batch</label>
-                                            <div class="uk-form-controls">
-                                                <select class="uk-select" id="student_batch" name="student_batch">
-                                                    {% for batch in batchs %}  
-                                                    <option value="{{batch.id}}">{{ batch.batch }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div> 
-
-                                        <div class="uk-margin">
-                                            <label class="uk-form-label" for="student_session">Select Session</label>
-                                            <div class="uk-form-controls">
-                                                <select class="uk-select" id="student_session" name="student_session">
-                                                    {% for session in sessions %}  
-                                                    <option value="{{session.id}}">{{ session.session }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                    <div class="uk-modal-footer uk-text-right">
-                                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                                        <!-- <input type="submit" class="uk-button uk-button-primary" value="Submit"> -->
-                                        <button class="uk-button uk-button-primary" type="submit">Save</button>
-                                    </div>
-                                </form>  
+                                        <div class="uk-modal-footer uk-text-right">
+                                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                            <!-- <input type="submit" class="uk-button uk-button-primary" value="Submit"> -->
+                                            <button class="uk-button uk-button-primary" type="submit">Save</button>
+                                        </div>
+                                    </form>  
+                                </div>
                             </div>
                         </div>
-                                            
-        
+
+                        
                         <div id="session">
                             <div class="uk-card uk-card-hover uk-card-body">
                                 <h3 class="uk-card-title">Session</h3>
