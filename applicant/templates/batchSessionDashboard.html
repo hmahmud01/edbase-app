@@ -19,16 +19,28 @@
             <div class="uk-child-width-1-1@s uk-grid-match uk-margin-large mix-content" uk-grid>
                 <div>
                     <ul uk-tab>
+                        
+                        {% if 'session' in request.session.tab %}
+                        <li><a href="#list">List</a></li>
+                        <li class="uk-active"><a href="#session">Session</a></li>
+                        <li><a href="#batch">Batch</a></li>
+                        {% elif 'batch' in request.session.tab %}
+                        <li><a href="#list">List</a></li>
+                        <li><a href="#session">Session</a></li>
+                        <li class="uk-active"><a href="#batch">Batch</a></li>
+                        {% elif 'all' in request.session.tab %}
                         <li class="uk-active"><a href="#list">List</a></li>
                         <li><a href="#session">Session</a></li>
                         <li><a href="#batch">Batch</a></li>
+                        {% endif %}
                     </ul>
 
                     <ul class="uk-switcher uk-margin">
                         <div id="list">
                             <div class="uk-card uk-card-hover uk-card-body">
                                 <h3 class="uk-card-title">List</h3>
-                                <!-- <a href="{% url 'generatesessionlist' %}" class="uk-button uk-button-danger">Generate</a> -->
+                                <!-- <a href="{% url 'generatesessionlist' %}" class="uk-button uk-button-danger">Generate</a>
+                                <a href="{% url 'deletesessiondata' %}" class="uk-button uk-button-danger">Delete All</a> -->
                                 <table class="uk-table uk-table-hover uk-table-divider">
                                     <thead>
                                         <tr>
@@ -51,7 +63,8 @@
                                             <td>{{ student.session.session }}</td>
                                             <td>{{ student.batch.batch }}</td>                                            
                                             <td class="uk-flex">
-                                                <a href="#" class="uk-button uk-button-danger">Assign Batch And Session</a>
+                                                <!-- <a href="#" class="uk-button uk-button-danger">Assign Batch And Session</a> -->
+                                                <a class="uk-button uk-button-danger" href="#assignStudent" data-name="{{ student.students.name }}" data-id="{{ student.students.id }}" onclick="return assignStudent(this)" uk-toggle>Assign Batch And Session</a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -59,6 +72,55 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div id="assignStudent" uk-modal>
+                            <div class="uk-modal-dialog uk-margin-auto-vertical">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <div class="uk-modal-header">
+                                    <h2 class="uk-modal-title">Assing Session & Batch</h2>
+                                </div>
+                                <form action="{% url 'assignstudentbatchsession' %}" method="post" class="uk-form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+                                    <div class="uk-modal-body">
+                                        <p>Assign The Student with the batch and session from the List.</p>
+                                        <div class="uk-margin">
+                                            <input class="uk-input" name="student_id" id="student_id" type="text" hidden>
+                                            <label class="uk-form-label" for="student_name">Name</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" id="student_name" type="text" name="student_name" disabled>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="student_batch">Select Batch</label>
+                                            <div class="uk-form-controls">
+                                                <select class="uk-select" id="student_batch" name="student_batch">
+                                                    {% for batch in batchs %}  
+                                                    <option value="{{batch.id}}">{{ batch.batch }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> 
+
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="student_session">Select Session</label>
+                                            <div class="uk-form-controls">
+                                                <select class="uk-select" id="student_session" name="student_session">
+                                                    {% for session in sessions %}  
+                                                    <option value="{{session.id}}">{{ session.session }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-right">
+                                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                        <!-- <input type="submit" class="uk-button uk-button-primary" value="Submit"> -->
+                                        <button class="uk-button uk-button-primary" type="submit">Save</button>
+                                    </div>
+                                </form>  
+                            </div>
+                        </div>
+                                            
         
                         <div id="session">
                             <div class="uk-card uk-card-hover uk-card-body">
@@ -168,4 +230,17 @@
             </div>                
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+<script>
+    function assignStudent(student) {
+        var studentId = student.getAttribute("data-id");
+        var studentName = student.getAttribute("data-name");
+        document.getElementById("student_id").value = studentId; 
+        document.getElementById("student_name").value = studentName; 
+
+        console.log(studentId, studentName);
+    }
+</script>
 {% endblock %}

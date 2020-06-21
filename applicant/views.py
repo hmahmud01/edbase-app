@@ -570,6 +570,8 @@ def batchSession(request):
     students = StudentSessionBatchTracker.objects.all()
     session = Session.objects.all()
     batch = Batch.objects.all()
+    del request.session['tab']
+    request.session['tab'] = 'all'
     return render(request, 'batchSessionDashboard.html', {'students': students, 'sessions': session, 'batchs': batch})
 
 
@@ -579,7 +581,8 @@ def saveBatch(request):
         batch = post_data['batch']
     )
     batch.save()
-
+    del request.session['tab']
+    request.session['tab'] = 'batch'
     return redirect('batchsession')
 
 
@@ -596,7 +599,8 @@ def saveSession(request):
         session = post_data['session']
     )
     session.save()
-
+    del request.session['tab']
+    request.session['tab'] = 'session'
     return redirect('batchsession')
 
 
@@ -618,5 +622,24 @@ def generateStudentSessionBatchList(request):
             batch=batch,
         )
         tracker.save()
+
+    return redirect('batchsession')
+
+def deleteStudentSessionBatchList(request):
+    tracker = StudentSessionBatchTracker.objects.all().delete()
+    return redirect('batchsession')
+
+def assignStudentSessionBatch(request):
+    print(request.POST)
+    post_data = request.POST
+    student_id = post_data['student_id']
+    batch_id = post_data['student_batch']
+    session_id = post_data['student_session']
+    tracker = StudentSessionBatchTracker.objects.get(students__id=student_id)
+    batch = Batch.objects.get(id=batch_id)
+    session = Session.objects.get(id=session_id)
+    tracker.batch = batch
+    tracker.session = session
+    tracker.save()    
 
     return redirect('batchsession')

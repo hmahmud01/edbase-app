@@ -50,7 +50,10 @@ urlpatterns = [
     path('savesession/', views.saveSession, name='savesession'),
     path('deletebatch/<int:bid>', views.deleteBatch, name='deletebatch'),
     path('deletesession/<int:sid>', views.deleteSession, name='deletesession'),
-    path('generatesessionlist/', views.generateStudentSessionBatchList, name='generatesessionlist')
+    path('generatesessionlist/', views.generateStudentSessionBatchList, name='generatesessionlist'),
+    path('deletesessiondata/', views.deleteStudentSessionBatchList, name='deletesessiondata'),
+    path('assignstudentbatchsession/', views.assignStudentSessionBatch, name='assignstudentbatchsession'),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
