@@ -499,6 +499,14 @@ def deletesubject(request, sid):
     return redirect('subjects')
 
 
+def updateCode(request):
+    post_data = request.POST
+    subject = Subject.objects.get(id=post_data['subject_id'])
+    subject.code = post_data['code']
+    subject.save()
+    return redirect('subjects')
+
+
 def uploadMaterial(request):    
     print(request.session['id'])
     print(request.session['user'])
