@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        <div class="admin-section-top">
+            <div>
+                <div class="uk-section-secondary uk-preserve-color">
+                    <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-dark; top: 200">
+                        <nav class="uk-navbar-container" uk-navbar="mode: click;">
+                            <div class="uk-navbar-left">
+                                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
+                            </div>
+                            <div class="uk-navbar-right uk-dark">
+                                <ul class="uk-navbar-nav uk-iconnav">                                    
+                                    <li>
+                                        <a href="{% url 'changePasswordPage' data.user_id %}" uk-toggle><span uk-icon="heart"></span> Change Password </a>
+                                    </li>                                    
+                                    <li>                                        
+                                        <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
+                                    </li>                                 
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-list">
+        <div class="uk-container">
+            <div class="head">
+                <h1 class="uk-heading-bullet">Welcome {{ data.name }}</h1>
+                <p class="uk-heading-line"><span>Teachers's Detail Information</span></p>
+            </div>
+
+            <div class="uk-child-width-1@m" uk-grid>
+                <div class="uk-margin-large">
+                    <div class="uk-card uk-card-default uk-card-body uk-margin-small">
+                        <h3>Teachers Information</h3>
+                        <div class="uk-grid-collapse" uk-grid>                            
+                            <div class="uk-width-3-4@m">
+                                <div class="uk-text-left" uk-grid>
+                                    <div class="uk-width-1-4">
+                                        <div class="">Name</div>
+                                    </div>
+                                    <div class="uk-width-3-4">
+                                        <div class="">{{ data.name }}</div>
+                                    </div>
+                                </div>
+    
+        
+                                <div class="uk-text-left" uk-grid>
+                                    <div class="uk-width-1-4">
+                                        <div class="">Teaching Allowed For</div>
+                                    </div>
+                                    <div class="uk-width-3-4">
+                                        <div class=" ">{{ data.level }} Level</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="uk-card uk-card-default uk-card-body uk-margin-small">
+                        <h3>Subjects</h3>
+                        <div class="uk-text-left" uk-grid>
+                            <div class="uk-width-1-4">
+                                <div class="">List of All Subjects</div>
+                            </div>
+                            <div class="uk-width-3-4">
+                                <ul class="uk-list uk-list-bullet">
+                                    <table class="uk-table uk-table-hover uk-table-divider">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject Title</th>
+                                                <th>Category</th>
+                                                <th>Subject Code</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for subject in subjects %}
+                                            <tr>
+                                                <td>{{ subject.title }}</td>
+                                                <td>{{ subject.level }} Level</td>   
+                                                <td>{{ subject.code }}</td>                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>                        
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="footer">
+        <div class="uk-padding">                            
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle">
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+            </div>                
+        </div>
+    </section>
+{% endblock %}
