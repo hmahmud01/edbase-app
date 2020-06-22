@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section id="registration">
+    <div>
+        <div class="uk-grid-collapse" uk-grid>
+            <div class="uk-width-1-2@m h-100">
+                <div class="h-1-1">
+                    <div class="uk-background-cover h-1-1 uk-dark uk-panel uk-flex uk-flex-center uk-flex-middle">
+                        <div class="uk-flex uk-flex-column uk-animation-slide-top-small">
+                            <div>
+                                <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin-bottom">                                        
+                                    <img width="325" class="uk-margin-bottom" src="/static/img/edbase.png" alt="" uk-img>
+                                    <p class="uk-flex uk-flex-center uk-margin-small-bottom">Registration with your Credentials</p>
+                                    <form action="{% url 'saveteacher' %}" method="post" class="uk-form-stacked uk-margin-large">{% csrf_token %}
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="username">Username</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" id="username" type="text" name="username" placeholder="Teacher's Username" required>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="name">Full Name</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" id="name" type="text" name="name" placeholder="Teacher's Full Name" required>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="email">Email Address</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" id="email" type="email" name="email" placeholder="Teacher's Email" required>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="qualification">Qualification</label>
+                                            <div class="uk-form-controls">
+                                                <select class="uk-select" id="qualification" name="qualification">
+                                                    <option value="none">Select</option>
+                                                    <option value="O">O Level</option>
+                                                    <option value="A">A Level</option>
+                                                    <option value="both">Both</option>
+                                                </select>
+                                            </div>
+                                        </div> 
+
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="form-stacked-text">Password</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" name="pass" id="form-stacked-text" type="password" placeholder="Password" required>
+                                            </div>
+                                        </div>     
+                                        <div class="uk-margin">
+                                            <label class="uk-form-label" for="form-stacked-text">Confirm Password</label>
+                                            <div class="uk-form-controls">
+                                                <input class="uk-input" name="conf_pass" id="form-stacked-text" type="password" placeholder="Confirm Password" required>
+                                            </div>
+                                        </div>  
+                                        
+                                        <button type="submit" class="uk-button uk-button-danger uk-width-1-1">Register</button>
+                                        <div class="uk-flex uk-flex-center uk-flex-middle">
+                                            <p>Already Have An Account? <a class="uk-button uk-button-text" href="{% url 'login' %}">Login</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="uk-width-expand@m">
+                <div class="h-100">
+                    <div class="uk-background-cover uk-dark uk-panel" uk-parallax="bgy: -200" style="background-image: url(/static/img/registration.jpg);">
+                        <div class="h-100 uk-flex uk-flex-right uk-flex-bottom">
+                            <div class="uk-flex-column">
+                                <div class="uk-flex uk-flex-column uk-animation-slide-top-small uk-margin-bottom">
+                                    <div>
+                                        <img src="/static/img/edbase.png" width="385" alt="logo" uk-img>
+                                    </div>                            
+                                </div>  
+                            </div>                                                  
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</section> 
+
+{% endblock %}

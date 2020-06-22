@@ -4,7 +4,7 @@
 {% block content %}
     <!-- Home Page Section -->
     <section class="main-section">
-        {% include 'admin_nav.html' %}
+        {% include 'nav_admin.html' %}
     </section>
 
 
@@ -29,6 +29,7 @@
                     <div>
                         <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">                        
                             <h3 class="uk-card-title">{{ subject.title }}</h3>     
+                            <p>{{ subject.code }}</p>          
                             <p>{{ subject.level }} Level</p>                   
                             <p>{{ subject.assigned_teacher }}</p>                   
                         </div>

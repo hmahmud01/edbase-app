@@ -289,23 +289,35 @@ def verifyLogin(request):
             auth_login(request, user)
             print(user.id)
             user_id = user.id
-            student = Student.objects.get(user_id=user_id)
-            print(student)
-            status = student.status
-            if student.status is True :
-                request.session['user'] = post_data['user']
-                request.session['type'] = "Student"
-                request.session['id'] = user_id
-                request.session['student'] = student.id
-                return redirect('studentpanel')
-            else :
-                request.session['user'] = post_data['user']
-                request.session['type'] = "Student"
-                request.session['id'] = user_id
-                request.session['student'] = student.id
-                return redirect('studentpanelunverified')            
+            if Teacher.objects.filter(user_id=user_id).exists():
+                teacher = Teacher.objects.get(user_id=user_id)
+                request.session['user'] = teacher.user.username
+                request.session['type'] = "Teacher"
+                request.session['teacher_id'] = teacher.id
+                return redirect('teacherpanel')
+            else:
+                student = Student.objects.get(user_id=user_id)
+                print(student)
+                status = student.status
+                if student.status is True :
+                    request.session['user'] = post_data['user']
+                    request.session['type'] = "Student"
+                    request.session['id'] = user_id
+                    request.session['student'] = student.id
+                    return redirect('studentpanel')
+                else :
+                    request.session['user'] = post_data['user']
+                    request.session['type'] = "Student"
+                    request.session['id'] = user_id
+                    request.session['student'] = student.id
+                    return redirect('studentpanelunverified')            
     else:
         return redirect('login')
+
+
+def verifyTeacher(tid):
+    print(tid)
+    return redirect('login')
 
 
 def userLogout(request):
@@ -347,6 +359,18 @@ def studentPanel(request):
     except :
         subjects = QualificationSubject.objects.filter(student__id__contains=sid)
         return render(request, 'studentPanel.html', {'data': student, 'subjects': subjects})
+
+    
+@login_required(login_url='/login/')
+def teacherPanel(request):    
+    tid = request.session['teacher_id']
+    print(tid)
+    teacher = Teacher.objects.get(id=tid)
+    try:
+        subjects = Subject.objects.filter(assigned_teacher__id__contains=tid)
+        return render(request, 'teacherPanel.html', {'data': teacher, 'subjects': subjects})
+    except :
+        return render(request, 'teacherPanel.html', {'data': teacher})
 
 
 @login_required(login_url='/login/')
@@ -441,16 +465,37 @@ def addTeacher(request):
 def saveteacher(request):
     post_data = request.POST
     print(post_data)
-    password = "edbaseteacher"
-    user = User.objects.create_user(post_data['username'], post_data['email'], password)
-    teacher = Teacher(
-        user = user,
-        name = post_data['name'],
-        status = True,
-        level = post_data['qualification'],
-    )
-    teacher.save()
-    return redirect('teachers')
+    password = ""
+    if 'pass' in post_data:
+        passwd = post_data['pass']
+        conf_pass = post_data['conf_pass']
+        if passwd == conf_pass:
+            password = passwd
+            user = User.objects.create_user(post_data['username'], post_data['email'], password)
+            teacher = Teacher(
+                user = user,
+                name = post_data['name'],
+                status = True,
+                level = post_data['qualification'],
+            )
+            teacher.save()
+            return redirect('login')
+    else:
+        password = "edbaseteacher"
+        user = User.objects.create_user(post_data['username'], post_data['email'], password)
+        teacher = Teacher(
+            user = user,
+            name = post_data['name'],
+            status = True,
+            level = post_data['qualification'],
+        )
+        teacher.save()
+        return redirect('teachers')
+
+
+def signupTeacher(request):
+    data = ""
+    return render(request, 'teacherSignup.html', {'data': data})
 
 
 def deleteteacher(request, tid):
@@ -496,6 +541,14 @@ def savesubject(request):
 def deletesubject(request, sid):
     student = Subject.objects.get(id=sid)    
     student.delete()
+    return redirect('subjects')
+
+
+def updateCode(request):
+    post_data = request.POST
+    subject = Subject.objects.get(id=post_data['subject_id'])
+    subject.code = post_data['code']
+    subject.save()
     return redirect('subjects')
 
 
