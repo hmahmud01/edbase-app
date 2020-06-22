@@ -34,6 +34,7 @@
                                 <th>Title</th>
                                 <th>Assigned Teacher</th>
                                 <th>Status</th>                                
+                                <th>Code</th>
                                 <th>Level</th>
                                 <th>Modification</th>
                             </tr>
@@ -45,20 +46,51 @@
                                 <td>{{ subject.title }}</td>
                                 <td>{{ subject.assigned_teacher.name }}</td>
                                 <td>{{ subject.status }}</td>
+                                <td>{{ subject.code }}</td>
                                 <td>{{ subject.level }}</td>
                                 <td class="uk-flex">
-                                    <a href="#" class="uk-button uk-button-secondary">Detail</a> 
-                                    <!-- {% if student.status is False %} -->
-                                    <a href="#" class="uk-button uk-button-primary">Activate</a>
-                                    <!-- {% else %} -->
-                                    <a href="#" class="uk-button uk-button-primary">De-Activate</a>
-                                    <!-- {% endif %} -->
-                                    <a href="{% url 'deletesubject' subject.id %}" class="uk-button uk-button-danger">Delete</a>
+                                    <a href="#" class="uk-button uk-button-secondary">Detail</a>                                    
+                                    <a class="uk-button uk-button-primary" href="#assignCode" data-name="{{ subject.title }}" data-id="{{ subject.id }}" onclick="return assignCode(this)" uk-toggle>Update Code</a>
+                                    <a href="{% url 'deletesubject' subject.id %}}" class="uk-button uk-button-danger">Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div id="assignCode" uk-modal>
+                <div class="uk-modal-dialog uk-margin-auto-vertical">
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Subject Code Update</h2>
+                    </div>
+                    <form action="{% url 'updatecode' %}" method="post" class="uk-form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="uk-modal-body">
+                            <p>Assign Subject a Code.</p>
+                            <div class="uk-margin">
+                                <input class="uk-input" name="subject_id" id="subject_id" type="text" hidden>
+                                <label class="uk-form-label" for="subject_name">Subject</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="subject_name" type="text" name="subject_name" disabled>
+                                </div>
+                            </div>
+
+                            <div class="uk-margin">                                
+                                <label class="uk-form-label" for="code">Code</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input" id="code" type="text" name="code" placeholder="Subject Specific Code">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            <!-- <input type="submit" class="uk-button uk-button-primary" value="Submit"> -->
+                            <button class="uk-button uk-button-primary" type="submit">Save</button>
+                        </div>
+                    </form>  
                 </div>
             </div>
         </div>
@@ -72,4 +104,15 @@
             </div>                 
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+<script>
+    function assignCode(subject) {
+        var subjectId = subject.getAttribute("data-id");
+        var subjectName = subject.getAttribute("data-name");
+        document.getElementById("subject_id").value = subjectId; 
+        document.getElementById("subject_name").value = subjectName; 
+    }
+</script>
 {% endblock %}

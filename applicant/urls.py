@@ -37,6 +37,7 @@ urlpatterns = [
     path('deleteteacher/<int:tid>', views.deleteteacher, name='deleteteacher'),
     path('addsubject/', views.addSubject, name='addsubject'),
     path('savesubject/', views.savesubject, name='savesubject'),
+    path('updatecode/', views.updateCode, name='updatecode'),
     path('deletesubject/<int:sid>', views.deletesubject, name='deletesubject'),
     path('uploadmaterial/', views.uploadMaterial, name='uploadmaterial'),
     path('savematerial/', views.saveMaterial, name='savematerial'),

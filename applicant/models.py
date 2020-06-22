@@ -34,6 +34,7 @@ class Subject(models.Model):
     assigned = models.BooleanField(default=False, null=True, blank=True)
     assigned_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     level = models.CharField(max_length=128, null=True, blank=True)
+    code = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
@@ -68,6 +69,7 @@ class PaymentInfo(models.Model):
 
 class PersonalInfo(models.Model):
     student = models.ForeignKey(Student, related_name='student_personal_info', on_delete=models.CASCADE)
+    unique_id = models.CharField(max_length=26, null=True, blank=True)
     acceptance = models.BooleanField(default=False, null=True, blank=True)
     father = models.CharField(max_length=128, null=True, blank=True)
     mother = models.CharField(max_length=128, null=True, blank=True)
