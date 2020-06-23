@@ -23,6 +23,22 @@
                 <button class="uk-button uk-button-secondary" data-filter=".A2">A2 Level</button>
             </p>
 
+            {% if user == "Student" %}
+            <div class="uk-child-width-1-4@s uk-grid-match uk-margin-large mix-content" uk-grid>
+                {% for subject in data %}
+                <a href="{% url 'contentlist' subject.id %}" class="mix {{ subject.level }}">
+                    <div>
+                        <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">                        
+                            <h3 class="uk-card-title">{{ subject.subjects.title }}</h3>     
+                            <p>{{ subject.subjects.code }}</p>          
+                            <p>{{ subject.subjects.level }} Level</p>                   
+                            <p>{{ subject.subjects.assigned_teacher }}</p>                   
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div> 
+            {% elif user == "Teacher" %}
             <div class="uk-child-width-1-4@s uk-grid-match uk-margin-large mix-content" uk-grid>
                 {% for subject in data %}
                 <a href="{% url 'contentlist' subject.id %}" class="mix {{ subject.level }}">
@@ -37,6 +53,7 @@
                 </a>
                 {% endfor %}
             </div> 
+            {% endif %}
         </div>
     </section>
     <section id="footer">

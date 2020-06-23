@@ -1,0 +1,7 @@
+{% if request.session.type == "Admin"  %}
+{% include 'nav_admin.html' %}
+{% elif request.session.type == "Student" %}
+{% include 'nav_student.html' %}
+{% elif request.session.type == "Teacher" %}
+{% include 'nav_teacher.html' %}
+{% endif %}

@@ -294,6 +294,7 @@ def verifyLogin(request):
                 request.session['user'] = teacher.user.username
                 request.session['type'] = "Teacher"
                 request.session['teacher_id'] = teacher.id
+                request.session['id'] = user_id
                 return redirect('teacherpanel')
             else:
                 student = Student.objects.get(user_id=user_id)
@@ -600,6 +601,23 @@ def deleteMaterial(request, fid):
 def contentDeashboard(request):    
     subjects = Subject.objects.all()
     return render(request, 'contentDashboard.html', {'data': subjects})
+
+
+def contentDashboardDynamic(request):    
+    user = request.session['type']
+    user_id = "none"
+    if user == "Student":
+        print(request.session['student'])
+        user_id = request.session['student']
+        subjects = QualificationSubject.objects.filter(student__id__contains=user_id)
+        return render(request, 'contentDashboardDynamic.html', {'data': subjects, 'user': user, 'user_id': user_id})
+    elif user == "Teacher":
+        user_id = request.session['teacher_id']
+        subjects = Subject.objects.filter(assigned_teacher__id__contains=user_id)
+        return render(request, 'contentDashboardDynamic.html', {'data': subjects, 'user': user, 'user_id': user_id})
+    subjects = Subject.objects.all()
+    return render(request, 'contentDashboardDynamic.html', {'data': subjects, 'user': user, 'user_id': user_id})
+    
 
 
 def contentList(request, cid):
