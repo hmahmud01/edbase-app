@@ -52,6 +52,7 @@ urlpatterns = [
     path('contentdetail/<int:fid>/', views.contentDetail, name='contentdetail'),
     path('help/', views.help, name='help'),
     path('batchsession/', views.batchSession, name='batchsession'),
+    path('batchsessionteacher/', views.batchSessionTeacher, name='batchsessionteacher'),
     path('savebatch/', views.saveBatch, name='savebatch'),
     path('savesession/', views.saveSession, name='savesession'),
     path('deletebatch/<int:bid>', views.deleteBatch, name='deletebatch'),
