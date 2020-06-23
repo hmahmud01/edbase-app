@@ -12,7 +12,7 @@
                                 <a href="{% url 'changePasswordPage' request.session.id %}" uk-toggle><span uk-icon="heart"></span> Change Password </a>
                             </li>
                             <li>
-                                <a href="{% url 'studentAdmissionForm' request.session.id %}" uk-toggle><span uk-icon="heart"></span> Registration </a>
+                                <a href="{% url 'studentAdmissionForm' request.session.student %}" uk-toggle><span uk-icon="heart"></span> Registration </a>
                             </li>
                             <li>
                                 <a href="{% url 'contents' %}" uk-toggle><span uk-icon="heart"></span> Content Dashboard </a>
