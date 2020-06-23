@@ -31,6 +31,7 @@ urlpatterns = [
     path('changepassword/<int:uid>/', views.changePasswordPage, name='changePasswordPage'),
     path('passwordchange/', views.changePassword, name='changePassword'),
     path('teachers/', views.teachers, name='teachers'),
+    path('teachersdetail/<int:tid>', views.teacherDetail, name='teachersdetail'),
     path('subjects/', views.subjects, name='subjects'),
     path('addteacher/', views.addTeacher, name='addteacher'),
     path('signupteacher/', views.signupTeacher, name='signupteacher'),
