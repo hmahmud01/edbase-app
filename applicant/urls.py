@@ -46,6 +46,7 @@ urlpatterns = [
     path('savematerial/', views.saveMaterial, name='savematerial'),
     path('deletematerial/<int:fid>', views.deleteMaterial, name='deletematerial'),
     path('contentdashboard/', views.contentDeashboard, name='contentdashboard'),
+    path('contents/', views.contentDashboardDynamic, name='contents'),
     path('contentlist/<int:cid>/', views.contentList, name='contentlist'),
     path('contentdetail/<int:fid>/', views.contentDetail, name='contentdetail'),
     path('help/', views.help, name='help'),
