@@ -89,6 +89,15 @@ def saveStudentData(request):
     student.qualification = post_data['qualification']
     student.save()
 
+    session = Session.objects.get(id=1)
+    batch = Batch.objects.get(id=1)
+    tracker = StudentSessionBatchTracker(
+        students = student,
+        session=session,
+        batch=batch,
+    )
+    tracker.save()
+
     personal_info = PersonalInfo(
         student = student,
         acceptance = True,
@@ -193,7 +202,14 @@ def saveStudent(request):
         qualification = post_data['qualification']
     )
     student.save()
-
+    session = Session.objects.get(id=1)
+    batch = Batch.objects.get(id=1)
+    tracker = StudentSessionBatchTracker(
+        students = student,
+        session=session,
+        batch=batch,
+    )
+    tracker.save()
     qual_value = post_data['qualification']
 
     if 'O' in qual_value:
@@ -368,7 +384,7 @@ def teacherPanel(request):
     print(tid)
     teacher = Teacher.objects.get(id=tid)
     try:
-        subjects = Subject.objects.filter(assigned_teacher__id__contains=tid)
+        subjects = Subject.objects.filter(assigned_teacher_id=teacher.id)
         return render(request, 'teacherPanel.html', {'data': teacher, 'subjects': subjects})
     except :
         return render(request, 'teacherPanel.html', {'data': teacher})
@@ -378,7 +394,7 @@ def teacherPanel(request):
 def teacherDetail(request, tid):
     teacher = Teacher.objects.get(id=tid)
     try:
-        subjects = Subject.objects.filter(assigned_teacher__id__contains=tid)
+        subjects = Subject.objects.filter(assigned_teacher_id=teacher.id)
         return render(request, 'teacherDetail.html', {'data': teacher, 'subjects': subjects})
     except :
         return render(request, 'teacherDetail.html', {'data': teacher})
@@ -623,7 +639,7 @@ def contentDashboardDynamic(request):
         return render(request, 'contentDashboardDynamic.html', {'data': subjects, 'user': user, 'user_id': user_id})
     elif user == "Teacher":
         user_id = request.session['teacher_id']
-        subjects = Subject.objects.filter(assigned_teacher__id__contains=user_id)
+        subjects = Subject.objects.filter(assigned_teacher_id=user_id)
         return render(request, 'contentDashboardDynamic.html', {'data': subjects, 'user': user, 'user_id': user_id})
     subjects = Subject.objects.all()
     return render(request, 'contentDashboardDynamic.html', {'data': subjects, 'user': user, 'user_id': user_id})
@@ -655,21 +671,35 @@ def batchSession(request):
     return render(request, 'batchSessionDashboard.html', {'students': students, 'sessions': session, 'batchs': batch})
 
 
+def batchSessionTeacher(request):
+    user_id = request.session['teacher_id']
+    students = QualificationSubject.objects.filter(subjects__assigned_teacher=user_id)    
+    session = Session.objects.all()
+    batch = Batch.objects.all()
+
+    return render(request, 'batchSessionTeacher.html', {'students': students, 'sessions': session, 'batchs': batch})
+
+
 def saveBatch(request):
     post_data = request.POST
     batch = Batch(
         batch = post_data['batch']
     )
     batch.save()
-
-    return redirect('batchsession')
+    if request.session['teacher_id']:
+        return redirect('batchsessionteacher')
+    else:
+        return redirect('batchsession')
 
 
 def deleteBatch(request, bid):
     batch = Batch.objects.get(id=bid)
     batch.delete()
 
-    return redirect('batchsession')
+    if request.session['teacher_id']:
+        return redirect('batchsessionteacher')
+    else:
+        return redirect('batchsession')
 
 
 def saveSession(request):
@@ -679,14 +709,20 @@ def saveSession(request):
     )
     session.save()
 
-    return redirect('batchsession')
+    if request.session['teacher_id']:
+        return redirect('batchsessionteacher')
+    else:
+        return redirect('batchsession')
 
 
 def deleteSession(request, sid):
     session = Session.objects.get(id=sid)
     session.delete()
 
-    return redirect('batchsession')
+    if request.session.teacher_id:
+        return redirect('batchsessionteacher')
+    else:
+        return redirect('batchsession')
 
 
 def generateStudentSessionBatchList(request):
@@ -705,7 +741,11 @@ def generateStudentSessionBatchList(request):
 
 def deleteStudentSessionBatchList(request):
     tracker = StudentSessionBatchTracker.objects.all().delete()
-    return redirect('batchsession')
+    if request.session.teacher_id:
+        return redirect('batchsessionteacher')
+    else:
+        return redirect('batchsession')
+
 
 def assignStudentSessionBatch(request):
     print(request.POST)
@@ -720,4 +760,7 @@ def assignStudentSessionBatch(request):
     tracker.session = session
     tracker.save()    
 
-    return redirect('batchsession')
+    if request.session['teacher_id']:
+        return redirect('batchsessionteacher')
+    else:
+        return redirect('batchsession')

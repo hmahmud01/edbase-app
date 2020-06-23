@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Home Page Section -->
+    <section class="main-section">
+        {% include 'nav_dynamic.html' %}
+    </section>
+
+
+    <!-- itemsList -->
+    <section id="student-application">
+        <div class="uk-container">
+            <div class="head">
+                <h1 class="uk-heading-bullet">Edbase - Student Batch and Session Manager</h1>
+                <p class="uk-heading-line"><span>List Students with their batch and Session</span></p>
+            </div>
+
+            <div class="uk-child-width-1-1@s uk-grid-match uk-margin-large mix-content" uk-grid>
+                <div>
+                    <ul uk-tab>
+                        <li class="uk-active"><a href="#list">List</a></li>
+                        <li><a href="#session">Session</a></li>
+                        <li><a href="#batch">Batch</a></li>
+                    </ul>
+
+                    <ul class="uk-switcher uk-margin">
+                        <div id="list">
+                            <div class="uk-card uk-card-hover uk-card-body">
+                                <h3 class="uk-card-title">List</h3>
+                                <!-- <a href="{% url 'generatesessionlist' %}" class="uk-button uk-button-danger">Generate</a>
+                                <a href="{% url 'deletesessiondata' %}" class="uk-button uk-button-danger">Delete All</a> -->
+                                <table class="uk-table uk-table-hover uk-table-divider">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>Name</th>
+                                            <th>Qualifcation</th>
+                                            <th>Modification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for student in students %}
+                                        <tr>
+                                            <td>{{ student.student.id }}</td>
+                                            <td>{{ student.student.name }}</td>
+                                            <td>{{ student.student.qualification }}</td>                                 
+                                            <td class="uk-flex">
+                                                <!-- <a href="#" class="uk-button uk-button-danger">Assign Batch And Session</a> -->
+                                                <a class="uk-button uk-button-danger" href="#assignStudent" data-name="{{ student.student.name }}" data-id="{{ student.student.id }}" onclick="return assignStudent(this)" uk-toggle>Assign Batch And Session</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="assignStudent" uk-modal>
+                                <div class="uk-modal-dialog uk-margin-auto-vertical">
+                                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                                    <div class="uk-modal-header">
+                                        <h2 class="uk-modal-title">Assing Session & Batch</h2>
+                                    </div>
+                                    <form action="{% url 'assignstudentbatchsession' %}" method="post" class="uk-form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="uk-modal-body">
+                                            <p>Assign The Student with the batch and session from the List.</p>
+                                            <div class="uk-margin">
+                                                <input class="uk-input" name="student_id" id="student_id" type="text" hidden>
+                                                <label class="uk-form-label" for="student_name">Name</label>
+                                                <div class="uk-form-controls">
+                                                    <input class="uk-input" id="student_name" type="text" name="student_name" disabled>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="uk-margin">
+                                                <label class="uk-form-label" for="student_batch">Select Batch</label>
+                                                <div class="uk-form-controls">
+                                                    <select class="uk-select" id="student_batch" name="student_batch">
+                                                        {% for batch in batchs %}  
+                                                        <option value="{{batch.id}}">{{ batch.batch }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> 
+    
+                                            <div class="uk-margin">
+                                                <label class="uk-form-label" for="student_session">Select Session</label>
+                                                <div class="uk-form-controls">
+                                                    <select class="uk-select" id="student_session" name="student_session">
+                                                        {% for session in sessions %}  
+                                                        <option value="{{session.id}}">{{ session.session }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="uk-modal-footer uk-text-right">
+                                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                                            <!-- <input type="submit" class="uk-button uk-button-primary" value="Submit"> -->
+                                            <button class="uk-button uk-button-primary" type="submit">Save</button>
+                                        </div>
+                                    </form>  
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div id="session">
+                            <div class="uk-card uk-card-hover uk-card-body">
+                                <h3 class="uk-card-title">Session</h3>
+                                <div class="uk-width-1-1" uk-grid>
+                                    <div class="uk-width-1-3@s">
+                                        <div>
+                                            <form action="{% url 'savesession' %}" method="post" class="uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                        
+                                                <div class="uk-margin">
+                                                    <label class="uk-form-label" for="session">Session Name</label>
+                                                    <div class="uk-form-controls">
+                                                        <input class="uk-input" id="session" name="session" type="text" placeholder="Session Name">
+                                                    </div>
+                                                </div>   
+                                                <div class="uk-margin" uk-margin>
+                                                    <input type="submit" class="uk-button uk-button-primary" value="Submit">
+                                                </div>
+                                            </form>   
+                                        </div>
+                                    </div>  
+                                    <div class="uk-width-expand@s">
+                                        <div>
+                                            <div class="uk-margin-large uk-padding uk-padding-remove-top">
+                                                <table class="uk-table uk-table-hover uk-table-divider">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>Session</th>
+                                                            <th>Operations</th>                                                       
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody> 
+                                                        {% for session in sessions %}                                                       
+                                                        <tr>
+                                                            <td>{{ session.id }}</td>
+                                                            <td>{{ session.session }}</td>
+                                                            <td><a href="{% url 'deletesession' session.id %}" class="uk-button uk-button-danger">Delete</a>       
+                                                        </tr>                                                       
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div id="batch">
+                            <div class="uk-card uk-card-hover uk-card-body">
+                                <h3 class="uk-card-title">Batch</h3>
+                                <div class="uk-width-1-1" uk-grid>
+                                    <div class="uk-width-1-3@s">
+                                        <div>
+                                            <form action="{% url 'savebatch' %}" method="post" class="uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                        
+                                                <div class="uk-margin">
+                                                    <label class="uk-form-label" for="batch">Batch Name</label>
+                                                    <div class="uk-form-controls">
+                                                        <input class="uk-input" id="batch" name="batch" type="text" placeholder="Batch Name">
+                                                    </div>
+                                                </div>   
+                                                <div class="uk-margin" uk-margin>
+                                                    <input type="submit" class="uk-button uk-button-primary" value="Submit">
+                                                </div>
+                                            </form>   
+                                        </div>
+                                    </div>  
+                                    <div class="uk-width-expand@s">
+                                        <div>
+                                            <div class="uk-margin-large uk-padding uk-padding-remove-top">
+                                                <table class="uk-table uk-table-hover uk-table-divider">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>Batch</th>
+                                                            <th>Operations</th>                                                       
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                 
+                                                        {% for batch in batchs %}                                       
+                                                        <tr>
+                                                            <td>{{ batch.id }}</td>
+                                                            <td>{{ batch.batch }}</td>
+                                                            <td><a href="{% url 'deletebatch' batch.id %}" class="uk-button uk-button-danger">Delete</a>       
+                                                        </tr>                                                       
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div> 
+        </div>
+    </section>
+    <section id="footer">
+        <div class="uk-padding">                            
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle">
+                <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
+                <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
+            </div>                
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+<script>
+    function assignStudent(student) {
+        var studentId = student.getAttribute("data-id");
+        var studentName = student.getAttribute("data-name");
+        document.getElementById("student_id").value = studentId; 
+        document.getElementById("student_name").value = studentName; 
+
+        console.log(studentId, studentName);
+    }
+</script>
+{% endblock %}
