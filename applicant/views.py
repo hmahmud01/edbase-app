@@ -375,6 +375,16 @@ def teacherPanel(request):
 
 
 @login_required(login_url='/login/')
+def teacherDetail(request, tid):
+    teacher = Teacher.objects.get(id=tid)
+    try:
+        subjects = Subject.objects.filter(assigned_teacher__id__contains=tid)
+        return render(request, 'teacherDetail.html', {'data': teacher, 'subjects': subjects})
+    except :
+        return render(request, 'teacherDetail.html', {'data': teacher})
+
+
+@login_required(login_url='/login/')
 def changePasswordPage(request, uid):
     user = User.objects.get(id=uid)
     return render(request, 'changePassword.html', {'user': user})

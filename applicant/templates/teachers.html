@@ -43,7 +43,7 @@
                                 <td>{{ teacher.status }}</td>
                                 <td>{{ teacher.level }}</td>
                                 <td class="uk-flex">
-                                    <a href="#" class="uk-button uk-button-secondary">Detail</a> 
+                                    <a href="{% url 'teachersdetail' teacher.id %}" class="uk-button uk-button-secondary">Detail</a> 
                                     <!-- {% if student.status is False %} -->
                                     <a href="#" class="uk-button uk-button-primary">Activate</a>
                                     <!-- {% else %} -->
