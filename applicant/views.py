@@ -83,6 +83,10 @@ def studentSignupAdmission(request):
     olevel = Subject.objects.filter(level__contains="O")
     return render(request, 'signuprework.html', {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel})
 
+def demoTeacher(request):
+    data = ""
+    return render(request, 'teacherdemo.html', {'data': data})
+
 
 def saveStudentData(request):
     print(request.POST)
