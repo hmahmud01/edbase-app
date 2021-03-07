@@ -496,6 +496,13 @@ def addTeacher(request):
     data = ""
     return render(request, 'addTeacher.html', {'data': data})
 
+def addTeacherNext(request):
+    data = ""
+    return render(request, 'addTeacher_next.html', {'data': data})
+
+def saveTeacherNext(request):
+    return redirect('addteachernext')
+
 
 def saveteacher(request):
     post_data = request.POST
