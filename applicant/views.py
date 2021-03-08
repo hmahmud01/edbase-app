@@ -13,6 +13,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 
 from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject, Batch, Session, StudentSessionBatchTracker
+from applicant.models import EdbaseBoard, EdbaseLocation, EdbaseQualification, EdbaseSubject, EdbaseTeacher, EdbaseTeacherSubject
 
 def home(request):
     data = ""
@@ -776,3 +777,85 @@ def assignStudentSessionBatch(request):
         return redirect('batchsessionteacher')
     else:
         return redirect('batchsession')
+
+# New Views Starting from here
+# TODO: creating new views for new models
+def addTeacherNext(request):
+    locations = EdbaseLocation.objects.all()
+    boards = EdbaseBoard.objects.all()
+    qualifications = EdbaseQualification.objects.all()
+    subjects = EdbaseSubject.objects.all()
+    return render(request, 'addTeacher_next.html', {'locations': locations, 'boards': boards, 'qualifications': qualifications, 'subjects': subjects})
+
+def addlocation(request):
+    post_data = request.POST
+    location = EdbaseLocation(
+        name = post_data['location'],
+    )
+    location.save()
+    return redirect('addteachernext')
+
+def addboard(request):
+    post_data = request.POST
+    location = EdbaseBoard(
+        name = post_data['board'],
+    )
+    location.save()
+    return redirect('addteachernext')
+
+def addqualifcation(request):
+    post_data = request.POST
+    location = EdbaseQualification(
+        level = post_data['qualification'],
+    )
+    location.save()
+    return redirect('addteachernext')
+
+def addsubjecttosystem(request):
+    post_data = request.POST
+    location = EdbaseSubject(
+        title = post_data['subject'],
+        code = post_data['subject_code'],
+        status = True,
+    )
+    location.save()
+    return redirect('addteachernext')
+
+def saveTeacherNext(request):
+    post_data = request.POST
+    teacherpass = "edbaseteacher"
+    username = post_data['username']
+    email = post_data['email']
+    user = User.objects.create_user(username, email, teacherpass)
+    teacher = EdbaseTeacher(
+        user = user,
+        name = post_data['name'],
+        status = True,
+    )
+    teacher.save()
+
+    location = EdbaseLocation.objects.get(id=post_data['location'])
+    board = EdbaseBoard.objects.get(id=post_data['board'])
+    qualification = EdbaseQualification.objects.get(id=post_data['qualification'])
+    subject = EdbaseSubject.objects.get(id=post_data['subject'])
+
+    teacherSubject = EdbaseTeacherSubject(
+        teacher = teacher,
+        location = location,
+        board = board,
+        qualification = qualification,
+        subject = subject,
+    )
+
+    teacherSubject.save()
+
+    return redirect('teacherlist')
+
+def teacherlist(request):
+    teachers = EdbaseTeacherSubject.objects.all()
+    return render(request, 'teachersNew.html', {'teachers': teachers})
+
+def teachernextdetail(request, tid):
+    detail = EdbaseTeacherSubject.objects.get(id=tid)
+    subjects = EdbaseTeacherSubject.objects.filter(id=tid)
+    return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})

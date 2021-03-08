@@ -139,3 +139,56 @@ class StudentSessionBatchTracker(models.Model):
 
     def __str__(self):
         return self.student
+
+
+# STARTING FROM NEW
+# TODO : CREATE NECESSARY CLASS MODELS
+class EdbaseTeacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    createt_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+class EdbaseSubject(models.Model):
+    title = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    code = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+class EdbaseLocation(models.Model):
+    name = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.name
+
+class EdbaseBoard(models.Model):
+    name = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.name
+
+class EdbaseQualification(models.Model):
+    level = models.CharField(max_length=128, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.level
+
+class EdbaseTeacherSubject(models.Model):
+    teacher = models.ForeignKey(EdbaseTeacher, related_name='edbaseteacher', on_delete=models.CASCADE)
+    location = models.ForeignKey(EdbaseLocation, related_name='edbaselocation', on_delete=models.CASCADE)
+    board = models.ForeignKey(EdbaseBoard, related_name='edbaseboard', on_delete=models.CASCADE)
+    qualification = models.ForeignKey(EdbaseQualification, related_name='edbasequalification', on_delete=models.CASCADE)
+    subject = models.ForeignKey(EdbaseSubject, related_name='edbasesubject', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.teacher.name

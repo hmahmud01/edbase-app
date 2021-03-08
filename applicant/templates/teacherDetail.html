@@ -12,7 +12,7 @@
     <section id="student-list">
         <div class="uk-container">
             <div class="head">
-                <h1 class="uk-heading-bullet">Welcome to {{ data.user.username }}'s Profile</h1>
+                <h1 class="uk-heading-bullet">Welcome to {{ detail.teacher.user.username }}'s Profile</h1>
                 <p class="uk-heading-line"><span>Teachers's Detail Information</span></p>
             </div>
 
@@ -21,22 +21,22 @@
                     <div class="uk-card uk-card-default uk-card-body uk-margin-small">
                         <h3>Teachers Information</h3>
                         <div class="uk-grid-collapse" uk-grid>                            
-                            <div class="uk-width-3-4@m">
+                            <div class="uk-width-1-2@m">
                                 <div class="uk-text-left" uk-grid>
                                     <div class="uk-width-1-4">
                                         <div class="">Name</div>
                                     </div>
                                     <div class="uk-width-3-4">
-                                        <div class="">{{ data.name }}</div>
+                                        <div class="">{{ detail.teacher.name }}</div>
                                     </div>
-                                </div>
+                                </div>      
                                 
                                 <div class="uk-text-left" uk-grid>
                                     <div class="uk-width-1-4">
-                                        <div class="">User Name</div>
+                                        <div class="">Email</div>
                                     </div>
                                     <div class="uk-width-3-4">
-                                        <div class="">{{ data.user.username }}</div>
+                                        <div class=" ">{{ detail.teacher.user.email }}</div>
                                     </div>
                                 </div>
     
@@ -46,7 +46,26 @@
                                         <div class="">Teaching Allowed For</div>
                                     </div>
                                     <div class="uk-width-3-4">
-                                        <div class=" ">{{ data.level }} Level</div>
+                                        <div class=" ">{{ detail.qualification.level }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-2@m">
+                                <div class="uk-text-left" uk-grid>
+                                    <div class="uk-width-1-4">
+                                        <div class="">Location</div>
+                                    </div>
+                                    <div class="uk-width-3-4">
+                                        <div class="">{{ detail.location.name }}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="uk-text-left" uk-grid>
+                                    <div class="uk-width-1-4">
+                                        <div class="">Board</div>
+                                    </div>
+                                    <div class="uk-width-3-4">
+                                        <div class="">{{ detail.board.name }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -72,9 +91,9 @@
                                         <tbody>
                                             {% for subject in subjects %}
                                             <tr>
-                                                <td>{{ subject.title }}</td>
-                                                <td>{{ subject.level }} Level</td>   
-                                                <td>{{ subject.code }}</td>                                
+                                                <td>{{ subject.subject.title }}</td>
+                                                <td>{{ subject.qualification.level }}</td>   
+                                                <td>{{ subject.subject.code }}</td>                                
                                             </tr>
                                             {% endfor %}
                                         </tbody>

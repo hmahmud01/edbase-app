@@ -36,6 +36,8 @@ urlpatterns = [
     path('teachersdetail/<int:tid>', views.teacherDetail, name='teachersdetail'),
     path('subjects/', views.subjects, name='subjects'),
     path('addteacher/', views.addTeacher, name='addteacher'),
+    path('addteachernext/', views.addTeacherNext, name='addteachernext'),
+    path('signupteachernext/', views.saveTeacherNext, name='signupteachernext'),
     path('signupteacher/', views.signupTeacher, name='signupteacher'),
     path('verifyteacher/', views.verifyTeacher, name='verifyteacher'),
     path('teacherpanel/', views.teacherPanel, name='teacherpanel'),
@@ -62,7 +64,13 @@ urlpatterns = [
     path('generatesessionlist/', views.generateStudentSessionBatchList, name='generatesessionlist'),
     path('deletesessiondata/', views.deleteStudentSessionBatchList, name='deletesessiondata'),
     path('assignstudentbatchsession/', views.assignStudentSessionBatch, name='assignstudentbatchsession'),
-    
+    path('addlocation/', views.addlocation, name='addlocation'),
+    path('addboard/', views.addboard, name='addboard'),
+    path('addqualification/', views.addqualifcation, name='addqualification'),
+    path('addsubjecttosystem/', views.addsubjecttosystem, name='addsubjecttosystem'),
+    path('teacherlist/', views.teacherlist, name='teacherlist'),
+    path('teachernextdetail/<int:tid>/', views.teachernextdetail, name='teachernextdetail'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
