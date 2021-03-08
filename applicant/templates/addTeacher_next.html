@@ -4,7 +4,29 @@
 {% block content %}
     <!-- Home Page Section -->
     <section class="main-section">
-        {% include 'nav_dynamic.html' %}
+        <!-- {% include 'nav_dynamic.html' %} -->
+        <section class="main-section">
+            <div class="admin-section-top">
+                <div>
+                    <div class="uk-section-secondary uk-preserve-color">
+                        <div uk-sticky="animation: uk-animation-slide-top; sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; cls-inactive: uk-navbar-transparent uk-dark; top: 200">
+                            <nav class="uk-navbar-container" uk-navbar="mode: click;">
+                                <div class="uk-navbar-left">
+                                    <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
+                                </div>
+                                <div class="uk-navbar-right uk-dark">
+                                    <ul class="uk-navbar-nav uk-iconnav">
+                                        <li>
+                                            <!-- <a href="{% url 'login' %}" uk-toggle><span uk-icon="heart"></span> Login </a> -->
+                                        </li>                                 
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </section>
 
 
@@ -16,7 +38,7 @@
                 <p class="uk-heading-line"><span>Application form to register Teacher for Edbase System</span></p>
             </div>
             <div class="uk-child-width-1@m" uk-grid>
-                <form action="" method="get" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
+                <form action="{% url 'signupteachernext' %}" method="POST" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
                     <div>
                         <div class="uk-background-secondary uk-light uk-padding uk-panel">
                             <p class="uk-h4">Teachers'Personal Information</p>
@@ -47,31 +69,73 @@
                             <p class="uk-h4">Academic Info</p>
                         </div>
                     </div>
+                    <p>Select the location you are teaching now</p>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="location">Location</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="location" name="location">
+                                <option value="none">Select</option>
+                                {% for location in locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- This is an anchor toggling the modal -->
+                    <a href="#modal-location" uk-toggle>Add Location</a>                    
+
+                    <p>Select the board you are teaching under</p>
                     <div class="uk-margin">
                         <label class="uk-form-label" for="board">Board</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" id="board" name="board">
                                 <option value="none">Select</option>
-                                <option value="O">O Level</option>
-                                <option value="A">A Level</option>
-                                <option value="both">Both</option>
+                                {% for board in boards %}
+                                <option value="{{ board.id }}">{{ board.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div> 
+
+                    <!-- This is an anchor toggling the modal -->
+                    <a href="#modal-board" uk-toggle>Add Board</a>                    
+
+                    <p>Select Qualification Level</p>
                     <div class="uk-margin">
                         <label class="uk-form-label" for="qualification">Qualification</label>
                         <div class="uk-form-controls">
-                            <select class="uk-select" id="qualification" name="qualification">
+                            <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
                                 <option value="none">Select</option>
-                                <option value="O">O Level</option>
-                                <option value="A">A Level</option>
-                                <option value="both">Both</option>
+                                {% for qualification in qualifications %}
+                                <option value="{{ qualification.id }}">{{ qualification.level }}</option>
+                                {% endfor %}
+                            </select>
                             </select>
                         </div>
                     </div> 
+
+                    <!-- This is an anchor toggling the modal -->
+                    <a href="#modal-qual" uk-toggle>Add Qualification</a>                    
+
+                    <p>Select the Subject you are teaching</p>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="subject">Subject</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="subject" name="subject">
+                                <option value="none">Select</option>
+                                {% for subject in subjects %}
+                                <option value="{{ subject.id }}">{{ subject.title }} - {{ subject.code }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div> 
+
+                    <!-- This is an anchor toggling the modal -->
+                    <a href="#modal-sub" uk-toggle>Add Subject</a>                    
                     
                     <div class="uk-margin uk-flex uk-flex-right">
-                        <input type="button" class="uk-button uk-button-primary" value="Submit" />
+                        <input type="submit" class="uk-button uk-button-primary" value="Submit" />
                         <!-- <input type="cancel" class="uk-button uk-button-danger" value="Cancel" /> -->
                         <a href="/" class="uk-button uk-button-danger">Cancel</a>
                     </div>   
@@ -80,9 +144,80 @@
         </div>
     </section>
 
+    <!-- This is the modal -->
+    <div id="modal-location" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">Add Location</h2>
+            <form action="{% url 'addlocation' %}" method="POST">{% csrf_token %}
+                <div class="uk-margin">
+                    <input class="uk-input" name="location" type="text" placeholder="Location">
+                </div>                            
+            
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="modal-board" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">Add Board</h2>
+            <form action="{% url 'addboard' %}" method="POST">{% csrf_token %}
+                <div class="uk-margin">
+                    <input class="uk-input" name="board" type="text" placeholder="Board">
+                </div>                            
+            
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="modal-qual" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">Add Qualification</h2>
+            <form action="{% url 'addqualification' %}" method="POST">{% csrf_token %}
+                <div class="uk-margin">
+                    <input class="uk-input" name="qualification" type="text" placeholder="Qualification">
+                </div>                            
+            
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- This is the modal -->
+    <div id="modal-sub" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">Add Subject</h2>
+            <form action="{% url 'addsubjecttosystem' %}" method="POST">{% csrf_token %}
+                <div class="uk-margin">
+                    <input class="uk-input" name="subject" type="text" placeholder="Subject">
+                </div>                            
+                <div class="uk-margin">
+                    <input class="uk-input" name="subject_code" type="text" placeholder="Subject code">
+                </div>                            
+            
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
     <section id="footer">
         <div class="uk-padding">                            
-            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle uk-position-bottom">
+            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-between uk-flex-middle">
                 <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase.png" alt="zeros"></a>   
                 <p class="uk-text-center"> <span class="zeros-sub-head copy">Copyright</span>  © <a href="/">edbasebd.com</a>@2020</p>
             </div>                

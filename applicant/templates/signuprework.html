@@ -56,8 +56,70 @@
                                 {% endif %}                            
                             </div>
                         </div>
-    
+
                         <div class="uk-margin">
+                            <label class="uk-form-label" for="email">Email Address</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="email" type="email" name="email" placeholder="Email Address">
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="passnid">Passport/Nid</label>
+                            <div class="uk-form-controls">
+                                {% if data.mobile %}
+                                <input class="uk-input" id="passnid" type="text" name="mobile" placeholder="Passport/Nid" value="{{ data.mobile }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="passnid" type="text" name="mobile" placeholder="Passport/Nid" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="guardian1">Guardian Name 1</label>
+                            <div class="uk-form-controls">
+                                {% if data.father %}
+                                <input class="uk-input" id="father" type="text" name="guardian1" placeholder="Guardian Name 1" value="{{ data.father }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="father" type="text" name="guardian1" placeholder="Guardian Name 1" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="guardian1relation">Relation</label>
+                            <div class="uk-form-controls">
+                                {% if data.father %}
+                                <input class="uk-input" id="father" type="text" name="guardian1relation" placeholder="Relation with the Student" value="{{ data.father }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="father" type="text" name="guardian1relation" placeholder="Relation with the Student" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="guardian1">Guardian Name 2</label>
+                            <div class="uk-form-controls">
+                                {% if data.father %}
+                                <input class="uk-input" id="father" type="text" name="guardian2" placeholder="Guardian Name 2" value="{{ data.father }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="father" type="text" name="guardian2" placeholder="Guardian Name 2" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="guardian2relation">Relation</label>
+                            <div class="uk-form-controls">
+                                {% if data.father %}
+                                <input class="uk-input" id="father" type="text" name="guardian2relation" placeholder="Relation with the Student" value="{{ data.father }}" disabled>
+                                {% else %}
+                                <input class="uk-input" id="father" type="text" name="guardian2relation" placeholder="Relation with the Student" required>
+                                {% endif %}                            
+                            </div>
+                        </div>
+    
+                        {% comment %} <div class="uk-margin">
                             <label class="uk-form-label" for="father">Fathers's Name</label>
                             <div class="uk-form-controls">
                                 {% if data.father %}
@@ -99,12 +161,19 @@
                                 <input class="uk-input" id="mother_mobile" type="text" name="mother_mobile" placeholder="Mother's Mobile Number" required>
                                 {% endif %}                            
                             </div>
+                        </div> {% endcomment %}
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="parent_email">Guardian's Email Address</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="parent_email" type="email" name="parent_email" placeholder="Guardian's Email Address" required>
+                            </div>
                         </div>
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="parent_email">Parent's Email Address</label>
+                            <label class="uk-form-label" for="parent_email">Guardian's Phone Number</label>
                             <div class="uk-form-controls">
-                                <input class="uk-input" id="parent_email" type="email" name="parent_email" placeholder="Parent Email Address" required>
+                                <input class="uk-input" id="parent_email" type="email" name="parent_email" placeholder="Guardian's Email Address" required>
                             </div>
                         </div>
 
@@ -124,13 +193,6 @@
                                         <input class="uk-input mb-5" id="country" type="text" name="country" placeholder="Country" required>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="email">Email Address</label>
-                            <div class="uk-form-controls">
-                                <input class="uk-input" id="email" type="email" name="email" placeholder="Email Address">
                             </div>
                         </div>
 
@@ -155,7 +217,7 @@
                         </div>
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="school">School Name</label>
+                            <label class="uk-form-label" for="school">Type Private if no School</label>
                             <div class="uk-form-controls">
                                 {% if data.school %}
                                 <input class="uk-input" id="school" type="text" name="school" placeholder="School Name" value="{{ data.school }}" disabled>
@@ -182,13 +244,6 @@
                             </div>
                         </div>     
                         
-
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="experience">Share Your Online Experience</label>
-                            <div class="uk-form-controls">
-                                <textarea class="uk-textarea" name="experience" rows="5" placeholder="Your Thoughts ...."></textarea>
-                            </div>
-                        </div>
                         <div class="uk-margin">
                             <label class="uk-form-label" for="email">Upload Your Passport Size Photo</label>
                             <div class="uk-form-controls">
@@ -275,6 +330,18 @@
                                         <option value="uttara">Uttara</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <p>Select the board you are in</p>
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="board">Board</label>
+                                <div class="uk-form-controls">
+                                    <select class="uk-select" id="board" name="board">
+                                        <option value="none">Select</option>
+                                        <option value="caie">CAIE</option>
+                                        <option value="edxcel">EDXCEL</option>
+                                    </select>
+                                </div>
                             </div> 
 
                             <p>Select only the subjects that you are registered to.</p>
@@ -285,6 +352,7 @@
                                         <option value="none">Select</option>
                                         <option value="O">O Level</option>
                                         <option value="A">A Level</option>
+                                        <option value="both">Both</option>
                                     </select>
                                 </div>
                             </div> 
@@ -333,6 +401,7 @@
                                     <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                         <label class="w-100"><input class="uk-radio" type="radio" name="payment_option" value="Cash"> Cash</label>
                                         <label class="w-100"><input class="uk-radio" type="radio" name="payment_option" value="bKash"> bKash</label>
+                                        <label class="w-100"><input class="uk-radio" type="radio" name="payment_option" value="notpaid"> Not Paid yet</label>
                                     </div>
                                 </div>
                             </div>
