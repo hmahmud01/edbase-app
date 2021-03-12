@@ -320,42 +320,73 @@
                             <p>Select Subject and location </p>
                         </div>
                         <div class="uk-card-body">  
-                            <p>Select the location you are getting Admitted to</p>
+                            <p class="uk-text-bold">Select the location you are getting Admitted to</p>
                             <div class="uk-margin">
-                                <label class="uk-form-label" for="location">Location</label>
+                                {% comment %} <label class="uk-form-label" for="location">Location</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="location" name="location">
                                         <option value="none">Select</option>
                                         <option value="dhanmondi">Dhanmondi</option>
                                         <option value="uttara">Uttara</option>
+                                        {% for location in locations %}
+                                        <option value="{{ location.id }}">{{ location.name }}</option>
+                                        {% endfor %}
                                     </select>
+                                </div> {% endcomment %}
+                                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                    {% for location in locations %}
+                                    <label><input class="uk-checkbox" type="checkbox" value="{{ location.id }}"> {{ location.name }}</label>
+                                    {% endfor %}
                                 </div>
                             </div>
 
-                            <p>Select the board you are in</p>
+                            <p class="uk-text-bold">Select the board you are in</p>
                             <div class="uk-margin">
-                                <label class="uk-form-label" for="board">Board</label>
+                                {% comment %} <label class="uk-form-label" for="board">Board</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="board" name="board">
                                         <option value="none">Select</option>
                                         <option value="caie">CAIE</option>
                                         <option value="edxcel">EDXCEL</option>
+                                        {% for board in boards %}
+                                        <option value="{{ board.id }}">{{ board.name }}</option>
+                                        {% endfor %}    
                                     </select>
+                                </div> {% endcomment %}
+                                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                    {% for board in boards %}
+                                    <label><input class="uk-checkbox" type="checkbox" value="{{ board.id }}"> {{ board.name }}</label>
+                                    {% endfor %}
                                 </div>
                             </div> 
 
-                            <p>Select only the subjects that you are registered to.</p>
+                            <p class="uk-text-bold">Select only the subjects that you are registered to.</p>
                             <div class="uk-margin">
-                                <label class="uk-form-label" for="qualification">Qualification</label>
+                                {% comment %} <label class="uk-form-label" for="qualification">Qualification</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
                                         <option value="none">Select</option>
                                         <option value="O">O Level</option>
                                         <option value="A">A Level</option>
                                         <option value="both">Both</option>
+                                        {% for qualification in qualifications %}
+                                        <option value="{{ qualification.id }}">{{ qualification.level }}</option>
+                                        {% endfor %}
                                     </select>
+                                </div> {% endcomment %}
+                                <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                    {% for qualification in qualifications %}
+                                    <label><input class="uk-checkbox" type="checkbox" value="{{ qualification.id }}"> {{ qualification.level }}</label>
+                                    {% endfor %}
                                 </div>
                             </div> 
+
+                            <div class="uk-margin">
+                                <a class="uk-button uk-button-secondary">Generate Subjects</a>
+                            </div>
+
+                            <div class="uk-margin" id="subjectload"></div>
+                    
         
                             <div class="uk-margin" id="o_level">
                                 <label class="uk-form-label" for="qualification">Select Subjects for O-level</label>
@@ -385,8 +416,7 @@
                                         <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
                                         {% endfor %}
                                     </div>
-                                </div>        
-                                
+                                </div>
                             </div> 
                         </div>
                     </div>

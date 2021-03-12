@@ -84,6 +84,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Subject Title</th>
+                                                <th>Board</th>
                                                 <th>Category</th>
                                                 <th>Subject Code</th>
                                             </tr>
@@ -92,6 +93,7 @@
                                             {% for subject in subjects %}
                                             <tr>
                                                 <td>{{ subject.subject.title }}</td>
+                                                <td>{{ subject.board.name }}</td>   
                                                 <td>{{ subject.qualification.level }}</td>   
                                                 <td>{{ subject.subject.code }}</td>                                
                                             </tr>
