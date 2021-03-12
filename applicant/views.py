@@ -79,10 +79,18 @@ def studentAdmissionForm(request, sid):
 
 def studentSignupAdmission(request):
     data = ''
+    academy = EdbaseTeacherSubject.objects.all()
+    qualifications = EdbaseQualification.objects.all()
+    boards = EdbaseBoard.objects.all()
+    locations = EdbaseLocation.objects.all()
     aslevel = Subject.objects.filter(level__contains="AS")
     a2level = Subject.objects.filter(level__contains="A2")
     olevel = Subject.objects.filter(level__contains="O")
-    return render(request, 'signuprework.html', {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel})
+    return render(request, 'signuprework.html', 
+        {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations})
+
+def loadsubject(request):
+    pass
 
 def demoTeacher(request):
     data = ""
@@ -813,10 +821,13 @@ def addqualifcation(request):
 
 def addsubjecttosystem(request):
     post_data = request.POST
+    boardId = post_data['board']
+    board = EdbaseBoard.objects.get(id=boardId)
     location = EdbaseSubject(
         title = post_data['subject'],
         code = post_data['subject_code'],
         status = True,
+        board = board,
     )
     location.save()
     return redirect('addteachernext')

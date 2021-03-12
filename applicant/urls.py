@@ -70,6 +70,7 @@ urlpatterns = [
     path('addsubjecttosystem/', views.addsubjecttosystem, name='addsubjecttosystem'),
     path('teacherlist/', views.teacherlist, name='teacherlist'),
     path('teachernextdetail/<int:tid>/', views.teachernextdetail, name='teachernextdetail'),
+    path('loadsubject/', views.loadsubject, name='loadsubject'),
 
 ]
 

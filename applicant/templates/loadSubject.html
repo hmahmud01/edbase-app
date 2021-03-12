@@ -1,0 +1,26 @@
+<div class="uk-margin" id="a_level">
+    {% comment %} <label class="uk-form-label" for="qualification">A Level : AS Subjects</label>
+    <div class="uk-form-controls">
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            {% for subject in aslevel %}
+            <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+            {% endfor %}
+        </div>
+    </div>
+
+    <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
+    <div class="uk-form-controls">
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            {% for subject in a2level %}
+            <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+            {% endfor %}
+        </div>
+    </div> {% endcomment %}
+
+    <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
+    <div class="uk-form-controls">
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+
+        </div>
+    </div>
+</div> 

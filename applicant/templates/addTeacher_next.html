@@ -111,7 +111,6 @@
                                 <option value="{{ qualification.id }}">{{ qualification.level }}</option>
                                 {% endfor %}
                             </select>
-                            </select>
                         </div>
                     </div> 
 
@@ -205,7 +204,17 @@
                 </div>                            
                 <div class="uk-margin">
                     <input class="uk-input" name="subject_code" type="text" placeholder="Subject code">
-                </div>                            
+                </div>     
+
+                <label class="uk-form-label" for="board">Board</label>
+                <div class="uk-form-controls">
+                    <select class="uk-select" id="board" name="board" required>
+                        <option value="none">Select</option>
+                        {% for board in boards %}
+                        <option value="{{ board.id }}">{{ board.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             
                 <p class="uk-text-right">
                     <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>

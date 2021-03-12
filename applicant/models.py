@@ -151,25 +151,26 @@ class EdbaseTeacher(models.Model):
 
     def __str__(self):
         return self.name
-
-class EdbaseSubject(models.Model):
-    title = models.CharField(max_length=128, null=True, blank=True)
-    status = models.BooleanField(default=True, null=True, blank=True)
-    level = models.CharField(max_length=128, null=True, blank=True)
-    code = models.CharField(max_length=128, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
-class EdbaseLocation(models.Model):
+    
+class EdbaseBoard(models.Model):
     name = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     
     def __str__(self):
         return self.name
 
-class EdbaseBoard(models.Model):
+class EdbaseSubject(models.Model):
+    title = models.CharField(max_length=128, null=True, blank=True)
+    status = models.BooleanField(default=True, null=True, blank=True)
+    level = models.CharField(max_length=128, null=True, blank=True)
+    code = models.CharField(max_length=128, null=True, blank=True)
+    board = models.ForeignKey(EdbaseBoard, related_name='edbaseboardforsubject', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+class EdbaseLocation(models.Model):
     name = models.CharField(max_length=128, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     
