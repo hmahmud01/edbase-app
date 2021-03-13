@@ -90,7 +90,39 @@ def studentSignupAdmission(request):
         {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations})
 
 def loadsubject(request):
-    pass
+    get_data = request.GET
+    location = get_data.get('locations')
+    board = get_data.get('boards')
+    qualifications = get_data.getlist('qualifications[]')
+
+    print(location)
+    print(board)
+    print(qualifications)
+
+    subjects = EdbaseTeacherSubject.objects.all()
+    subjects = subjects.filter(board_id=board)   
+    subjects = subjects.filter(location_id=location)
+
+    oLevel = None
+    asLevel = None
+    a2level = None
+
+    for qual in qualifications:
+        if qual == '1':
+            oLevel = subjects.filter(qualification_id=qual)
+        elif qual == '2':
+            asLevel = subjects.filter(qualification_id=qual)
+        elif qual == '3':
+            a2level = subjects.filter(qualification_id=qual)
+
+
+    print(oLevel)
+    print(asLevel)
+    print(a2level)
+
+    print(subjects)
+
+    return render(request, 'loadSubject.html', {'olevel': oLevel, 'aslevel': asLevel, 'a2level': a2level})
 
 def demoTeacher(request):
     data = ""
@@ -870,3 +902,4 @@ def teachernextdetail(request, tid):
     detail = EdbaseTeacherSubject.objects.get(id=tid)
     subjects = EdbaseTeacherSubject.objects.filter(id=tid)
     return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})
+

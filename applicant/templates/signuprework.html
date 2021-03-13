@@ -322,7 +322,7 @@
                         <div class="uk-card-body">  
                             <p class="uk-text-bold">Select the location you are getting Admitted to</p>
                             <div class="uk-margin">
-                                {% comment %} <label class="uk-form-label" for="location">Location</label>
+                                <!-- {% comment %} <label class="uk-form-label" for="location">Location</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="location" name="location">
                                         <option value="none">Select</option>
@@ -332,17 +332,17 @@
                                         <option value="{{ location.id }}">{{ location.name }}</option>
                                         {% endfor %}
                                     </select>
-                                </div> {% endcomment %}
+                                </div> {% endcomment %} -->
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {% for location in locations %}
-                                    <label><input class="uk-checkbox" type="checkbox" value="{{ location.id }}"> {{ location.name }}</label>
+                                    <label><input class="uk-radio" type="radio" name="location" value="{{ location.id }}"> {{ location.name }}</label>
                                     {% endfor %}
                                 </div>
                             </div>
 
                             <p class="uk-text-bold">Select the board you are in</p>
                             <div class="uk-margin">
-                                {% comment %} <label class="uk-form-label" for="board">Board</label>
+                                <!-- {% comment %} <label class="uk-form-label" for="board">Board</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="board" name="board">
                                         <option value="none">Select</option>
@@ -352,17 +352,17 @@
                                         <option value="{{ board.id }}">{{ board.name }}</option>
                                         {% endfor %}    
                                     </select>
-                                </div> {% endcomment %}
+                                </div> {% endcomment %} -->
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {% for board in boards %}
-                                    <label><input class="uk-checkbox" type="checkbox" value="{{ board.id }}"> {{ board.name }}</label>
+                                    <label><input class="uk-radio" type="radio" name="board" value="{{ board.id }}"> {{ board.name }}</label>
                                     {% endfor %}
                                 </div>
                             </div> 
 
                             <p class="uk-text-bold">Select only the subjects that you are registered to.</p>
                             <div class="uk-margin">
-                                {% comment %} <label class="uk-form-label" for="qualification">Qualification</label>
+                                <!-- {% comment %} <label class="uk-form-label" for="qualification">Qualification</label>
                                 <div class="uk-form-controls">
                                     <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
                                         <option value="none">Select</option>
@@ -373,22 +373,22 @@
                                         <option value="{{ qualification.id }}">{{ qualification.level }}</option>
                                         {% endfor %}
                                     </select>
-                                </div> {% endcomment %}
+                                </div> {% endcomment %} -->
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {% for qualification in qualifications %}
-                                    <label><input class="uk-checkbox" type="checkbox" value="{{ qualification.id }}"> {{ qualification.level }}</label>
+                                    <label><input class="uk-checkbox" type="checkbox" name="qualification" value="{{ qualification.id }}"> {{ qualification.level }}</label>
                                     {% endfor %}
                                 </div>
                             </div> 
 
                             <div class="uk-margin">
-                                <a class="uk-button uk-button-secondary">Generate Subjects</a>
+                                <a class="uk-button uk-button-secondary" id="subjectloadfunction" data-brand-url="{% url 'loadsubject' %}">Generate Subjects</a>
                             </div>
 
                             <div class="uk-margin" id="subjectload"></div>
                     
         
-                            <div class="uk-margin" id="o_level">
+                            <!-- <div class="uk-margin" id="o_level">
                                 <label class="uk-form-label" for="qualification">Select Subjects for O-level</label>
                                 <div class="uk-form-controls">
                                     <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
@@ -417,7 +417,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div> 
+                            </div>  -->
                         </div>
                     </div>
                     <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
@@ -472,49 +472,79 @@
 {% endblock %}
 
 {% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>   
-    var o_level = document.getElementById("o_level");
-    var a_level = document.getElementById("a_level"); 
+    $("#subjectloadfunction").click(function(){
+        var url = $("#subjectloadfunction").attr("data-brand-url");
+        const locations = document.querySelector('input[name="location"]:checked').value;
+        const boards = document.querySelector('input[name="board"]:checked').value;
+        const qualifications = document.querySelectorAll('input[name="qualification"]:checked');
 
-    window.onload = function() {
-        hideContent();
-    }
+        let qualificationsval = [];
 
-    function qualificationRender() {
-        var qualification = document.getElementById("qualification").value;
-        if(qualification == "none"){
-            hideContent();
-        } else if (qualification == "O") {
-            toggleOLevel();
-        } else if (qualification == "A") {
-            toggleAlevel();
-        } else {
-            hideContent();
-        }
-    }
+        qualifications.forEach((checkbox) => {
+            qualificationsval.push(checkbox.value);
+        });
+    
+        $.ajax({
+            url: url,
+            type: 'get',
+            data: {
+                'locations': locations,
+                'boards': boards,
+                'qualifications': qualificationsval
+            },
+            success: function(data){
+                $("#subjectload").html(data);
+            }
+        })
+    }); 
 
-    function hideContent(){
-        o_level.style.display = "none";
-        a_level.style.display = "none";
-    }
+    // var o_level = document.getElementById("o_level");
+    // var a_level = document.getElementById("a_level"); 
+
+    // window.onload = function() {
+    //     hideContent();
+    // }
+
+    // function qualificationRender() {
+    //     var qualification = document.getElementById("qualification").value;
+    //     if(qualification == "none"){
+    //         hideContent();
+    //     } else if (qualification == "O") {
+    //         toggleOLevel();
+    //     } else if (qualification == "A") {
+    //         toggleAlevel();
+    //     } else {
+    //         hideContent();
+    //     }
+    // }
+
+    // function hideContent(){
+    //     o_level.style.display = "none";
+    //     a_level.style.display = "none";
+    // }
 
 
-    function toggleOLevel(){
-        a_level.style.display = "none";
-        if(o_level.style.display == "none"){
-            o_level.style.display = "block";
-        }else{
-            o_level.style.display = "none";
-        }
-    }
+    // function toggleOLevel(){
+    //     a_level.style.display = "none";
+    //     if(o_level.style.display == "none"){
+    //         o_level.style.display = "block";
+    //     }else{
+    //         o_level.style.display = "none";
+    //     }
+    // }
 
-    function toggleAlevel(){
-        o_level.style.display = "none";
-        if(a_level.style.display == "none"){
-            a_level.style.display = "block";
-        }else{
-            a_level.style.display = "none";
-        }
-    }
+    // function toggleAlevel(){
+    //     o_level.style.display = "none";
+    //     if(a_level.style.display == "none"){
+    //         a_level.style.display = "block";
+    //     }else{
+    //         a_level.style.display = "none";
+    //     }
+    // }
+
+    
+
 </script>
 {% endblock%}
