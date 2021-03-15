@@ -35,8 +35,8 @@
                 <p class="uk-heading-line"><span>Application form to get enroll</span></p>
             </div>
             <div class="uk-child-width-1@m" uk-grid>
-                <form action="" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
-                    {% comment %} <input id="id" type="text" name="id" value="{{ data.id }}" hidden> {% endcomment %}
+                <form action="{% url 'savestudentsystem' %}" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                    <!-- {% comment %} <input id="id" type="text" name="id" value="{{ data.id }}" hidden> {% endcomment %} -->
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
                         <h3 class="uk-card-title">Personal Information</h3>
                         <div class="uk-margin">
@@ -68,9 +68,9 @@
                             <label class="uk-form-label" for="passnid">Passport/Nid</label>
                             <div class="uk-form-controls">
                                 {% if data.mobile %}
-                                <input class="uk-input" id="passnid" type="text" name="mobile" placeholder="Passport/Nid" value="{{ data.mobile }}" disabled>
+                                <input class="uk-input" id="passnid" type="text" name="passnid" placeholder="Passport/Nid" value="{{ data.mobile }}" disabled>
                                 {% else %}
-                                <input class="uk-input" id="passnid" type="text" name="mobile" placeholder="Passport/Nid" required>
+                                <input class="uk-input" id="passnid" type="text" name="passnid" placeholder="Passport/Nid" required>
                                 {% endif %}                            
                             </div>
                         </div>
@@ -171,9 +171,9 @@
                         </div>
 
                         <div class="uk-margin">
-                            <label class="uk-form-label" for="parent_email">Guardian's Phone Number</label>
+                            <label class="uk-form-label" for="parent_phone">Guardian's Phone Number</label>
                             <div class="uk-form-controls">
-                                <input class="uk-input" id="parent_email" type="email" name="parent_email" placeholder="Guardian's Email Address" required>
+                                <input class="uk-input" id="parent_phone" type="text" name="parent_phone" placeholder="Guardian's Phone Number" required>
                             </div>
                         </div>
 
@@ -322,17 +322,6 @@
                         <div class="uk-card-body">  
                             <p class="uk-text-bold">Select the location you are getting Admitted to</p>
                             <div class="uk-margin">
-                                <!-- {% comment %} <label class="uk-form-label" for="location">Location</label>
-                                <div class="uk-form-controls">
-                                    <select class="uk-select" id="location" name="location">
-                                        <option value="none">Select</option>
-                                        <option value="dhanmondi">Dhanmondi</option>
-                                        <option value="uttara">Uttara</option>
-                                        {% for location in locations %}
-                                        <option value="{{ location.id }}">{{ location.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div> {% endcomment %} -->
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {% for location in locations %}
                                     <label><input class="uk-radio" type="radio" name="location" value="{{ location.id }}"> {{ location.name }}</label>
@@ -342,17 +331,6 @@
 
                             <p class="uk-text-bold">Select the board you are in</p>
                             <div class="uk-margin">
-                                <!-- {% comment %} <label class="uk-form-label" for="board">Board</label>
-                                <div class="uk-form-controls">
-                                    <select class="uk-select" id="board" name="board">
-                                        <option value="none">Select</option>
-                                        <option value="caie">CAIE</option>
-                                        <option value="edxcel">EDXCEL</option>
-                                        {% for board in boards %}
-                                        <option value="{{ board.id }}">{{ board.name }}</option>
-                                        {% endfor %}    
-                                    </select>
-                                </div> {% endcomment %} -->
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {% for board in boards %}
                                     <label><input class="uk-radio" type="radio" name="board" value="{{ board.id }}"> {{ board.name }}</label>
@@ -362,18 +340,6 @@
 
                             <p class="uk-text-bold">Select only the subjects that you are registered to.</p>
                             <div class="uk-margin">
-                                <!-- {% comment %} <label class="uk-form-label" for="qualification">Qualification</label>
-                                <div class="uk-form-controls">
-                                    <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
-                                        <option value="none">Select</option>
-                                        <option value="O">O Level</option>
-                                        <option value="A">A Level</option>
-                                        <option value="both">Both</option>
-                                        {% for qualification in qualifications %}
-                                        <option value="{{ qualification.id }}">{{ qualification.level }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div> {% endcomment %} -->
                                 <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {% for qualification in qualifications %}
                                     <label><input class="uk-checkbox" type="checkbox" name="qualification" value="{{ qualification.id }}"> {{ qualification.level }}</label>
@@ -386,38 +352,6 @@
                             </div>
 
                             <div class="uk-margin" id="subjectload"></div>
-                    
-        
-                            <!-- <div class="uk-margin" id="o_level">
-                                <label class="uk-form-label" for="qualification">Select Subjects for O-level</label>
-                                <div class="uk-form-controls">
-                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        {% for subject in olevel %}
-                                        <label class="w-100"><input name="oLevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div> 
-        
-                            <div class="uk-margin" id="a_level">
-                                <label class="uk-form-label" for="qualification">A Level : AS Subjects</label>
-                                <div class="uk-form-controls">
-                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        {% for subject in aslevel %}
-                                        <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
-                                        {% endfor %}
-                                    </div>
-                                </div>
-        
-                                <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
-                                <div class="uk-form-controls">
-                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                        {% for subject in a2level %}
-                                        <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>  -->
                         </div>
                     </div>
                     <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
@@ -499,50 +433,6 @@
             }
         })
     }); 
-
-    // var o_level = document.getElementById("o_level");
-    // var a_level = document.getElementById("a_level"); 
-
-    // window.onload = function() {
-    //     hideContent();
-    // }
-
-    // function qualificationRender() {
-    //     var qualification = document.getElementById("qualification").value;
-    //     if(qualification == "none"){
-    //         hideContent();
-    //     } else if (qualification == "O") {
-    //         toggleOLevel();
-    //     } else if (qualification == "A") {
-    //         toggleAlevel();
-    //     } else {
-    //         hideContent();
-    //     }
-    // }
-
-    // function hideContent(){
-    //     o_level.style.display = "none";
-    //     a_level.style.display = "none";
-    // }
-
-
-    // function toggleOLevel(){
-    //     a_level.style.display = "none";
-    //     if(o_level.style.display == "none"){
-    //         o_level.style.display = "block";
-    //     }else{
-    //         o_level.style.display = "none";
-    //     }
-    // }
-
-    // function toggleAlevel(){
-    //     o_level.style.display = "none";
-    //     if(a_level.style.display == "none"){
-    //         a_level.style.display = "block";
-    //     }else{
-    //         a_level.style.display = "none";
-    //     }
-    // }
 
     
 

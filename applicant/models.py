@@ -71,6 +71,7 @@ class PersonalInfo(models.Model):
     student = models.ForeignKey(Student, related_name='student_personal_info', on_delete=models.CASCADE)
     unique_id = models.CharField(max_length=26, null=True, blank=True)
     acceptance = models.BooleanField(default=False, null=True, blank=True)
+    passport = models.CharField(max_length=128, null=True, blank=True)
     father = models.CharField(max_length=128, null=True, blank=True)
     mother = models.CharField(max_length=128, null=True, blank=True)
     father_mobile = models.CharField(max_length=128, null=True, blank=True)
@@ -193,3 +194,38 @@ class EdbaseTeacherSubject(models.Model):
 
     def __str__(self):
         return self.teacher.name
+
+
+class EdbaseStudentQualification(models.Model):
+    student = models.ForeignKey(Student, related_name='edbase_student_qualification_connection', on_delete=models.CASCADE)
+    qualification = models.ForeignKey(EdbaseQualification, related_name='qualification', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id
+
+class EdbaseStudentSubjects(models.Model):
+    student = models.ForeignKey(Student, related_name='edbase_student', on_delete=models.CASCADE)
+    subect = models.ForeignKey(EdbaseTeacherSubject, related_name='edbase_student_teacher_subject', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id
+
+class EdbaseStudentGuardian(models.Model):
+    student = models.ForeignKey(Student, related_name='edbase_student_guardian', on_delete=models.CASCADE)
+    guardian1 = models.CharField(max_length=128, null=True, blank=True)
+    guardian1relation = models.CharField(max_length=128, null=True, blank=True)
+    guardian2 = models.CharField(max_length=128, null=True, blank=True)
+    guardian2relation = models.CharField(max_length=128, null=True, blank=True)
+    parent_email = models.EmailField(max_length=128, null=True, blank=True)
+    parent_phone = models.CharField(max_length=128, null=True, blank=True)
+
+    def __str__(self):
+        return self.id
+
+class EdbaseStudentLocationBoard(models.Model):
+    student = models.ForeignKey(Student, related_name='edbase_student_loc', on_delete=models.CASCADE)
+    location = models.ForeignKey(EdbaseLocation, related_name='edbase_location', on_delete=models.CASCADE)
+    board = models.ForeignKey(EdbaseBoard, related_name='edbase_board', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id
