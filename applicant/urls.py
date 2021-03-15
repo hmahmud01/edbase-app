@@ -71,7 +71,9 @@ urlpatterns = [
     path('teacherlist/', views.teacherlist, name='teacherlist'),
     path('teachernextdetail/<int:tid>/', views.teachernextdetail, name='teachernextdetail'),
     path('loadsubject/', views.loadsubject, name='loadsubject'),
-
+    path('savestudentsystem/', views.saveStudentSystem, name='savestudentsystem'),
+    path('studentlist/', views.edbaseStudentList, name='studentlist'),
+    path('studentdetailnext/<int:sid>/', views.edbaseStudentDetail, name='studentdetailnext'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
