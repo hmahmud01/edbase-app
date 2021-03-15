@@ -834,6 +834,7 @@ def addsubjecttosystem(request):
 
 def saveTeacherNext(request):
     post_data = request.POST
+    print(post_data)
     teacherpass = "edbaseteacher"
     username = post_data['username']
     email = post_data['email']
