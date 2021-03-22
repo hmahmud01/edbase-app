@@ -1,26 +1,34 @@
 <div class="uk-margin" id="a_level">
-    {% comment %} <label class="uk-form-label" for="qualification">A Level : AS Subjects</label>
+    {% if olevel is not None %}
+    <label class="uk-form-label" for="qualification">Select Subjects for O-Level</label>
+    <div class="uk-form-controls">
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            {% for subject in olevel %}
+            <label class="w-100"><input name="olevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} ( {{ subject.teacher.name }} ) </label> 
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if aslevel is not None %}
+    <label class="uk-form-label" for="qualification">Select Subjects for AS-Level</label>
     <div class="uk-form-controls">
         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
             {% for subject in aslevel %}
-            <label class="w-100"><input name="aSLevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+            <label class="w-100"><input name="aslevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} ( {{ subject.teacher.name }} ) </label> 
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 
-    <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
+    {% if a2level is not None %}
+    <label class="uk-form-label" for="qualification">Select Subjects for A2-Level</label>
     <div class="uk-form-controls">
         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
             {% for subject in a2level %}
-            <label class="w-100"><input name="a2Level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.title }} ( {{ subject.assigned_teacher.name }} ) </label> 
+            <label class="w-100"><input name="a2level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} ( {{ subject.teacher.name }} ) </label> 
             {% endfor %}
         </div>
-    </div> {% endcomment %}
-
-    <label class="uk-form-label" for="qualification">Select Subjects for A-Level</label>
-    <div class="uk-form-controls">
-        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-
-        </div>
     </div>
+    {% endif %}
 </div> 

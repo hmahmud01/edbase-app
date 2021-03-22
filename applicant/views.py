@@ -13,7 +13,7 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 
 from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject, Batch, Session, StudentSessionBatchTracker
-from applicant.models import EdbaseBoard, EdbaseLocation, EdbaseQualification, EdbaseSubject, EdbaseTeacher, EdbaseTeacherSubject
+from applicant.models import EdbaseBoard, EdbaseLocation, EdbaseQualification, EdbaseSubject, EdbaseTeacher, EdbaseTeacherSubject, EdbaseStudentQualification, EdbaseStudentSubjects, EdbaseStudentGuardian, EdbaseStudentLocationBoard
 
 def home(request):
     data = ""
@@ -90,7 +90,39 @@ def studentSignupAdmission(request):
         {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations})
 
 def loadsubject(request):
-    pass
+    get_data = request.GET
+    location = get_data.get('locations')
+    board = get_data.get('boards')
+    qualifications = get_data.getlist('qualifications[]')
+
+    print(location)
+    print(board)
+    print(qualifications)
+
+    subjects = EdbaseTeacherSubject.objects.all()
+    subjects = subjects.filter(board_id=board)   
+    subjects = subjects.filter(location_id=location)
+
+    oLevel = None
+    asLevel = None
+    a2level = None
+
+    for qual in qualifications:
+        if qual == '1':
+            oLevel = subjects.filter(qualification_id=qual)
+        elif qual == '2':
+            asLevel = subjects.filter(qualification_id=qual)
+        elif qual == '3':
+            a2level = subjects.filter(qualification_id=qual)
+
+
+    print(oLevel)
+    print(asLevel)
+    print(a2level)
+
+    print(subjects)
+
+    return render(request, 'loadSubject.html', {'olevel': oLevel, 'aslevel': asLevel, 'a2level': a2level})
 
 def demoTeacher(request):
     data = ""
@@ -871,3 +903,134 @@ def teachernextdetail(request, tid):
     detail = EdbaseTeacherSubject.objects.get(id=tid)
     subjects = EdbaseTeacherSubject.objects.filter(id=tid)
     return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})
+
+
+def saveStudentSystem(request):
+    print(request.POST)
+    print(request.FILES)
+
+    post_data = request.POST
+    photo = request.FILES['photo']
+
+    if post_data['pass'] == post_data['conf_pass']:
+        user = User.objects.create_user(post_data['email'], post_data['email'], post_data['pass'])
+        student = Student(
+            user = user,
+            name = post_data['name'],
+            mobile = post_data['mobile'],
+            email = post_data['email'],            
+            school = post_data['school'],
+            status = True,
+            user_type = "student",            
+        )
+        student.save()
+
+        personal_info = PersonalInfo(
+            student = student,
+            acceptance =True,
+            passport = post_data['passnid'],
+            parent_email = post_data['parent_email'],
+            street_1 = post_data['street_1'],
+            street_2 = post_data['street_2'],
+            city = post_data['city'],
+            zip_code = post_data['zip_code'],
+            country = post_data['country'],
+            dob = post_data['dob'],
+            blood_group = post_data['blood_group'],            
+            photo = photo
+        )
+
+        personal_info.save()
+
+        location = EdbaseLocation.objects.get(id=post_data['location'])
+        board = EdbaseBoard.objects.get(id=post_data['board'])
+
+        location_board = EdbaseStudentLocationBoard(
+            student = student,
+            location = location,
+            board = board
+        )
+
+        location_board.save()
+
+        guardian = EdbaseStudentGuardian(
+            student = student,
+            guardian1 = post_data['guardian1'],
+            guardian1relation = post_data['guardian1relation'],
+            guardian2 = post_data['guardian2'],
+            guardian2relation = post_data['guardian2relation'],
+            parent_email = post_data['parent_email'],
+            parent_phone = post_data['parent_phone']
+        )
+
+        guardian.save()
+
+        qualifications = post_data.getlist('qualification')
+
+        for qual in qualifications:
+            edbqual = EdbaseQualification.objects.get(id=qual)
+            studentqual = EdbaseStudentQualification(
+                student = student,
+                qualification = edbqual
+            )
+            studentqual.save()
+        
+        if 'olevel' in post_data:
+            edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['olevel'])
+            subject = EdbaseStudentSubjects(
+                student = student,
+                subect = edbsubject
+            )
+            subject.save()
+            
+        if 'aslevel' in post_data:
+            edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['aslevel'])
+            subject = EdbaseStudentSubjects(
+                student = student,
+                subect = edbsubject
+            )
+            subject.save()
+
+        if 'a2level' in post_data:
+            edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['a2level'])
+            subject = EdbaseStudentSubjects(
+                student = student,
+                subect = edbsubject
+            )
+            subject.save()
+
+        payment_option = post_data['payment_option']
+
+        if 'Cash' in payment_option:
+            payment_info = PaymentInfo(
+                student = student,
+                payment_option = payment_option,
+                trx_id = "Cash Paid"
+            )
+            payment_info.save()
+        else :
+            payment_info = PaymentInfo(
+                student = student,
+                payment_option = payment_option,
+                trx_id = post_data['trx_id']
+            )
+            payment_info.save()
+
+    return redirect('studentlist')
+
+def edbaseStudentList(request):
+    students = Student.objects.all()
+    return render(request, 'studentlist.html', {'students': students})
+
+def edbaseStudentDetail(request, sid):
+    detail = Student.objects.get(id=sid)
+    personal_info = PersonalInfo.objects.get(student_id=sid)
+    subjects = EdbaseStudentSubjects.objects.filter(student_id=sid)
+    loc_board = EdbaseStudentLocationBoard.objects.get(student_id=sid)
+    guardian = EdbaseStudentGuardian.objects.get(student_id=sid)
+    qualification = EdbaseStudentQualification.objects.filter(student_id=sid)
+    payment_info = PaymentInfo.objects.get(student_id=sid)
+
+    context = {'detail': detail, 'personal_info': personal_info, 'subjects': subjects, 'loc_board': loc_board, 'guardian': guardian, 'qualification': qualification, 'payment_info': payment_info}
+
+    return render(request, 'studentdetailrework.html', context)
