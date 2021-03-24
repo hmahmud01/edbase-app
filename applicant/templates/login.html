@@ -13,7 +13,8 @@
                                 <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin-bottom">                                        
                                     <img width="325" class="uk-margin-bottom" src="/static/img/edbase.png" alt="" uk-img>
                                     <p class="uk-flex uk-flex-center uk-margin-small-bottom">Login With your Credentials</p>
-                                    <form method="POST" action="{% url 'verifylogin' %}" class="uk-form-stacked">{% csrf_token %}
+                                    <!-- previous url was verifylogin -->
+                                    <form method="POST" action="{% url 'userverification' %}" class="uk-form-stacked">{% csrf_token %}
                                         <div class="uk-margin">
                                             <label class="uk-form-label" for="form-stacked-text">Username</label>
                                             <div class="uk-form-controls">

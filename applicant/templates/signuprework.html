@@ -34,8 +34,12 @@
                 <h1 class="uk-heading-bullet">Edbase - O/A Level Admission Form</h1>
                 <p class="uk-heading-line"><span>Application form to get enroll</span></p>
             </div>
-            <div class="uk-child-width-1@m" uk-grid>
+            <div class="uk-child-width-1@m" uk-grid>                
                 <form action="{% url 'savestudentsystem' %}" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="uk-alert-danger" uk-alert>
+                        <a class="uk-alert-close" uk-close></a>
+                        <p>Please Check the Teachers <a href="uk-button uk-button-text">Routine</a> Before Enrolling. Teacher Routine are not subject to change.</p>
+                    </div>
                     <!-- {% comment %} <input id="id" type="text" name="id" value="{{ data.id }}" hidden> {% endcomment %} -->
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
                         <h3 class="uk-card-title">Personal Information</h3>
