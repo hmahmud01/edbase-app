@@ -77,18 +77,6 @@ def studentAdmissionForm(request, sid):
     return render(request, 'studentForm.html', {'data': student, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel})
 
 
-def studentSignupAdmission(request):
-    data = ''
-    academy = EdbaseTeacherSubject.objects.all()
-    qualifications = EdbaseQualification.objects.all()
-    boards = EdbaseBoard.objects.all()
-    locations = EdbaseLocation.objects.all()
-    aslevel = Subject.objects.filter(level__contains="AS")
-    a2level = Subject.objects.filter(level__contains="A2")
-    olevel = Subject.objects.filter(level__contains="O")
-    return render(request, 'signuprework.html', 
-        {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations})
-
 def loadsubject(request):
     get_data = request.GET
     location = get_data.get('locations')
@@ -904,6 +892,17 @@ def teachernextdetail(request, tid):
     subjects = EdbaseTeacherSubject.objects.filter(id=tid)
     return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})
 
+def studentSignupAdmission(request):
+    data = ''
+    academy = EdbaseTeacherSubject.objects.all()
+    qualifications = EdbaseQualification.objects.all()
+    boards = EdbaseBoard.objects.all()
+    locations = EdbaseLocation.objects.all()
+    aslevel = Subject.objects.filter(level__contains="AS")
+    a2level = Subject.objects.filter(level__contains="A2")
+    olevel = Subject.objects.filter(level__contains="O")
+    return render(request, 'signuprework.html', 
+        {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations})
 
 def saveStudentSystem(request):
     print(request.POST)
@@ -1034,3 +1033,148 @@ def edbaseStudentDetail(request, sid):
     context = {'detail': detail, 'personal_info': personal_info, 'subjects': subjects, 'loc_board': loc_board, 'guardian': guardian, 'qualification': qualification, 'payment_info': payment_info}
 
     return render(request, 'studentdetailrework.html', context)
+
+
+def edbaseStudentPortal(request):
+    data = ""
+    student = request.user.student
+    subjects = EdbaseStudentSubjects.objects.filter(student_id=student.id)    
+    return render(request, "portal/student/student.html", {"data": data, "subjects": subjects})
+
+def edbaseTeacherPortal(request):
+    data = ""
+    locations = EdbaseLocation.objects.all()
+    boards = EdbaseBoard.objects.all()
+    qualifications = EdbaseQualification.objects.all()
+    teacher = request.user.edbaseteacher    
+    subjects = EdbaseTeacherSubject.objects.filter(teacher_id=teacher.id)    
+    return render(request, "portal/teacher/teacher.html", {"data": data, 'subjects':subjects, 'locations': locations, 'boards': boards, 'qualifications': qualifications})
+
+def teacherPortalDetail(request, tid):    
+    detail = EdbaseTeacherSubject.objects.filter(teacher_id=tid).first()
+    subjects = EdbaseTeacherSubject.objects.filter(teacher_id=tid)
+    return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})    
+
+def teacherStudentList(request, sid):
+    students = EdbaseStudentSubjects.objects.filter(subect_id=sid)
+    return render(request, "portal/teacher/studentlist.html", {"students": students})
+
+def teacherbatchandsession(request):
+    data = ""
+    teacher = request.user.edbaseteacher    
+    subjects = EdbaseTeacherSubject.objects.filter(teacher_id=teacher.id)   
+    return render(request, "portal/teacher/batchandsession.html", {"data": data, "subjects": subjects})
+
+def addAnotherSubject(request):
+    post_data = request.POST
+    print(post_data)
+    teacher = request.user.edbaseteacher
+    location = EdbaseLocation.objects.get(id=post_data['location'])
+    board = EdbaseBoard.objects.get(id=post_data['board'])
+    qualification = EdbaseQualification.objects.get(id=post_data['qualification'])    
+
+    subject = EdbaseSubject(
+        title = post_data['subject'],
+        code = post_data['subject_code'],
+        status = True,
+        board = board,
+    )
+    subject.save()
+
+    teacherSubject = EdbaseTeacherSubject(
+        teacher = teacher,
+        location = location,
+        board = board,
+        qualification = qualification,
+        subject = subject,
+    )
+
+    teacherSubject.save()
+
+    return redirect('teacherportal')
+
+def veriyuser(request):
+    post_data = request.POST
+    print(post_data)
+    if 'user' and 'pass' in post_data:
+        user = authenticate(
+            request,
+            username = post_data['user'],
+            password = post_data['pass']
+        )
+        print(user)
+        if user is not None:
+            if user.is_authenticated:            
+                user_id = user.id
+                if user.is_superuser:
+                    auth_login(request, user)
+                    return redirect('dashboard')
+                else:
+                    if Student.objects.filter(user_id=user_id):
+                        auth_login(request, user)
+                        return redirect('studentportal')
+                    else:
+                        auth_login(request, user)
+                        teacher = user.edbaseteacher                        
+                        return redirect('teacherportal')
+            else:
+                return redirect('login')
+        else:
+            return redirect('login')
+
+    #     if user is None:
+    #         if User.objects.filter(username=post_data['user']).exists():
+    #             user = User.objects.get(username=post_data['user'])
+    #             user_id = user.id
+    #             student = Student.objects.get(user_id=user_id)
+    #             print(student)
+    #             status = student.status
+    #             if student.status is True :
+    #                 request.session['user'] = post_data['user']
+    #                 request.session['type'] = "Student"
+    #                 request.session['id'] = user_id
+    #                 request.session['student'] = student.id
+    #                 return redirect('studentpanel')
+    #             else :
+    #                 request.session['user'] = post_data['user']
+    #                 request.session['type'] = "Student"
+    #                 request.session['id'] = user_id
+    #                 request.session['student'] = student.id
+    #                 return redirect('studentpanelunverified')          
+    #         else:                
+    #             return redirect('login')
+    #     elif user.is_superuser:
+    #         auth_login(request, user)
+    #         request.session['user'] = post_data['user']
+    #         request.session['type'] = "Admin"
+    #         request.session['id'] = user.id
+    #         return redirect('dashboard')
+    #     else:
+    #         auth_login(request, user)
+    #         print(user.id)
+    #         user_id = user.id
+    #         if Teacher.objects.filter(user_id=user_id).exists():
+    #             teacher = Teacher.objects.get(user_id=user_id)
+    #             request.session['user'] = teacher.user.username
+    #             request.session['type'] = "Teacher"
+    #             request.session['teacher_id'] = teacher.id
+    #             request.session['id'] = user_id
+    #             return redirect('teacherpanel')
+    #         else:
+    #             student = Student.objects.get(user_id=user_id)
+    #             print(student)
+    #             status = student.status
+    #             if student.status is True :
+    #                 request.session['user'] = post_data['user']
+    #                 request.session['type'] = "Student"
+    #                 request.session['id'] = user_id
+    #                 request.session['student'] = student.id
+    #                 return redirect('studentpanel')
+    #             else :
+    #                 request.session['user'] = post_data['user']
+    #                 request.session['type'] = "Student"
+    #                 request.session['id'] = user_id
+    #                 request.session['student'] = student.id
+    #                 return redirect('studentpanelunverified')            
+    # else:
+    #     return redirect('login')

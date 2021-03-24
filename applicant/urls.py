@@ -74,6 +74,13 @@ urlpatterns = [
     path('savestudentsystem/', views.saveStudentSystem, name='savestudentsystem'),
     path('studentlist/', views.edbaseStudentList, name='studentlist'),
     path('studentdetailnext/<int:sid>/', views.edbaseStudentDetail, name='studentdetailnext'),
+    path('studentportal/', views.edbaseStudentPortal, name='studentportal'),
+    path('teacherportal/', views.edbaseTeacherPortal, name='teacherportal'),
+    path('userverification/', views.veriyuser, name='userverification'),
+    path('teacherportaldetail/<int:tid>/', views.teacherPortalDetail, name='teacherportaldetail'),
+    path('teacherportalstudents/<int:sid>/', views.teacherStudentList, name='teacherportalstudents'),    
+    path('addanothersubject', views.addAnotherSubject, name='addanothersubject'),
+    path('teacherbatchandsession/', views.teacherbatchandsession, name='teacherbatchandsession')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

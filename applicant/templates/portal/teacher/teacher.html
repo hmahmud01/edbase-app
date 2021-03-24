@@ -13,21 +13,14 @@
                                 <a class="uk-navbar-item uk-logo logo-size" href="/"><img src="/static/img/edbase_footer.png" alt="edbase"></a>                                                 
                             </div>
                             <div class="uk-navbar-right uk-dark">
-                                <!-- <ul class="uk-navbar-nav uk-iconnav">                                    
-                                    <li>
-                                        <a href="{% url 'changePasswordPage' request.session.id %}" uk-toggle><span uk-icon="heart"></span> Change Password </a>
-                                    </li>        
-                                    <li>
-                                        <a href="{% url 'batchsessionteacher' %}" uk-toggle><span uk-icon="heart"></span> Session & Batch </a>
-                                    </li>        
-                                    <li>
-                                        <a href="{% url 'contents' %}" uk-toggle><span uk-icon="heart"></span> Content Dashboard </a>
-                                    </li>                             
-                                    <li>                                        
-                                        <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
-                                    </li>                                 
-                                </ul> -->
+
                                 <ul class="uk-navbar-nav uk-iconnav">
+                                    <li>
+                                        <a href="{% url 'teacherbatchandsession' %}" class="uk-button uk-button-secondary">Batch&Sessions</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'teacherportaldetail' request.user.edbaseteacher.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
+                                    </li>
                                     <li>
                                         <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
                                     </li>
@@ -43,6 +36,8 @@
 
     <!-- itemsList -->
     <section id="student-list">
+
+
         <!-- <div class="uk-container">
             <div class="head">
                 <h1 class="uk-heading-bullet">Welcome {{ data.name }}</h1>
@@ -112,8 +107,81 @@
             </div>
         </div> -->
 
-        <div class="uk-container">
-            <h1>Hello Teacher</h1>
+        <div class="uk-container" style="min-height:700px">
+            <h1>Hello {{ request.user.edbaseteacher.name }}</h1>            
+            <p>Your Enlisted Student List</p>            
+            <a class="uk-button uk-button-primary uk-button-small" href="#modal-subject" uk-toggle>Add Another Subject</a>
+            <hr>
+            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+                {% for sub in subjects %}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <a href="{% url 'teacherportalstudents' sub.id %}"><h3 class="uk-card-title">{{ sub.subject.title }} - {{ sub.subject.code }}</h3></a>
+                        <p>{{ sub.qualification.level }}</p>
+                        <p>{{ sub.board.name }}</p>
+                        <p>Batch</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <!-- This is the modal -->
+        <div id="modal-subject" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">Add Location</h2>
+                <form action="{% url 'addanothersubject' %}" method="POST">{% csrf_token %}
+                    
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="location">Location</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="location" name="location">
+                                <option value="none">Select</option>
+                                {% for location in locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>                    
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="board">Board</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="board" name="board">
+                                <option value="none">Select</option>
+                                {% for board in boards %}
+                                <option value="{{ board.id }}">{{ board.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>   
+                    
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="qualification">Qualification</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
+                                <option value="none">Select</option>
+                                {% for qualification in qualifications %}
+                                <option value="{{ qualification.id }}">{{ qualification.level }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div> 
+
+                    <hr>
+                    <div class="uk-margin">
+                        <input class="uk-input" name="subject" type="text" placeholder="Subject">
+                    </div>                            
+                    <div class="uk-margin">
+                        <input class="uk-input" name="subject_code" type="text" placeholder="Subject code">
+                    </div>     
+                    
+                    <p class="uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="submit">Save</button>
+                    </p>
+                </form>
+            </div>
         </div>
     </section>
 
