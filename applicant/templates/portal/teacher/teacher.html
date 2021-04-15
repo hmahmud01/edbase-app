@@ -19,6 +19,9 @@
                                         <a href="{% url 'teacherbatchandsession' %}" class="uk-button uk-button-secondary">Batch&Sessions</a>
                                     </li>
                                     <li>
+                                        <a href="#modal-assign-subject" class="uk-button uk-button-secondary" uk-toggle>Add session</a>
+                                    </li>
+                                    <li>
                                         <a href="{% url 'teacherportaldetail' request.user.edbaseteacher.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
                                     </li>
                                     <li>
@@ -36,8 +39,25 @@
 
     <!-- itemsList -->
     <section id="student-list">
+     <div id="modal-assign-subject" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">Add Batch to The Subject</h2>
+                <form action="" method="">{% csrf_token %}
 
-
+                    <p>You are currently adding batch for {{ subject.title }} - {{ subject.code }}</p>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="session">Session Name</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="session" name="session" type="text" placeholder="Session Name">
+                        </div>
+                    </div> 
+                    <p class="uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="button">Save</button>
+                    </p>
+                </form>
+            </div>
+        </div>
         <!-- <div class="uk-container">
             <div class="head">
                 <h1 class="uk-heading-bullet">Welcome {{ data.name }}</h1>

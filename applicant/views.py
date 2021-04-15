@@ -1057,7 +1057,9 @@ def teacherPortalDetail(request, tid):
 
 def teacherStudentList(request, sid):
     students = EdbaseStudentSubjects.objects.filter(subect_id=sid)
-    return render(request, "portal/teacher/studentlist.html", {"students": students})
+    main = EdbaseStudentSubjects.objects.filter(subect_id=sid).first()
+    subject = main.subect.subject
+    return render(request, "portal/teacher/studentlist.html", {"students": students, "subject": subject})
 
 def teacherbatchandsession(request):
     data = ""

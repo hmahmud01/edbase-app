@@ -33,10 +33,10 @@
 
     <!-- itemsList -->
     <section id="student-list">
-
         <div class="uk-container">
             <h1>Hello {{ request.user.edbaseteacher.name }}</h1>
             <p>Your Enlisted Student List</p>
+            <a class="uk-button uk-button-primary uk-button-small" href="#modal-assign-subject" uk-toggle>Assign Batch To Subject</a>            
             <hr>
             <div class="uk-child-width-1@m" uk-grid>
                 <div class="uk-margin-large">
@@ -63,6 +63,37 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+        <div id="modal-assign-subject" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">Add Batch to The Subject</h2>
+                <form action="" method="">{% csrf_token %}
+
+                    <p>You are currently adding batch for {{ subject.title }} - {{ subject.code }}</p>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="session">Session Name</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="session" name="session" type="text" placeholder="Session Name">
+                        </div>
+                    </div> 
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="batch">Batch Name</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="batch" name="batch" type="text" placeholder="Batch Name">
+                        </div>
+                    </div>   
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="seat">Seat Limit</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="seat" name="seat" type="text" placeholder="Seat Limit">
+                        </div>
+                    </div> 
+                    <p class="uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="button">Save</button>
+                    </p>
+                </form>
             </div>
         </div>
     </section>
