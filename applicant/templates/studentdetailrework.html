@@ -29,6 +29,28 @@
         </div>
     </section>
 
+    <!-- This is password modal -->
+    <div id="modal-change-password" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">Change Password</h2>
+            <form action="{% url 'studentpasswordchange' detail.user.id %}" method="POST">{% csrf_token %}        
+                
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-text">Password</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" name="pass" id="form-stacked-text" type="password" placeholder="Password">
+                    </div>
+                </div>   
+
+                
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary" type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
 
     <!-- itemsList -->
     <section id="student-list">
@@ -39,6 +61,7 @@
             </div>
 
             <div class="uk-child-width-1@m" uk-grid>
+                
                 <div class="uk-margin-large">
                     <div class="uk-card uk-card-default uk-card-body uk-margin-small">
                         <h3>Students Information</h3>
@@ -96,6 +119,7 @@
                             </div>
                             <div class="uk-width-expand@m">
                                 <img style="width:200px" src="/media/{{ personal_info.photo }}" alt="{{data.name}}">
+                                <a class="uk-button uk-button-secondary uk-button-samll" href="#modal-change-password" uk-toggle>Change Password</a>
                             </div>
                         </div>
                     </div>

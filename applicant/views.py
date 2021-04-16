@@ -1124,59 +1124,10 @@ def veriyuser(request):
         else:
             return redirect('login')
 
-    #     if user is None:
-    #         if User.objects.filter(username=post_data['user']).exists():
-    #             user = User.objects.get(username=post_data['user'])
-    #             user_id = user.id
-    #             student = Student.objects.get(user_id=user_id)
-    #             print(student)
-    #             status = student.status
-    #             if student.status is True :
-    #                 request.session['user'] = post_data['user']
-    #                 request.session['type'] = "Student"
-    #                 request.session['id'] = user_id
-    #                 request.session['student'] = student.id
-    #                 return redirect('studentpanel')
-    #             else :
-    #                 request.session['user'] = post_data['user']
-    #                 request.session['type'] = "Student"
-    #                 request.session['id'] = user_id
-    #                 request.session['student'] = student.id
-    #                 return redirect('studentpanelunverified')          
-    #         else:                
-    #             return redirect('login')
-    #     elif user.is_superuser:
-    #         auth_login(request, user)
-    #         request.session['user'] = post_data['user']
-    #         request.session['type'] = "Admin"
-    #         request.session['id'] = user.id
-    #         return redirect('dashboard')
-    #     else:
-    #         auth_login(request, user)
-    #         print(user.id)
-    #         user_id = user.id
-    #         if Teacher.objects.filter(user_id=user_id).exists():
-    #             teacher = Teacher.objects.get(user_id=user_id)
-    #             request.session['user'] = teacher.user.username
-    #             request.session['type'] = "Teacher"
-    #             request.session['teacher_id'] = teacher.id
-    #             request.session['id'] = user_id
-    #             return redirect('teacherpanel')
-    #         else:
-    #             student = Student.objects.get(user_id=user_id)
-    #             print(student)
-    #             status = student.status
-    #             if student.status is True :
-    #                 request.session['user'] = post_data['user']
-    #                 request.session['type'] = "Student"
-    #                 request.session['id'] = user_id
-    #                 request.session['student'] = student.id
-    #                 return redirect('studentpanel')
-    #             else :
-    #                 request.session['user'] = post_data['user']
-    #                 request.session['type'] = "Student"
-    #                 request.session['id'] = user_id
-    #                 request.session['student'] = student.id
-    #                 return redirect('studentpanelunverified')            
-    # else:
-    #     return redirect('login')
+def studentPasswordReset(request, uid):
+    post_data = request.POST
+    user = User.objects.get(id=uid)
+    password = post_data['pass']
+    user.set_password(password)
+    user.save()
+    return redirect('studentlist')        

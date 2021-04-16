@@ -80,7 +80,8 @@ urlpatterns = [
     path('teacherportaldetail/<int:tid>/', views.teacherPortalDetail, name='teacherportaldetail'),
     path('teacherportalstudents/<int:sid>/', views.teacherStudentList, name='teacherportalstudents'),    
     path('addanothersubject', views.addAnotherSubject, name='addanothersubject'),
-    path('teacherbatchandsession/', views.teacherbatchandsession, name='teacherbatchandsession')
+    path('teacherbatchandsession/', views.teacherbatchandsession, name='teacherbatchandsession'),
+    path('studentpasswordchange/<int:uid>/', views.studentPasswordReset, name='studentpasswordchange'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
