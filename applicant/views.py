@@ -14,6 +14,7 @@ from django.conf import settings
 
 from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject, Batch, Session, StudentSessionBatchTracker
 from applicant.models import EdbaseBoard, EdbaseLocation, EdbaseQualification, EdbaseSubject, EdbaseTeacher, EdbaseTeacherSubject, EdbaseStudentQualification, EdbaseStudentSubjects, EdbaseStudentGuardian, EdbaseStudentLocationBoard
+from applicant.models import EdbaseBatch, EdbaseSesssion, EdbaseBatchSubject, EdbaseStudentBatch
 
 def home(request):
     data = ""
@@ -82,10 +83,7 @@ def loadsubject(request):
     location = get_data.get('locations')
     board = get_data.get('boards')
     qualifications = get_data.getlist('qualifications[]')
-
-    print(location)
-    print(board)
-    print(qualifications)
+    
 
     subjects = EdbaseTeacherSubject.objects.all()
     subjects = subjects.filter(board_id=board)   
@@ -103,14 +101,15 @@ def loadsubject(request):
         elif qual == '3':
             a2level = subjects.filter(qualification_id=qual)
 
+    batchs = EdbaseBatchSubject.objects.all()
 
-    print(oLevel)
-    print(asLevel)
-    print(a2level)
+    return render(request, 'loadSubject.html', {'olevel': oLevel, 'aslevel': asLevel, 'a2level': a2level, "batchs": batchs})
 
-    print(subjects)
-
-    return render(request, 'loadSubject.html', {'olevel': oLevel, 'aslevel': asLevel, 'a2level': a2level})
+def loadbatch(request):
+    get_data = request.GET
+    data = get_data.get('test')
+    print(data)
+    return render(request, 'loadbatch.html', {'data': data})
 
 def demoTeacher(request):
     data = ""
@@ -973,7 +972,7 @@ def saveStudentSystem(request):
                 qualification = edbqual
             )
             studentqual.save()
-        
+        studentsubjects = []
         if 'olevel' in post_data:
             edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['olevel'])
             subject = EdbaseStudentSubjects(
@@ -981,6 +980,7 @@ def saveStudentSystem(request):
                 subect = edbsubject
             )
             subject.save()
+            studentsubjects.append(subject)
             
         if 'aslevel' in post_data:
             edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['aslevel'])
@@ -989,6 +989,7 @@ def saveStudentSystem(request):
                 subect = edbsubject
             )
             subject.save()
+            studentsubjects.append(subject)
 
         if 'a2level' in post_data:
             edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['a2level'])
@@ -997,6 +998,19 @@ def saveStudentSystem(request):
                 subect = edbsubject
             )
             subject.save()
+            studentsubjects.append(subject)
+
+        batchs = post_data.getlist('batch')
+        print(batchs)
+        for batch in batchs:
+            edbbatch = EdbaseBatch.objects.get(id=batch)
+            for x in range(len(studentsubjects)):
+                studentbatch = EdbaseStudentBatch(                    
+                    batch = edbbatch,
+                    student = student,
+                    edsubject = studentsubjects[x]
+                )
+            studentbatch.save()
 
         payment_option = post_data['payment_option']
 
@@ -1029,8 +1043,9 @@ def edbaseStudentDetail(request, sid):
     guardian = EdbaseStudentGuardian.objects.get(student_id=sid)
     qualification = EdbaseStudentQualification.objects.filter(student_id=sid)
     payment_info = PaymentInfo.objects.get(student_id=sid)
+    batchs = EdbaseStudentBatch.objects.filter(student_id=sid)
 
-    context = {'detail': detail, 'personal_info': personal_info, 'subjects': subjects, 'loc_board': loc_board, 'guardian': guardian, 'qualification': qualification, 'payment_info': payment_info}
+    context = {'detail': detail, 'personal_info': personal_info, 'subjects': subjects, 'loc_board': loc_board, 'guardian': guardian, 'qualification': qualification, 'payment_info': payment_info, 'batchs': batchs}
 
     return render(request, 'studentdetailrework.html', context)
 
@@ -1048,12 +1063,39 @@ def edbaseTeacherPortal(request):
     qualifications = EdbaseQualification.objects.all()
     teacher = request.user.edbaseteacher    
     subjects = EdbaseTeacherSubject.objects.filter(teacher_id=teacher.id)    
-    return render(request, "portal/teacher/teacher.html", {"data": data, 'subjects':subjects, 'locations': locations, 'boards': boards, 'qualifications': qualifications})
+    batchsubjects = EdbaseBatchSubject.objects.filter(subject__teacher_id=teacher.id)
+    sessions = EdbaseSesssion.objects.all()    
+    batchs = EdbaseBatch.objects.all()
+    return render(request, "portal/teacher/teacher.html", {"data": data, 'subjects':subjects, 'locations': locations, 'boards': boards, 'qualifications': qualifications, 'sessions': sessions, 'batchs': batchs, 'batchsubjects': batchsubjects})
 
 def teacherPortalDetail(request, tid):    
     detail = EdbaseTeacherSubject.objects.filter(teacher_id=tid).first()
     subjects = EdbaseTeacherSubject.objects.filter(teacher_id=tid)
     return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})    
+
+def teacherBatchList(request, sid):
+    print(sid)
+    batchs = EdbaseBatchSubject.objects.filter(subject_id=sid)
+    subject = EdbaseTeacherSubject.objects.get(id=sid)
+    batchlist = EdbaseBatch.objects.all()
+    sessionlist = EdbaseSesssion.objects.all()
+    return render(request, "portal/teacher/batchlist.html", {"batchs" : batchs, "subject": subject, "batchlist": batchlist, "sessionlist": sessionlist})    
+
+def studentBatchList(request, bid):
+    students = EdbaseStudentBatch.objects.filter(batch_id=bid)
+    return render(request, "portal/teacher/batchstudentlist.html", {"students": students})
+
+def assignBatchToSubject(request):
+    post_data = request.POST
+    sid = post_data['subject_id']
+    subject = EdbaseTeacherSubject.objects.get(id=sid)
+    batch = EdbaseBatch.objects.get(id=post_data['batch'])
+    edbsubjectbatch = EdbaseBatchSubject(
+        subject = subject,
+        batch= batch
+    )
+    edbsubjectbatch.save()
+    return redirect('teacherbatchlist', sid)
 
 def teacherStudentList(request, sid):
     students = EdbaseStudentSubjects.objects.filter(subect_id=sid)
@@ -1090,8 +1132,15 @@ def addAnotherSubject(request):
         qualification = qualification,
         subject = subject,
     )
-
     teacherSubject.save()
+
+    batch = EdbaseBatch.objects.get(id=post_data['batch'])
+    batchSubject = EdbaseBatchSubject(
+        subject = teacherSubject,
+        batch = batch
+    )
+
+    batchSubject.save()
 
     return redirect('teacherportal')
 
@@ -1131,3 +1180,36 @@ def studentPasswordReset(request, uid):
     user.set_password(password)
     user.save()
     return redirect('studentlist')        
+
+def addSession(request):
+    post_data = request.POST
+    session = post_data['session']
+    edbsession = EdbaseSesssion(
+        session = session
+    )
+    edbsession.save()    
+    print(edbsession.id)
+    return redirect('teacherportal')
+
+def addBatch(request):
+    post_data = request.POST
+    session = EdbaseSesssion.objects.get(id=post_data['session'])    
+    batch = EdbaseBatch(
+        session = session,
+        batch = post_data['batch'],
+        seat = post_data['seat']
+    )   
+    batch.save()    
+    return redirect('teacherportal')
+    
+def edbaseremovestudent(request, sid):
+    student = Student.objects.get(id=sid)
+    user = User.objects.get(id=student.user_id)
+    personalInfo = PersonalInfo.objects.get(student_id=sid)    
+    student.delete()
+    user.delete()
+    personalInfo.delete()
+    if PaymentInfo.objects.get(student_id=sid).exists():
+        paymentinfo = PaymentInfo.objects.get(student_id=sid)
+        paymentinfo.delete()
+    return redirect('studentlist')
