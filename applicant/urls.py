@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('signup/', views.signUp, name='signup'),
-    path('signupdemo/', views.studentSignupAdmission, name='signupdemo'),
+    path('signupv2/', views.studentSignupAdmission, name='signupv2'),
     path('teacherdemo/', views.demoTeacher, name='teacherdemo'),
     path('activate/<int:sid>/', views.activateStudent, name='activate'),
     path('deactivate/<int:sid>/', views.deactivateStudent, name='deactivate'),
@@ -71,8 +71,10 @@ urlpatterns = [
     path('teacherlist/', views.teacherlist, name='teacherlist'),
     path('teachernextdetail/<int:tid>/', views.teachernextdetail, name='teachernextdetail'),
     path('loadsubject/', views.loadsubject, name='loadsubject'),
+    path('loadbatch/', views.loadbatch, name='loadbatch'),
     path('savestudentsystem/', views.saveStudentSystem, name='savestudentsystem'),
     path('studentlist/', views.edbaseStudentList, name='studentlist'),
+    path('removestudent/<int:sid>/', views.edbaseremovestudent, name='removestudent'),
     path('studentdetailnext/<int:sid>/', views.edbaseStudentDetail, name='studentdetailnext'),
     path('studentportal/', views.edbaseStudentPortal, name='studentportal'),
     path('teacherportal/', views.edbaseTeacherPortal, name='teacherportal'),
@@ -82,6 +84,12 @@ urlpatterns = [
     path('addanothersubject', views.addAnotherSubject, name='addanothersubject'),
     path('teacherbatchandsession/', views.teacherbatchandsession, name='teacherbatchandsession'),
     path('studentpasswordchange/<int:uid>/', views.studentPasswordReset, name='studentpasswordchange'),
+    path('addsession', views.addSession, name='addsession'),
+    path('addbatch', views.addBatch, name='addbatch'),
+    path('teacherbatchlist/<int:sid>/', views.teacherBatchList, name='teacherbatchlist'),
+    path('batchstudentlist/<int:bid>/', views.studentBatchList, name='batchstudentlist'),
+    path('assignbatchtosubject/', views.assignBatchToSubject, name='assignbatchtosubject'),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

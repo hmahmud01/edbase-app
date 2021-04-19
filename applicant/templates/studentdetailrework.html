@@ -283,6 +283,37 @@
                             </div>
                         </div>                        
                     {% endif %}
+                    <hr>
+                    {% if batchs %}
+                    <div class="uk-card uk-card-default uk-card-body uk-margin-small">
+                        <h3>Batchs</h3>
+                        <div class="uk-text-left" uk-grid>
+                            <div class="uk-width-1-4">
+                                <div class="">Batchs You are Enlisted in</div>
+                            </div>
+                            <div class="uk-width-3-4">
+                                <ul class="uk-list uk-list-bullet">
+                                    <table class="uk-table uk-table-hover uk-table-divider">
+                                        <thead>
+                                            <tr>
+                                                <th>Batch</th>
+                                                <th>Session</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for batch in batchs %}
+                                            <tr>
+                                                <td>{{ batch.batch.batch }}</td>  
+                                                <td>{{ batch.batch.session.session }}</td>                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>  
+                    {% endif %}
                 </div>
             </div>
         </div>

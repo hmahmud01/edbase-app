@@ -15,7 +15,7 @@
     <div class="uk-form-controls">
         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
             {% for subject in aslevel %}
-            <label class="w-100"><input name="aslevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} ( {{ subject.teacher.name }} ) </label> 
+            <label class="w-100"><input name="aslevel" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} - {{ subject.subject.code }} ( {{ subject.teacher.name }} ) </label> 
             {% endfor %}
         </div>
     </div>
@@ -26,9 +26,21 @@
     <div class="uk-form-controls">
         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
             {% for subject in a2level %}
-            <label class="w-100"><input name="a2level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} ( {{ subject.teacher.name }} ) </label> 
+            <label class="w-100"><input name="a2level" class="uk-checkbox" type="checkbox" value="{{ subject.id }}"> {{ subject.subject.title }} - {{ subject.subject.code }} ( {{ subject.teacher.name }} ) </label> 
             {% endfor %}
         </div>
     </div>
-    {% endif %}
+    {% endif %}    
 </div> 
+
+<p class="uk-text-bold">Select Your Batch</p>
+<div class="uk-margin">    
+    <label class="uk-form-label" for="batch">Your batch will be confirmed after reviewing your selection</label>    
+    <div class="uk-form-controls">
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+            {% for batch in batchs %}
+            <label class="w-100"><input name="batch" class="uk-checkbox" type="checkbox" value="{{ batch.batch.id }}"> {{ batch.batch.batch }} - {{ subject.subject.code }} ( {{ batch.subject.subject.title }} - {{ batch.subject.subject.code }} - {{ batch.subject.teacher.name }} ) </label> 
+            {% endfor %}
+        </div>
+    </div>
+</div>

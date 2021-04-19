@@ -64,6 +64,7 @@
                                 <td>{{ student.status }}</td>
                                 <td class="uk-flex">
                                     <a href="{% url 'studentdetailnext' student.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
+                                    <a href="{% url 'removestudent' student.id %}" class="uk-button uk-button-danger">delete</a>                                     
                                 </td>
                             </tr>
                             {% endfor %}
