@@ -105,8 +105,7 @@
         <div id="modal-assign-batch" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">Assign Batch</h2>
-                <p>To the subject {{ subject.subject.title }} - {{ subject.subject.code }}</p>
-                <p>{{ subject.qualification.level }}</p>
+                <p>To the subject {{ subject.subject.title }} - {{ subject.subject.code }}</p>                
                 <form action="{% url 'assignbatchtosubject' %}" method="POST" class="" enctype="multipart/form-data">{% csrf_token %}
                     <input type="hidden" name="subject_id" value="{{ subject.id }}">
                     <div class="uk-margin">
