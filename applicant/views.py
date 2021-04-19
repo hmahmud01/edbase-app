@@ -1073,7 +1073,11 @@ def teacherPortalDetail(request, tid):
     subjects = EdbaseTeacherSubject.objects.filter(teacher_id=tid)
     return render(request, 'teacherDetail.html', {'detail': detail, 'subjects': subjects})    
 
-def teacherBatchList(request, sid):
+def sessionList(request, sid):
+    sessions = EdbaseSesssion.objects.all()
+    return render(request, "portal/teacher/sessionlist.html", {"sessions": sessions, "sid": sid})
+
+def teacherBatchList(request, ssid, sid):
     print(sid)
     batchs = EdbaseBatchSubject.objects.filter(subject_id=sid)
     subject = EdbaseTeacherSubject.objects.get(id=sid)

@@ -86,10 +86,10 @@ urlpatterns = [
     path('studentpasswordchange/<int:uid>/', views.studentPasswordReset, name='studentpasswordchange'),
     path('addsession', views.addSession, name='addsession'),
     path('addbatch', views.addBatch, name='addbatch'),
-    path('teacherbatchlist/<int:sid>/', views.teacherBatchList, name='teacherbatchlist'),
-    path('batchstudentlist/<int:bid>/', views.studentBatchList, name='batchstudentlist'),
+    path('sessionlist/<int:sid>/', views.sessionList, name='sessionlist'),
+    path('teacherbatchlist/<int:ssid>/<int:sid>/', views.teacherBatchList, name='teacherbatchlist'),    
+    path('batchstudentlist/<int:bid>/', views.studentBatchList, name='batchstudentlist'),    
     path('assignbatchtosubject/', views.assignBatchToSubject, name='assignbatchtosubject'),
-    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

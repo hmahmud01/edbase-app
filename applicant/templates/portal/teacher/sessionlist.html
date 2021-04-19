@@ -65,13 +65,13 @@
         <div id="modal-batch-create" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">Add Batch to the System</h2>
-                <form action="{% url 'addbatch' %}" method="POST" class="uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
+                <form action="{% url 'addbatch' %}" method="POST" class="" enctype="multipart/form-data">{% csrf_token %}
                     <div class="uk-margin">
                         <label class="uk-form-label" for="session">Session Name</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" id="session" name="session">
                                 <option value="none">Select</option>
-                                {% for session in sessions %}
+                                {% for session in sessionlist %}
                                 <option value="{{ session.id }}">{{ session.session }}</option>
                                 {% endfor %}
                             </select>
@@ -101,120 +101,50 @@
             </div>
         </div>
 
-        <!-- ADD SUBJECTMODAL -->
-        <div id="modal-subject" uk-modal>
+        <!-- BATCH CREATE MODAL -->
+        <div id="modal-assign-batch" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
-                <h2 class="uk-modal-title">Add Subject To The System</h2>
-                <form action="{% url 'addanothersubject' %}" method="POST">{% csrf_token %}
-                    
+                <h2 class="uk-modal-title">Assign Batch</h2>
+                <p>To the subject {{ subject.subject.title }} - {{ subject.subject.code }}</p>
+                <p>{{ subject.qualification.level }}</p>
+                <form action="{% url 'assignbatchtosubject' %}" method="POST" class="" enctype="multipart/form-data">{% csrf_token %}
+                    <input type="hidden" name="subject_id" value="{{ subject.id }}">
                     <div class="uk-margin">
-                        <label class="uk-form-label" for="location">Location</label>
-                        <div class="uk-form-controls">
-                            <select class="uk-select" id="location" name="location">
-                                <option value="none">Select</option>
-                                {% for location in locations %}
-                                <option value="{{ location.id }}">{{ location.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>                    
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="board">Board</label>
-                        <div class="uk-form-controls">
-                            <select class="uk-select" id="board" name="board">
-                                <option value="none">Select</option>
-                                {% for board in boards %}
-                                <option value="{{ board.id }}">{{ board.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>   
-                    
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="qualification">Qualification</label>
-                        <div class="uk-form-controls">
-                            <select class="uk-select" id="qualification" name="qualification" onchange="qualificationRender()">
-                                <option value="none">Select</option>
-                                {% for qualification in qualifications %}
-                                <option value="{{ qualification.id }}">{{ qualification.level }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div> 
-
-                    <hr>
-                    <div class="uk-margin">
-                        <input class="uk-input" name="subject" type="text" placeholder="Subject">
-                    </div>                            
-                    <div class="uk-margin">
-                        <input class="uk-input" name="subject_code" type="text" placeholder="Subject code">
-                    </div>  
-
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="batch">Batch</label>
+                        <label class="uk-form-label" for="batch">Batch Name</label>
                         <div class="uk-form-controls">
                             <select class="uk-select" id="batch" name="batch">
                                 <option value="none">Select</option>
-                                {% for batch in batchs %}
+                                {% for batch in batchlist %}
                                 <option value="{{ batch.id }}">{{ batch.batch }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                    </div> 
-                    <p>Create Batch If not available<a href="#modal-batch-create" uk-toggle>Add Batch</a></p>
-                    <p class="uk-text-right">
+                    </div>  
+                    <p>If Batch is not Available then create from here <a href="#modal-batch-create" uk-toggle>Add Batch</a></p>
+
+                    <div class="uk-margin" uk-margin>
                         <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
                         <button class="uk-button uk-button-primary" type="submit">Save</button>
-                    </p>
+                    </div>
                 </form>
             </div>
         </div>
 
 
         <div class="uk-container" style="min-height:700px">
-            <h1>Hello {{ request.user.edbaseteacher.name }}</h1>            
-            <p>Your Enlisted Student List</p>            
-            <a class="uk-button uk-button-primary uk-button-small" href="#modal-subject" uk-toggle>Add Another Subject</a>
-            <!-- <hr>
-            <p>Student List</p>
-            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>                
-                {% for sub in subjects %}
-                <div>
-                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'teacherportalstudents' sub.id %}"><h3 class="uk-card-title">{{ sub.subject.title }} - {{ sub.subject.code }}</h3></a>
-                        <p>{{ sub.qualification.level }}</p>
-                        <p>{{ sub.board.name }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div> -->
+            <h1>Hello {{ request.user.edbaseteacher.name }}</h1>                                       
+            <a class="uk-button uk-button-primary uk-button-small" href="#modal-add-session" uk-toggle>Create Session</a>
             <hr>
-            <p>Batch list</p>
-            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>                
-                {% for sub in subjects %}
+            <p>List of all Sessions</p>       
+            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+                {% for session in sessions %}
                 <div>
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'sessionlist' sub.id %}"><h3 class="uk-card-title">{{ sub.subject.title }} - {{ sub.subject.code }}</h3></a>
-                        <p>{{ sub.qualification.level }}</p>
-                        <p>{{ sub.board.name }}</p>
+                        <a href="{% url 'teacherbatchlist' session.id sid %}"><h3 class="uk-card-title">{{ session.session }}</h3></a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            <hr>
-            <!-- <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for sub in batchsubjects %}
-                <div>
-                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'teacherportalstudents' sub.id %}"><h3 class="uk-card-title">{{ sub.subject.subject.title }} - {{ sub.subject.subject.code }}</h3></a>
-                        <p>{{ sub.subject.qualification.level }}</p>
-                        <p>{{ sub.subject.board.name }}</p>
-                        <p>{{ sub.batch.batch }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div> -->
-
         </div>
     </section>
 
