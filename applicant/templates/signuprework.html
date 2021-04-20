@@ -352,10 +352,22 @@
                             </div> 
 
                             <div class="uk-margin">
-                                <a class="uk-button uk-button-secondary" id="subjectloadfunction" data-brand-url="{% url 'loadsubject' %}">Generate Subjects</a>
+                                <a class="uk-button uk-button-secondary" id="subjectloadfunction" data-subject-url="{% url 'loadsubject' %}">Generate Subjects</a>
                             </div>
 
                             <div class="uk-margin" id="subjectload"></div>
+                            <div class="uk-margin" id="sessionarea">
+                                <p class="uk-text-bold">Select Session from the following list.</p>
+                                <div class="uk-margin">
+                                    <select class="uk-select" id="sessionval" name="session">
+                                        {% for session in sessions %}
+                                        <option value="{{ session.id }}">{{ session.session }}</option>                                        
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <a class="uk-button uk-button-secondary" id="batchloadfunction" data-batch-url="{% url 'loadbatch' %}">Generate Batch</a>
+                            </div>
+                            <div class="uk-margin" id="batchload"></div>
                         </div>
                     </div>
                     <div class="uk-card uk-card-default uk-card-hover uk-width-1@m">
@@ -412,8 +424,9 @@
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>   
+    $("#sessionarea").hide();
     $("#subjectloadfunction").click(function(){
-        var url = $("#subjectloadfunction").attr("data-brand-url");
+        var url = $("#subjectloadfunction").attr("data-subject-url");
         const locations = document.querySelector('input[name="location"]:checked').value;
         const boards = document.querySelector('input[name="board"]:checked').value;
         const qualifications = document.querySelectorAll('input[name="qualification"]:checked');
@@ -437,7 +450,25 @@
             }
         })
         $("#batchloadfunction").removeAttr("disabled");
+        $("#sessionarea").show();
     }); 
+
+    $("#batchloadfunction").click(function() {
+        var url = $("#batchloadfunction").attr("data-batch-url"); 
+        const sessionval = $("#sessionval option:selected" ).val();
+        console.log(sessionval);
+        $.ajax({
+            url: url,
+            type: 'get',
+            data: {
+                'session' : sessionval,
+            },
+            success: function(data){
+                $('#batchload').html(data);
+            }
+        })
+
+    });
 
 </script>
 {% endblock%}

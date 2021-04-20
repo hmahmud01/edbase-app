@@ -106,10 +106,11 @@ def loadsubject(request):
     return render(request, 'loadSubject.html', {'olevel': oLevel, 'aslevel': asLevel, 'a2level': a2level, "batchs": batchs})
 
 def loadbatch(request):
-    get_data = request.GET
-    data = get_data.get('test')
-    print(data)
-    return render(request, 'loadbatch.html', {'data': data})
+    get_data = request.GET    
+    sid = get_data.get('session')
+    batchs = EdbaseBatchSubject.objects.filter(batch__session_id=sid)
+    # batchs = EdbaseBatch.objects.filter(session_id=sid)    
+    return render(request, 'loadbatch.html', {'batchs': batchs})
 
 def demoTeacher(request):
     data = ""
@@ -900,8 +901,9 @@ def studentSignupAdmission(request):
     aslevel = Subject.objects.filter(level__contains="AS")
     a2level = Subject.objects.filter(level__contains="A2")
     olevel = Subject.objects.filter(level__contains="O")
+    sessions = EdbaseSesssion.objects.all()
     return render(request, 'signuprework.html', 
-        {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations})
+        {'data': data, 'aslevel': aslevel, 'a2level': a2level, 'olevel': olevel, 'academy': academy, 'qualifications': qualifications, 'boards': boards, 'locations': locations, 'sessions': sessions})
 
 def saveStudentSystem(request):
     print(request.POST)
@@ -974,31 +976,37 @@ def saveStudentSystem(request):
             studentqual.save()
         studentsubjects = []
         if 'olevel' in post_data:
-            edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['olevel'])
-            subject = EdbaseStudentSubjects(
-                student = student,
-                subect = edbsubject
-            )
-            subject.save()
-            studentsubjects.append(subject)
+            selected = post_data.getlist('olevel')
+            for select in selected:
+                edbsubject = EdbaseTeacherSubject.objects.get(id=select)
+                subject = EdbaseStudentSubjects(
+                    student = student,
+                    subect = edbsubject
+                )
+                subject.save()
+                studentsubjects.append(subject)
             
         if 'aslevel' in post_data:
-            edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['aslevel'])
-            subject = EdbaseStudentSubjects(
-                student = student,
-                subect = edbsubject
-            )
-            subject.save()
-            studentsubjects.append(subject)
+            selected = post_data.getlist('aslevel')
+            for select in selected:
+                edbsubject = EdbaseTeacherSubject.objects.get(id=select)
+                subject = EdbaseStudentSubjects(
+                    student = student,
+                    subect = edbsubject
+                )
+                subject.save()
+                studentsubjects.append(subject)
 
         if 'a2level' in post_data:
-            edbsubject = EdbaseTeacherSubject.objects.get(id=post_data['a2level'])
-            subject = EdbaseStudentSubjects(
-                student = student,
-                subect = edbsubject
-            )
-            subject.save()
-            studentsubjects.append(subject)
+            selected = post_data.getlist('a2level')
+            for select in selected:
+                edbsubject = EdbaseTeacherSubject.objects.get(id=select)
+                subject = EdbaseStudentSubjects(
+                    student = student,
+                    subect = edbsubject
+                )
+                subject.save()
+                studentsubjects.append(subject)
 
         batchs = post_data.getlist('batch')
         print(batchs)
