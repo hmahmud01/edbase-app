@@ -32,33 +32,23 @@
 
 
     <!-- itemsList -->
-    <section id="student-list">
+    <section id="content-area">
 
-        <div class="uk-container" style="min-height:700px;">
+        <div class="uk-container" style="min-height:700px">
             <h1>Hello {{ request.user.student.name }}</h1>
-            <p>Your Enlisted Student Subjects</p>                        
-            <!-- <hr>
-            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for sub in subjects %}
-                <div>
-                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href=""><h3 class="uk-card-title">{{ sub.subect.subject.title }} - {{ sub.subect.subject.code }}</h3></a>
-                        <p>{{ sub.subect.qualification.level }}</p>
-                        <p>{{ sub.subect.teacher.name }}</p>
-                        <p>Batch Name</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div> -->
             <hr>
+            <div class="uk-margin">
+                <p>Contents for: </p>       
+                <p>Subject : {{ info.subject.subject.title }} - {{ info.subject.subject.code }}</p>
+                <p>Batch : {{ info.batch.batch }}</p>
+
+            </div>
+            
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for batch in batchs %}
+                {% for content in contents %}
                 <div>
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'studentcontent' batch.id %}"><h3 class="uk-card-title">{{ batch.subject.subject.title }} - {{ batch.subject.subject.code }}</h3></a>
-                        <p>{{ batch.subject.teacher.name }}</p>
-                        <p>{{ batch.subject.qualification.level }}</p>                        
-                        <p>{{ batch.batch.batch }}</p>
+                        <a href="{% url 'subjectcontentdetail' content.id %}"><h3 class="uk-card-title">{{ content.name }}</h3></a>
                     </div>
                 </div>
                 {% endfor %}

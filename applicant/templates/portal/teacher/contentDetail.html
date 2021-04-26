@@ -16,7 +16,11 @@
 
                                 <ul class="uk-navbar-nav uk-iconnav">
                                     <li>
+                                        {% if request.user.eedbaseteacher %}
+                                        <a href="{% url 'teacherportaldetail' request.user.edbaseteacher.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
+                                        {% elif request.user.student %}
                                         <a href="{% url 'studentdetailnext' request.user.student.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
+                                        {% endif %}
                                     </li>
                                     <li>
                                         <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
@@ -32,37 +36,31 @@
 
 
     <!-- itemsList -->
-    <section id="student-list">
+    <section id="content-area">
 
-        <div class="uk-container" style="min-height:700px;">
-            <h1>Hello {{ request.user.student.name }}</h1>
-            <p>Your Enlisted Student Subjects</p>                        
-            <!-- <hr>
-            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for sub in subjects %}
-                <div>
-                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href=""><h3 class="uk-card-title">{{ sub.subect.subject.title }} - {{ sub.subect.subject.code }}</h3></a>
-                        <p>{{ sub.subect.qualification.level }}</p>
-                        <p>{{ sub.subect.teacher.name }}</p>
-                        <p>Batch Name</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div> -->
+        <div class="uk-container" style="min-height:700px">
+            <h1>Subject Content Detail Area</h1>
             <hr>
-            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for batch in batchs %}
+            <div class="uk-child-width-1-1@s uk-grid-match uk-margin-large" uk-grid>
                 <div>
-                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'studentcontent' batch.id %}"><h3 class="uk-card-title">{{ batch.subject.subject.title }} - {{ batch.subject.subject.code }}</h3></a>
-                        <p>{{ batch.subject.teacher.name }}</p>
-                        <p>{{ batch.subject.qualification.level }}</p>                        
-                        <p>{{ batch.batch.batch }}</p>
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <h3 class="uk-card-title">{{ data.name }}</h3>
+                        <p>Subject : {{ data.subject.subject.title }}</p>
+                        <p>Code : {{ data.subject.subject.code }}</p>        
+                        <p>Qualification: {{ data.subject.qualification.level }}</p>                    
+                        <p>Batch: {{ data.batch.batch }}</p>                    
+                        <p>Session: {{ data.batch.session.session }}</p>         
+                        <div class="uk-margin">
+                            <a class="uk-button uk-button-secondary uk-button-small" href="/media/{{ data.file }}">Download</a>
+                            {% if request.user.edbaseteacher %}
+                            <a class="uk-button uk-button-danger uk-button-small" href="{% url 'deletecontent' data.id data.subject.id data.batch.id %}">Delete</a>
+                            {% endif %}
+                        </div>
+
                     </div>
                 </div>
-                {% endfor %}
-            </div>
+            </div> 
+
         </div>
     </section>
 

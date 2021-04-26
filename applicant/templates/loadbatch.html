@@ -4,7 +4,7 @@
     <div class="uk-form-controls">
         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
             {% for batch in batchs %}
-            <label class="w-100"><input name="batch" class="uk-checkbox" type="checkbox" value="{{ batch.batch.id }}"> {{ batch.batch.batch }} - {{ subject.subject.code }} ( {{ batch.subject.subject.title }} - {{ batch.subject.subject.code }} - {{ batch.subject.teacher.name }} ) </label> 
+            <label class="w-100"><input name="batch" class="uk-checkbox" type="checkbox" value="{{ batch.id }}"> {{ batch.batch.batch }} - {{ subject.subject.code }} ( {{ batch.subject.subject.title }} - {{ batch.subject.subject.code }} - {{ batch.subject.teacher.name }} ) </label> 
             {% endfor %}
         </div>
     </div>
