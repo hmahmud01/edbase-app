@@ -16,7 +16,7 @@
 
                                 <ul class="uk-navbar-nav uk-iconnav">
                                     <li>
-                                        <a href="{% url 'studentdetailnext' request.user.student.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
+                                        <a href="{% url 'teacherportaldetail' request.user.edbaseteacher.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
                                     </li>
                                     <li>
                                         <a href="{% url 'logout' %}" uk-toggle><span uk-icon="heart"></span> Logout </a>
@@ -32,33 +32,48 @@
 
 
     <!-- itemsList -->
-    <section id="student-list">
+    <section id="content-area">
+        <!-- SESSION CREATE MODAL -->
+        <div id="modal-content" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">upload A file</h2>
+                <form action="{% url 'addcontent' %}" method="post" class="uk-form-stack" enctype="multipart/form-data">{% csrf_token %}       
+                    <input class="uk-input" id="subject_id" type="hidden" name="subject_id" value="{{ sid }}">
+                    <input class="uk-input" id="batch_id" type="hidden" name="batch_id" value="{{ bid }}">
+                    <div class="uk-margin">
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="name" type="text" name="name" placeholder="File Name" required>
+                        </div>
+                    </div>    
 
-        <div class="uk-container" style="min-height:700px;">
-            <h1>Hello {{ request.user.student.name }}</h1>
-            <p>Your Enlisted Student Subjects</p>                        
-            <!-- <hr>
-            <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for sub in subjects %}
-                <div>
-                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href=""><h3 class="uk-card-title">{{ sub.subect.subject.title }} - {{ sub.subect.subject.code }}</h3></a>
-                        <p>{{ sub.subect.qualification.level }}</p>
-                        <p>{{ sub.subect.teacher.name }}</p>
-                        <p>Batch Name</p>
+                    <div class="uk-margin" uk-margin>
+                        <div uk-form-custom="target: true">
+                            <input type="file" name="file" multiple>
+                            <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
+                        </div>
+                        <input type="submit" class="uk-button uk-button-primary" value="Submit">
                     </div>
-                </div>
-                {% endfor %}
-            </div> -->
+                </form>    
+            </div>
+        </div>
+
+
+
+        <div class="uk-container" style="min-height:700px">
+            <h1>Hello {{ request.user.edbaseteacher.name }}</h1>
             <hr>
+            <div class="uk-margin">
+                <p>Contents for: </p>       
+                <p>Subject : {{ subject.subject.title }} - {{ subject.subject.code }}</p>
+                <p>Batch : {{ batch.batch }}</p>
+                <a class="uk-button uk-button-primary uk-button-small" href="#modal-content" uk-toggle>Add Material to this subject for this batch</a>
+            </div>
+            
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for batch in batchs %}
+                {% for content in contents %}
                 <div>
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'studentcontent' batch.id %}"><h3 class="uk-card-title">{{ batch.subject.subject.title }} - {{ batch.subject.subject.code }}</h3></a>
-                        <p>{{ batch.subject.teacher.name }}</p>
-                        <p>{{ batch.subject.qualification.level }}</p>                        
-                        <p>{{ batch.batch.batch }}</p>
+                        <a href="{% url 'subjectcontentdetail' content.id %}"><h3 class="uk-card-title">{{ content.name }}</h3></a>
                     </div>
                 </div>
                 {% endfor %}

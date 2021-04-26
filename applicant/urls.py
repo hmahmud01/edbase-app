@@ -77,6 +77,7 @@ urlpatterns = [
     path('removestudent/<int:sid>/', views.edbaseremovestudent, name='removestudent'),
     path('studentdetailnext/<int:sid>/', views.edbaseStudentDetail, name='studentdetailnext'),
     path('studentportal/', views.edbaseStudentPortal, name='studentportal'),
+    path('studentcontent/<int:bid>/', views.edbaseStudentContent, name='studentcontent'),
     path('teacherportal/', views.edbaseTeacherPortal, name='teacherportal'),
     path('userverification/', views.veriyuser, name='userverification'),
     path('teacherportaldetail/<int:tid>/', views.teacherPortalDetail, name='teacherportaldetail'),
@@ -88,7 +89,12 @@ urlpatterns = [
     path('addbatch', views.addBatch, name='addbatch'),
     path('sessionlist/<int:sid>/', views.sessionList, name='sessionlist'),
     path('teacherbatchlist/<int:ssid>/<int:sid>/', views.teacherBatchList, name='teacherbatchlist'),    
-    path('batchstudentlist/<int:bid>/', views.studentBatchList, name='batchstudentlist'),    
+    path('batchcontent/<int:bid>/<int:sid>/', views.batchContent, name='batchcontent'),
+    path('batchstudentlist/<int:bid>/', views.studentBatchList, name='batchstudentlist'),   
+    path('content/<int:bid>/<int:sid>/', views.content, name="content"),
+    path('addcontent', views.addContent, name="addcontent"),    
+    path('subjectcontentdetail/<int:cid>/', views.subjectContentDetail, name="subjectcontentdetail"),
+    path('deletecontent/<int:cid>/<int:sid>/<int:bid>', views.deleteContent, name="deletecontent"),
     path('assignbatchtosubject/', views.assignBatchToSubject, name='assignbatchtosubject'),
 ]
 

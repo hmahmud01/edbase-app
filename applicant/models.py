@@ -258,7 +258,19 @@ class EdbaseStudentBatch(models.Model):
     batch = models.ForeignKey(EdbaseBatch, related_name='edbase_batch_student', on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name='edbase_student_batch', on_delete=models.CASCADE)      
     edsubject = models.ForeignKey(EdbaseStudentSubjects, related_name='edb_stu_sub', on_delete=models.CASCADE, null=True, blank=True)  
+    subject = models.ForeignKey(EdbaseTeacherSubject, related_name='edb_subject', on_delete=models.CASCADE, null=True, blank=True)  
     create_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.id)
+
+class EdbaseSubjectContent(models.Model):
+    file = file = models.FileField('contents', upload_to='content', blank=True, null=True)
+    name = models.CharField(max_length=36, null=True, blank=True)
+    uploader = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.ForeignKey(EdbaseTeacherSubject, related_name='content_subject', on_delete=models.CASCADE)
+    batch = models.ForeignKey(EdbaseBatch, related_name='content_batch', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)    
 
     def __str__(self):
         return str(self.id)

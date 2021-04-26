@@ -1,0 +1,70 @@
+
+VC_2008_SP1_REDIST_X86 ID={820B6609-4C97-3A2B-B644-573B06A0F0CC}
+Visual C++ 2008 SP1 Redistributable Package (x86)
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2008 SP1 Package (x86)
+----------------------------------------
+VC_2008_SP1_ATL_SEC_UPD_REDIST_X86 ID={1F1C2DFC-2D24-3E06-BCB8-725134ADF989}
+Visual C++ 2008 SP1 ATL Security (x86)
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2008 SP1 ATL Package (x86)
+----------------------------------------
+VC_2008_SP1_MFC_SEC_UPD_REDIST_X86 ID={9BE518E6-ECC6-35A9-88E4-87755C07200F}
+Visual C++ 2008 SP1 MFC Security Update (x86)
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2008 SP1 MFC Package (x86)
+----------------------------------------
+*** VC_2008 (VC9) is needed to use PHP 5.3 or 5.4 ***
+VC_2012_REDIST_MIN_UPD4_X86 ID={BD95A8CD-1D9F-35AD-981A-3E7925026EBB}
+Visual C++ 2012 x86 Minimum Runtime Update - 4 11.0.61030
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2012 Update 4 (x86)
+----------------------------------------
+VC_2013_REDIST_X86_MIN ID={8122DAB1-ED4D-3676-BB0A-CA368196543E}
+Visual C++ 2013 x86 Minimum Runtime - 12.0.40664
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2013 Package Up 5 (x86)
+----------------------------------------
+VC_2019_REDIST_X86 ID={EE2E15BB-54C8-4DB0-B1F3-026E3C166991}
+Visual C++ 2015-2019 x86 Minimum Runtime - 14.28.29325
+**** NOT INSTALLED ****
+Installation file is on: https://wampserver.aviatechno.net
+VC 2015-2019 (VC16 x86) 14.28.29325
+----------------------------------------
+VC_2008_SP1_REDIST_X64 ID={9B3F0A88-790D-3AD9-9F96-B19CF2746452}
+Visual C++ 2008 SP1 Redistributable Package (x64)
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2008 SP1 Package (x64)
+----------------------------------------
+VC_2008_SP1_ATL_SEC_UPD_REDIST_X64 ID={4B6C7001-C7D6-3710-913E-5BC23FCE91E6}
+Visual C++ 2008 SP1 ATL Security Update (x64)
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2008 SP1 ATL Package (x64)
+----------------------------------------
+VC_2008_SP1_MFC_SEC_UPD_REDIST_X64 ID={5FCE6D76-F5DC-37AB-B2B8-22AB8CEDB1D4}
+Visual C++ 2008 SP1 MFC Security (x64)
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2008 SP1 MFC Package (x64)
+----------------------------------------
+*** VC_2008 (VC9) is needed to use PHP 5.3 or 5.4 ***
+VC_2013_REDIST_X64_MIN ID={53CF6934-A98D-3D84-9146-FC4EDF3D5641}
+Visual C++ 2013 x64 Minimum Runtime Update 5 - 12.0.40664
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2013 Up 5 (x64)
+----------------------------------------
+VC_2019_REDIST_X64 ID={7D0362D5-C699-4403-BC09-0C1DAD1D93AB}
+Visual C++ 2015-2019 x64 Minimum Runtime - 14.28.29325
+**** NOT INSTALLED ****
+Installation file is on: http://wampserver.aviatechno.net
+VC 2015-2019 (VC16 x64) 14.28.29325
+----------------------------------------
+

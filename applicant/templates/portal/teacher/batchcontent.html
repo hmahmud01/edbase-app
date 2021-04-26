@@ -16,15 +16,6 @@
 
                                 <ul class="uk-navbar-nav uk-iconnav">
                                     <li>
-                                        <a href="{% url 'teacherbatchandsession' %}" class="uk-button uk-button-secondary">Batch&Sessions</a>
-                                    </li>
-                                    <li>
-                                        <a href="#modal-add-session" class="uk-button uk-button-secondary" uk-toggle>Add session</a>
-                                    </li>
-                                    <li>
-                                        <a href="#modal-batch-create" class="uk-button uk-button-secondary" uk-toggle>Add Batch</a>
-                                    </li>
-                                    <li>
                                         <a href="{% url 'teacherportaldetail' request.user.edbaseteacher.id %}" class="uk-button uk-button-secondary">Detail</a>                                     
                                     </li>
                                     <li>
@@ -105,7 +96,8 @@
         <div id="modal-assign-batch" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">Assign Batch</h2>
-                <p>To the subject {{ subject.subject.title }} - {{ subject.subject.code }}</p>                
+                <p>To the subject {{ subject.subject.title }} - {{ subject.subject.code }}</p>
+                <p>{{ subject.qualification.level }}</p>
                 <form action="{% url 'assignbatchtosubject' %}" method="POST" class="" enctype="multipart/form-data">{% csrf_token %}
                     <input type="hidden" name="subject_id" value="{{ subject.id }}">
                     <div class="uk-margin">
@@ -131,18 +123,20 @@
 
 
         <div class="uk-container" style="min-height:700px">
-            <h1>Hello {{ request.user.edbaseteacher.name }}</h1>                                       
-            <a class="uk-button uk-button-primary uk-button-small" href="#modal-assign-batch" uk-toggle>Assign Batch to this Subject</a>
+            <h1>Hello {{ request.user.edbaseteacher.name }}</h1>
             <hr>
-            <p>List of all batchs from {{ subject.subject.title }}</p>       
+            <p class="uk-margin">Click Student to see the Student List and Subject contents to Subject list to this batch under the subject</p>       
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for batch in batchs %}
                 <div>
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                        <a href="{% url 'batchcontent' batch.batch.id sid %}"><h3 class="uk-card-title">{{ batch.batch.batch }}</h3></a>
+                        <a href="{% url 'batchstudentlist' bid %}"><h3 class="uk-card-title">Students</h3></a>
                     </div>
                 </div>
-                {% endfor %}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <a href="{% url 'content' bid sid %}"><h3 class="uk-card-title">Subject Cotents</h3></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
