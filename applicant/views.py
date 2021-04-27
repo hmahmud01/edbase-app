@@ -14,7 +14,7 @@ from django.conf import settings
 
 from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject, Batch, Session, StudentSessionBatchTracker
 from applicant.models import EdbaseBoard, EdbaseLocation, EdbaseQualification, EdbaseSubject, EdbaseTeacher, EdbaseTeacherSubject, EdbaseStudentQualification, EdbaseStudentSubjects, EdbaseStudentGuardian, EdbaseStudentLocationBoard
-from applicant.models import EdbaseBatch, EdbaseSesssion, EdbaseBatchSubject, EdbaseStudentBatch, EdbaseSubjectContent
+from applicant.models import EdbaseBatch, EdbaseSesssion, EdbaseBatchSubject, EdbaseStudentBatch, EdbaseSubjectContent, EdbaseGuardianAccount, EdbaseGuardianProfile
 
 def home(request):
     data = ""
@@ -1032,6 +1032,33 @@ def saveStudentSystem(request):
                 trx_id = post_data['trx_id']
             )
             payment_info.save()
+
+        guardian_email = post_data['parent_email']
+
+        if User.objects.filter(username=guardian_email).exists():
+            guardianUser = User.objects.get(username=guardian_email)
+            account = EdbaseGuardianAccount.objects.get(user_id=guardianUser.id)
+            profile = EdbaseGuardianProfile(
+                useracc = account,
+                student = student,
+                info = guardian,
+                studentinfo = personal_info
+            )
+            profile.save()
+        else:
+            guardian_pass = "edbaseguardian"
+            guardianUser = User.objects.create_user(guardian_email, password= guardian_pass, email=guardian_email)
+            account = EdbaseGuardianAccount(
+                user = guardianUser
+            )
+            account.save()
+            profile = EdbaseGuardianProfile(
+                useracc = account,
+                student = student,
+                info = guardian,
+                studentinfo = personal_info
+            )
+            profile.save()
 
     return redirect('login')
 

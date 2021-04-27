@@ -274,3 +274,18 @@ class EdbaseSubjectContent(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class EdbaseGuardianAccount(models.Model):
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+class EdbaseGuardianProfile(models.Model):    
+    useracc = models.ForeignKey(EdbaseGuardianAccount, on_delete=models.CASCADE, null=True)
+    student = models.ForeignKey(Student, related_name='students_guardian', on_delete=models.CASCADE)
+    info = models.ForeignKey(EdbaseStudentGuardian, related_name='students_guardian_info', on_delete=models.CASCADE)
+    studentinfo = models.ForeignKey(PersonalInfo, related_name='students_personal_ifo', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
