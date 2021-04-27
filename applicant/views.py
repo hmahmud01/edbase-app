@@ -1245,6 +1245,9 @@ def veriyuser(request):
                     if Student.objects.filter(user_id=user_id):
                         auth_login(request, user)
                         return redirect('studentportal')
+                    elif EdbaseGuardianAccount.objects.filter(user_id=user_id):
+                        auth_login(request, user)
+                        return redirect('guardianportal')
                     else:
                         auth_login(request, user)
                         teacher = user.edbaseteacher                        
@@ -1294,3 +1297,9 @@ def edbaseremovestudent(request, sid):
         paymentinfo = PaymentInfo.objects.get(student_id=sid)
         paymentinfo.delete()
     return redirect('studentlist')
+
+def edbaseGuardianPortal(request):
+    user_id = request.user.id
+    account = EdbaseGuardianAccount.objects.get(user_id=user_id)
+    data = EdbaseGuardianProfile.objects.filter(useracc__user_id=user_id)
+    return render(request, "portal/guardian/index.html", {"data": data})
