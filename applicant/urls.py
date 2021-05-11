@@ -97,6 +97,10 @@ urlpatterns = [
     path('deletecontent/<int:cid>/<int:sid>/<int:bid>', views.deleteContent, name="deletecontent"),
     path('assignbatchtosubject/', views.assignBatchToSubject, name='assignbatchtosubject'),
     path('guardianportal/', views.edbaseGuardianPortal, name='guardianportal'),
+    path('routine/', views.routineIndex, name='routine'),
+    path('addroutine/', views.addRoutine, name='addroutine'),
+    path('removeroutine/<int:rid>/', views.removeRoutine, name='removeroutine'),
+    path('studentroutine/', views.studentRoutine, name='studentroutine'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
