@@ -94,12 +94,16 @@ def loadsubject(request):
     a2level = None
 
     for qual in qualifications:
-        if qual == '1':
+        if qual == '5':
             oLevel = subjects.filter(qualification_id=qual)
-        elif qual == '2':
+        elif qual == '6':
             asLevel = subjects.filter(qualification_id=qual)
-        elif qual == '3':
+        elif qual == '7':
             a2level = subjects.filter(qualification_id=qual)
+
+    print(oLevel)
+    print(asLevel)
+    print(a2level)
 
     batchs = EdbaseBatchSubject.objects.all()
 
