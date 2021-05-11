@@ -14,7 +14,7 @@ from django.conf import settings
 
 from applicant.models import Student, Qualification, StudentFile, PersonalInfo, PaymentInfo, Teacher, Subject, SubjectMaterial, MaterialContent, QualificationSubject, Batch, Session, StudentSessionBatchTracker
 from applicant.models import EdbaseBoard, EdbaseLocation, EdbaseQualification, EdbaseSubject, EdbaseTeacher, EdbaseTeacherSubject, EdbaseStudentQualification, EdbaseStudentSubjects, EdbaseStudentGuardian, EdbaseStudentLocationBoard
-from applicant.models import EdbaseBatch, EdbaseSesssion, EdbaseBatchSubject, EdbaseStudentBatch, EdbaseSubjectContent, EdbaseGuardianAccount, EdbaseGuardianProfile
+from applicant.models import EdbaseBatch, EdbaseSesssion, EdbaseBatchSubject, EdbaseStudentBatch, EdbaseSubjectContent, EdbaseGuardianAccount, EdbaseGuardianProfile, EdbaseRoutine
 
 def home(request):
     data = ""
@@ -1314,3 +1314,38 @@ def edbaseGuardianPortal(request):
     account = EdbaseGuardianAccount.objects.get(user_id=user_id)
     data = EdbaseGuardianProfile.objects.filter(useracc__user_id=user_id)
     return render(request, "portal/guardian/index.html", {"data": data})
+
+def routineIndex(request):
+    data = ""
+    routines = EdbaseRoutine.objects.all()
+    return render(request, "portal/admin/routines.html", {"data": data, "routines": routines})
+
+
+def addRoutine(request):
+    post_data = request.POST
+    files = request.FILES
+    name = post_data['name']
+    session = post_data['session']
+    if 'file' in files:
+        for f in files.getlist('file'):
+            routine = EdbaseRoutine(
+                file = f,
+                name = name,
+                session = session
+            )
+            routine.save()
+    
+    return redirect('routine')
+
+def removeRoutine(request, rid):
+
+    routine = EdbaseRoutine.objects.get(id=rid)
+    print(routine.file.path)
+    os.remove(routine.file.path)
+    routine.delete()
+    return redirect('routine')
+
+def studentRoutine(request):
+    data = ""
+    routines = EdbaseRoutine.objects.all()
+    return render(request, "portal/student/routine.html", {"data": data, "routines": routines})
