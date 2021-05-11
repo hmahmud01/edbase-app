@@ -265,7 +265,7 @@ class EdbaseStudentBatch(models.Model):
         return str(self.id)
 
 class EdbaseSubjectContent(models.Model):
-    file = file = models.FileField('contents', upload_to='content', blank=True, null=True)
+    file = models.FileField('contents', upload_to='content', blank=True, null=True)
     name = models.CharField(max_length=36, null=True, blank=True)
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(EdbaseTeacherSubject, related_name='content_subject', on_delete=models.CASCADE)
@@ -289,3 +289,12 @@ class EdbaseGuardianProfile(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class EdbaseRoutine(models.Model):
+    name = models.CharField(max_length=50, null=True, blank=True)
+    session = models.CharField(max_length=50, null=True, blank=True)
+    file = models.FileField('routines',upload_to='routines', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

@@ -39,31 +39,7 @@
             </div>
             <div class="uk-child-width-1@m" uk-grid>
                 <form action="{% url 'signupteachernext' %}" method="POST" class="uk-form-horizontal uk-margin-large">{% csrf_token %}
-                    <div>
-                        <div class="uk-background-secondary uk-light uk-padding uk-panel">
-                            <p class="uk-h4">Teachers'Personal Information</p>
-                        </div>
-                    </div>
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="username">Username</label>
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="username" type="text" name="username" placeholder="Teacher's Username" required>
-                        </div>
-                    </div>
 
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="name">Name</label>
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="name" type="text" name="name" placeholder="Teacher's Name" required>
-                        </div>
-                    </div>
-
-                    <div class="uk-margin">
-                        <label class="uk-form-label" for="email">Email Address</label>
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="email" type="email" name="email" placeholder="Teacher's Email" required>
-                        </div>
-                    </div>
                     <div>
                         <div class="uk-background-secondary uk-light uk-padding uk-panel">
                             <p class="uk-h4">Academic Info</p>
@@ -131,7 +107,33 @@
                     </div> 
 
                     <!-- This is an anchor toggling the modal -->
-                    <a href="#modal-sub" uk-toggle>Add Subject</a>                    
+                    <a href="#modal-sub" uk-toggle>Add Subject</a>   
+                    <hr>
+                    <div>
+                        <div class="uk-background-secondary uk-light uk-padding uk-panel">
+                            <p class="uk-h4">Teachers'Personal Information</p>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="username">Username</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="username" type="text" name="username" placeholder="Teacher's Username" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="name">Full Name</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="name" type="text" name="name" placeholder="Teacher's Full Name" required>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="email">Email Address</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="email" type="email" name="email" placeholder="Teacher's Email" required>
+                        </div>
+                    </div>                 
                     
                     <div class="uk-margin uk-flex uk-flex-right">
                         <input type="submit" class="uk-button uk-button-primary" value="Submit" />
