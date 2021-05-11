@@ -15,11 +15,9 @@
                             <div class="uk-navbar-right uk-dark">
 
                                 <ul class="uk-navbar-nav uk-iconnav">
+
                                     <li>
-                                        <a href="#modal-add-routine" class="uk-button uk-button-secondary" uk-toggle>Add a Routine</a>
-                                    </li>
-                                    <li>
-                                        <a href="/" uk-toggle><span uk-icon="heart"></span> Logout </a>
+                                        <a href="{% url 'signupv2' %}" uk-toggle><span uk-icon="heart"></span> Back </a>
                                     </li>
                                 </ul>
                             </div>
@@ -33,33 +31,6 @@
 
     <!-- itemsList -->
     <section id="student-list">
-        <!-- Routine CREATE MODAL -->
-        <div id="modal-add-routine" uk-modal>
-            <div class="uk-modal-dialog uk-modal-body">
-                <h2 class="uk-modal-title">Upload A Routine</h2>
-                <form action="{% url 'addroutine' %}" method="post" class="uk-form-stack" enctype="multipart/form-data">{% csrf_token %}       
-                    <div class="uk-margin">
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="name" type="text" name="name" placeholder="Teacher Name" required>
-                        </div>
-                    </div>    
-
-                    <div class="uk-margin">
-                        <div class="uk-form-controls">
-                            <input class="uk-input" id="session" type="text" name="session" placeholder="Session" required>
-                        </div>
-                    </div>   
-
-                    <div class="uk-margin" uk-margin>
-                        <div uk-form-custom="target: true">
-                            <input type="file" name="file" multiple>
-                            <input class="uk-input uk-form-width-medium" type="text" placeholder="Select file" disabled>
-                        </div>
-                        <input type="submit" class="uk-button uk-button-primary" value="Submit">
-                    </div>
-                </form>    
-            </div>
-        </div>
 
 
         <div class="uk-container" style="min-height:700px">                                      
@@ -73,7 +44,6 @@
                         <h3 class="uk-card-title">{{ routine.name }}</h3>
                         <p>{{ routine.session }} Session</p>
                         <a href="/media/{{ routine.file }}">View</a>
-                        <a href="{% url 'removeroutine' routine.id %}" class="uk-button uk-button-danger uk-button-small">Remove</a>
                     </div>
                 </div>
                 {% endfor %}

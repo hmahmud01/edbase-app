@@ -38,7 +38,7 @@
                 <form action="{% url 'savestudentsystem' %}" method="post" class="uk-form-horizontal uk-margin-large" enctype="multipart/form-data">{% csrf_token %}
                     <div class="uk-alert-danger" uk-alert>
                         <a class="uk-alert-close" uk-close></a>
-                        <p>Please Check the Teachers <a href="uk-button uk-button-text">Routine</a> Before Enrolling. Teacher Routine are not subject to change.</p>
+                        <p>Please Check the Teachers <a href="{% url 'studentroutine' %}" target="_blank">Routine</a> Before Enrolling. Teacher Routine are not subject to change.</p>
                     </div>
                     <!-- {% comment %} <input id="id" type="text" name="id" value="{{ data.id }}" hidden> {% endcomment %} -->
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
