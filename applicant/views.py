@@ -93,12 +93,21 @@ def loadsubject(request):
     asLevel = None
     a2level = None
 
+    # for qual in qualifications:
+    #     if qual == '1':
+    #         oLevel = subjects.filter(qualification_id=qual)
+    #     elif qual == '2':
+    #         asLevel = subjects.filter(qualification_id=qual)
+    #     elif qual == '3':
+    #         a2level = subjects.filter(qualification_id=qual)
+    
+    # Considering the id created again
     for qual in qualifications:
-        if qual == '1':
+        if qual == '4':
             oLevel = subjects.filter(qualification_id=qual)
-        elif qual == '2':
+        elif qual == '5':
             asLevel = subjects.filter(qualification_id=qual)
-        elif qual == '3':
+        elif qual == '6':
             a2level = subjects.filter(qualification_id=qual)
 
     batchs = EdbaseBatchSubject.objects.all()
@@ -1114,12 +1123,13 @@ def sessionList(request, sid):
 
 def teacherBatchList(request, ssid, sid):
     print(sid)
+    print(ssid)
     # batchs = EdbaseBatchSubject.objects.filter(subject_id=sid)
     batchs = EdbaseBatchSubject.objects.filter(batch__session_id=ssid).filter(subject_id=sid)
     subject = EdbaseTeacherSubject.objects.get(id=sid)
     batchlist = EdbaseBatch.objects.all()
     sessionlist = EdbaseSesssion.objects.all()
-    return render(request, "portal/teacher/batchlist.html", {"batchs" : batchs, "subject": subject, "batchlist": batchlist, "sessionlist": sessionlist, "sid": sid})    
+    return render(request, "portal/teacher/batchlist.html", {"batchs" : batchs, "subject": subject, "batchlist": batchlist, "sessionlist": sessionlist, "sid": sid, "ssid": ssid})    
 
 def batchContent(request, bid, sid):
     return render(request, "portal/teacher/batchcontent.html", {"bid": bid, "sid": sid})
@@ -1169,6 +1179,7 @@ def subjectContentDetail(request, cid):
 def assignBatchToSubject(request):
     post_data = request.POST
     sid = post_data['subject_id']
+    ssid = post_data['session_id']
     subject = EdbaseTeacherSubject.objects.get(id=sid)
     batch = EdbaseBatch.objects.get(id=post_data['batch'])
     edbsubjectbatch = EdbaseBatchSubject(
@@ -1176,7 +1187,7 @@ def assignBatchToSubject(request):
         batch= batch
     )
     edbsubjectbatch.save()
-    return redirect('teacherbatchlist', sid)
+    return redirect('teacherbatchlist',ssid, sid)
 
 def teacherStudentList(request, sid):
     students = EdbaseStudentSubjects.objects.filter(subect_id=sid)
