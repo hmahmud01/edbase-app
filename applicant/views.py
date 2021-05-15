@@ -1316,9 +1316,19 @@ def edbaseGuardianPortal(request):
     return render(request, "portal/guardian/index.html", {"data": data})
 
 def routineIndex(request):
-    data = ""
-    routines = EdbaseRoutine.objects.all()
-    return render(request, "portal/admin/routines.html", {"data": data, "routines": routines})
+    qualifications = EdbaseQualification.objects.all()
+    o_level = 1
+    as_level = 2
+    a2_level = 3
+    # server id's
+    # o_level = 4
+    # as_level = 5
+    # a2_level = 6
+    return render(request, "portal/admin/routineIndex.html", {"qualifications": qualifications, "o_level": o_level, "as_level": as_level, "a2_level": a2_level})
+
+def routines(request, rid):
+    routines = EdbaseRoutine.objects.filter(qualification_id=rid)
+    return render(request, "portal/admin/routines.html", {"routines": routines})
 
 
 def addRoutine(request):
@@ -1326,12 +1336,15 @@ def addRoutine(request):
     files = request.FILES
     name = post_data['name']
     session = post_data['session']
+    qualification = post_data['qualification']
+    qualObj = EdbaseQualification.objects.get(id=qualification)
     if 'file' in files:
         for f in files.getlist('file'):
             routine = EdbaseRoutine(
                 file = f,
                 name = name,
-                session = session
+                session = session,
+                qualification = qualObj
             )
             routine.save()
     
@@ -1346,6 +1359,16 @@ def removeRoutine(request, rid):
     return redirect('routine')
 
 def studentRoutine(request):
-    data = ""
     routines = EdbaseRoutine.objects.all()
-    return render(request, "portal/student/routine.html", {"data": data, "routines": routines})
+    o_level = 1
+    as_level = 2
+    a2_level = 3
+    # server id's
+    # o_level = 4
+    # as_level = 5
+    # a2_level = 6
+    return render(request, "portal/student/routineIndex.html", {"routines": routines, "o_level": o_level, "as_level": as_level, "a2_level": a2_level})
+
+def studentRoutineIndex(request, rid):
+    routines = EdbaseRoutine.objects.filter(qualification_id=rid)
+    return render(request, "portal/student/routine.html", {"routines": routines})
