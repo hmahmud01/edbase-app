@@ -93,6 +93,7 @@ def loadsubject(request):
     asLevel = None
     a2level = None
 
+    # local host id
     # for qual in qualifications:
     #     if qual == '1':
     #         oLevel = subjects.filter(qualification_id=qual)
@@ -1236,6 +1237,21 @@ def addAnotherSubject(request):
 
     return redirect('teacherportal')
 
+def removesubject(request, sid):
+    subject = EdbaseTeacherSubject.objects.get(id=sid)
+    batch = EdbaseBatchSubject.objects.filter(subject_id=subject.id)
+    subjecttitle = EdbaseSubject.objects.get(id=subject.subject.id)
+    print(subject.id)
+    for b in batch:
+        print(b.id)
+    print(subjecttitle.id)
+    subject.delete()
+    for b in batch:
+        b.delete()
+    subjecttitle.delete()
+    print("subject deleted")
+    return redirect('teacherportal')
+
 def veriyuser(request):
     post_data = request.POST
     print(post_data)
@@ -1317,13 +1333,15 @@ def edbaseGuardianPortal(request):
 
 def routineIndex(request):
     qualifications = EdbaseQualification.objects.all()
-    o_level = 1
-    as_level = 2
-    a2_level = 3
+    # localhost id's
+    # o_level = 1
+    # as_level = 2
+    # a2_level = 3
+    
     # server id's
-    # o_level = 4
-    # as_level = 5
-    # a2_level = 6
+    o_level = 4
+    as_level = 5
+    a2_level = 6
     return render(request, "portal/admin/routineIndex.html", {"qualifications": qualifications, "o_level": o_level, "as_level": as_level, "a2_level": a2_level})
 
 def routines(request, rid):
@@ -1360,13 +1378,15 @@ def removeRoutine(request, rid):
 
 def studentRoutine(request):
     routines = EdbaseRoutine.objects.all()
-    o_level = 1
-    as_level = 2
-    a2_level = 3
+    # localhost id'
+    # o_level = 1
+    # as_level = 2
+    # a2_level = 3
+
     # server id's
-    # o_level = 4
-    # as_level = 5
-    # a2_level = 6
+    o_level = 4
+    as_level = 5
+    a2_level = 6
     return render(request, "portal/student/routineIndex.html", {"routines": routines, "o_level": o_level, "as_level": as_level, "a2_level": a2_level})
 
 def studentRoutineIndex(request, rid):
