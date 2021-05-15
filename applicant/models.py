@@ -293,6 +293,7 @@ class EdbaseGuardianProfile(models.Model):
 class EdbaseRoutine(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
     session = models.CharField(max_length=50, null=True, blank=True)
+    qualification = models.ForeignKey(EdbaseQualification, null=True, blank=True, on_delete=models.CASCADE)
     file = models.FileField('routines',upload_to='routines', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 

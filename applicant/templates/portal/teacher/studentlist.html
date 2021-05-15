@@ -36,7 +36,7 @@
         <div class="uk-container">
             <h1>Hello {{ request.user.edbaseteacher.name }}</h1>
             <p>Your Enlisted Student List</p>
-            <a class="uk-button uk-button-primary uk-button-small" href="#modal-assign-subject" uk-toggle>Assign Batch To Subject</a>            
+            <a href="{% url 'teacherportal' %}">Home</a>
             <hr>
             <div class="uk-child-width-1@m" uk-grid>
                 <div class="uk-margin-large">

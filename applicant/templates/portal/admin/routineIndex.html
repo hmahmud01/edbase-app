@@ -48,7 +48,7 @@
                         <div class="uk-form-controls">
                             <input class="uk-input" id="session" type="text" name="session" placeholder="Session" required>
                         </div>
-                    </div>  
+                    </div>   
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="qualification">Qualification</label>
@@ -60,7 +60,7 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    </div> 
+                    </div>  
 
                     <div class="uk-margin" uk-margin>
                         <div uk-form-custom="target: true">
@@ -79,16 +79,35 @@
             <h3>Routines</h3> 
             <hr>      
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-                {% for routine in routines %}
+                {% comment %} {% for routine in routines %}
                 <div>
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
                         <h3 class="uk-card-title">{{ routine.name }}</h3>
                         <p>{{ routine.session }} Session</p>
+                        <p>{{ routine.qualification.level }}</p>
                         <a href="/media/{{ routine.file }}">View</a>
                         <a href="{% url 'removeroutine' routine.id %}" class="uk-button uk-button-danger uk-button-small">Remove</a>
                     </div>
                 </div>
-                {% endfor %}
+                {% endfor %} {% endcomment %}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <h3 class="uk-card-title">O Level</h3>
+                        <a href="{% url 'routines' o_level %}">View</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <h3 class="uk-card-title">AS Level</h3>
+                        <a href="{% url 'routines' as_level %}">View</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <h3 class="uk-card-title">A2 Level</h3>
+                        <a href="{% url 'routines' a2_level %}">View</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
