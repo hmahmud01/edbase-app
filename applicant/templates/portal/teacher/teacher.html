@@ -197,7 +197,7 @@
                         <a href="{% url 'sessionlist' sub.id %}"><h3 class="uk-card-title">{{ sub.subject.title }} - {{ sub.subject.code }}</h3></a>
                         <p>{{ sub.qualification.level }}</p>
                         <p>{{ sub.board.name }}</p>
-                        <a href="" class="uk-button uk-button-danger uk-button-small">Remove</a>
+                        <a href="{% url 'removesubject' sub.id %}" class="uk-button uk-button-danger uk-button-small">Remove</a>
                     </div>
                 </div>
                 {% endfor %}
