@@ -124,6 +124,9 @@
 
         <div class="uk-container" style="min-height:700px">
             <h1>Hello {{ request.user.edbaseteacher.name }}</h1>
+            <div>
+                <p> <a href="{% url 'teacherportal' %}">Home</a> / <a href="{% url 'sessionlist' sid %}">Session List</a> /  <strong> Batch List </strong> / <strong> Batch Content </strong> </p>
+            </div>
             <hr>
             <p class="uk-margin">Click Student to see the Student List and Subject contents to Subject list to this batch under the subject</p>       
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
@@ -135,6 +138,11 @@
                 <div>
                     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
                         <a href="{% url 'content' bid sid %}"><h3 class="uk-card-title">Subject Cotents</h3></a>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <a href=""><h3 class="uk-card-title">Subject Grades</h3></a>
                     </div>
                 </div>
             </div>

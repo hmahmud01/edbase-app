@@ -134,6 +134,9 @@
         <div class="uk-container" style="min-height:700px">
             <h1>Hello {{ request.user.edbaseteacher.name }}</h1>                                       
             <a class="uk-button uk-button-primary uk-button-small" href="#modal-add-session" uk-toggle>Create Session</a>
+            <div>
+                <p> <a href="{% url 'teacherportal' %}">Home</a> / <strong> Session List </strong> </p>
+            </div>
             <hr>
             <p>List of all Sessions</p>       
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
