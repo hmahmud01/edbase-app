@@ -83,6 +83,7 @@ urlpatterns = [
     path('teacherportaldetail/<int:tid>/', views.teacherPortalDetail, name='teacherportaldetail'),
     path('teacherportalstudents/<int:sid>/', views.teacherStudentList, name='teacherportalstudents'),    
     path('addanothersubject', views.addAnotherSubject, name='addanothersubject'),
+    path('removesubject/<int:sid>/', views.removesubject, name='removesubject'),
     path('teacherbatchandsession/', views.teacherbatchandsession, name='teacherbatchandsession'),
     path('studentpasswordchange/<int:uid>/', views.studentPasswordReset, name='studentpasswordchange'),
     path('addsession', views.addSession, name='addsession'),
