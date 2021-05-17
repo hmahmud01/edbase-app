@@ -1126,14 +1126,16 @@ def teacherBatchList(request, ssid, sid):
     print(sid)
     print(ssid)
     # batchs = EdbaseBatchSubject.objects.filter(subject_id=sid)
+    session = EdbaseSesssion.objects.get(id=ssid)
     batchs = EdbaseBatchSubject.objects.filter(batch__session_id=ssid).filter(subject_id=sid)
     subject = EdbaseTeacherSubject.objects.get(id=sid)
     batchlist = EdbaseBatch.objects.all()
     sessionlist = EdbaseSesssion.objects.all()
-    return render(request, "portal/teacher/batchlist.html", {"batchs" : batchs, "subject": subject, "batchlist": batchlist, "sessionlist": sessionlist, "sid": sid, "ssid": ssid})    
+    return render(request, "portal/teacher/batchlist.html", {"batchs" : batchs, "subject": subject, "batchlist": batchlist, "sessionlist": sessionlist, "sid": sid, "ssid": ssid, "session": session})    
 
 def batchContent(request, bid, sid):
-    return render(request, "portal/teacher/batchcontent.html", {"bid": bid, "sid": sid})
+    batch = EdbaseBatch.objects.get(id=bid)
+    return render(request, "portal/teacher/batchcontent.html", {"bid": bid, "sid": sid, "batch": batch})
 
 def studentBatchList(request, bid):
     students = EdbaseStudentBatch.objects.filter(batch_id=bid)
