@@ -131,14 +131,14 @@
         </div>
 
 
-        <div class="uk-container" style="min-height:700px">s
+        <div class="uk-container" style="min-height:700px">
             <h1>Hello {{ request.user.edbaseteacher.name }}</h1>                                       
             <a class="uk-button uk-button-primary uk-button-small" href="#modal-assign-batch" uk-toggle>Assign Batch to this Subject</a>
             <div>
-                <p> <a href="{% url 'teacherportal' %}">Home</a> / <a href="{% url 'sessionlist' sid %}">Session List</a> /  <strong> Batch List </strong> </p>
+                <p> <a href="{% url 'teacherportal' %}">Home</a> / <a href="{% url 'sessionlist' sid %}">{{ session.session }}</a> /  <strong> Batch List </strong> </p>
             </div>
             <hr>
-            <p>List of all batchs from {{ subject.subject.title }}</p>       
+            <p>List of all batches from {{ subject.subject.title }}</p>       
             <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
                 {% for batch in batchs %}
                 <div>

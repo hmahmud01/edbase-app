@@ -125,7 +125,7 @@
         <div class="uk-container" style="min-height:700px">
             <h1>Hello {{ request.user.edbaseteacher.name }}</h1>
             <div>
-                <p> <a href="{% url 'teacherportal' %}">Home</a> / <a href="{% url 'sessionlist' sid %}">Session List</a> /  <strong> Batch List </strong> / <strong> Batch Content </strong> </p>
+                <p> <a href="{% url 'teacherportal' %}">Home</a> / <a href="{% url 'sessionlist' sid %}">{{ batch.session.session }}</a> /  <strong> {{ batch.batch }} </strong> / <strong> Batch Content </strong> </p>
             </div>
             <hr>
             <p class="uk-margin">Click Student to see the Student List and Subject contents to Subject list to this batch under the subject</p>       
